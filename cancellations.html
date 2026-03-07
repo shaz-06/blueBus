@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancellations - blueBus</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Apply Inter font as the default */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for the accordion */
+        .faq-question {
+            cursor: pointer;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 300px; /* Adjust as needed for longer answers */
+        }
+        .faq-item.open .arrow-down {
+            transform: rotate(180deg);
+        }
+        .arrow-down {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Hero section background image */
+        .hero-background {
+            background-image: url('BlueBus.png'); /* Re-using the same theme background */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Overlay to make text readable */
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+            z-index: 0;
+        }
+
+        .hero-background > * {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header / Navigation --><header class="bg-blue-700 text-white shadow-md">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo --><a href="#" class="flex items-center space-x-2">
+                <img src="logo.png" alt="blueBus Logo" class="h-8 w-auto" onerror="this.style.display='none';"> <!-- Hide image on error -->
+                <span class="text-3xl font-bold tracking-tight">blueBus</span>
+            </a>
+            
+            <!-- Navigation Links --><div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-sm font-medium hover:text-blue-200 transition-colors">Home</a>
+                <a href="help.html" class="text-sm font-medium hover:text-blue-200 transition-colors">Manage Booking</a>
+                <a href="help.html" class="text-sm font-medium hover:text-blue-200 transition-colors">Help & Support</a>
+            </div>
+            
+            <!-- Mobile Menu Button (Optional) --><div class="md:hidden">
+                <button class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area --><main>
+        <!-- Hero Section --><section class="hero-background text-white pt-16 pb-20 md:pt-24 md:pb-28">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Cancellations & Refunds</h1>
+                <p class="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto">
+                    Your complete guide to understanding cancellation policies for both bus and train bookings.
+                </p>
+            </div>
+        </section>
+
+        <!-- Information Section --><section class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+            
+            <!-- How to Cancel --><div class="mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">How to Cancel Your Ticket</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Step 1: Log In --><div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105">
+                        <div class="flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mx-auto mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">1. Go to Bookings</h3>
+                        <p class="text-gray-600 text-sm">Log in to your blueBus account and navigate to the "My Bookings" or "Manage Booking" section.</p>
+                    </div>
+                    <!-- Step 2: Select --><div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105">
+                        <div class="flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mx-auto mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">2. Select Your Trip</h3>
+                        <p class="text-gray-600 text-sm">Find the upcoming bus or train ticket you wish to cancel and select the "Cancel" option.</p>
+                    </div>
+                    <!-- Step 3: Review --><div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105">
+                        <div class="flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mx-auto mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">3. Review & Confirm</h3>
+                        <p class="text-gray-600 text-sm">Review the cancellation charges and the final refund amount. Confirm the cancellation.</p>
+                    </div>
+                    <!-- Step 4: Refund --><div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105">
+                        <div class="flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mx-auto mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">4. Receive Refund</h3>
+                        <p class="text-gray-600 text-sm">Your refund will be processed back to your original payment method within 5-7 business days.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cancellation Policies --><div class="mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Cancellation Policies at a Glance</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    
+                    <!-- Bus Policy Card --><div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                        <div class="flex items-center mb-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18H2.477L.82 14.521A1 1 0 011.767 13h10.466m-1.74-5H3.767a1 1 0 01-.947-1.479L4.523 2H12m0 6v10m0-10h6.477L20.18 6.479A1 1 0 0019.233 5H12m0 3h6.233a1 1 0 01.947 1.479L17.477 13H12"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-blue-700 ml-4">Bus Tickets</h3>
+                        </div>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold mr-2 mt-1">✓</span>
+                                <p><strong>Operator-Specific:</strong> Cancellation policies and charges are set by the private bus operator, not blueBus.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold mr-2 mt-1">✓</span>
+                                <p><strong>Time-Based Charges:</strong> The refund amount depends on how many hours before departure you cancel. (e.g., 0-12 hours, 12-24 hours, etc.).</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold mr-2 mt-1">✓</span>
+                                <p><strong>Partial Cancellation:</strong> Usually available. You can cancel tickets for just one or two passengers in a larger booking.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold mr-2 mt-1">✓</span>
+                                <p><strong>Non-Refundable:</strong> Some promotional tickets may be non-refundable. Please check the policy *before* booking.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Train Policy Card --><div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                        <div class="flex items-center mb-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 13.5V3.75A1.75 1.75 0 017.75 2h8.5A1.75 1.75 0 0118 3.75v9.75m-12 0A2.25 2.25 0 003.75 15h16.5a2.25 2.25 0 002.25-2.25m-18.75 0H1.5v-3.375c0-1.02.83-1.875 1.875-1.875h16.5c1.02 0 1.875.83 1.875 1.875v3.375h.375m-18.75 0h18.75M12 18a.75.75 0 110-1.5.75.75 0 010 1.5z"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-blue-700 ml-4">Train Tickets</h3>
+                        </div>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold mr-2 mt-1">✓</span>
+                                <p><strong>IRCTC Rules:</strong> Policies are set by Indian Railways (IRCTC). Charges are fixed based on time slots and ticket status.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold mr-2 mt-1">✓</span>
+                                <p><strong>Ticket Status Matters:</strong>
+                                    <br>• <strong>Confirmed (CNF):</strong> Cancellation charges apply based on time (e.g., >48 hrs, 48-12 hrs).
+                                    <br>• <strong>Waitlisted (WL):</strong> Auto-cancelled if not confirmed. Full refund minus a small clerkage fee.
+                                </p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold mr-2 mt-1">✓</span>
+                                <p><strong>Partial Cancellation:</strong> Available. You can cancel specific passengers on a multi-passenger PNR.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold mr-2 mt-1">✓</span>
+                                <p><strong>Filing TDR:</strong> For special cases (e.g., train delayed 3+ hours, missed connecting train), you must file a TDR (Ticket Deposit Receipt) for a refund.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section --><div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Cancellation FAQs</h2>
+                <div class="max-w-3xl mx-auto space-y-4" id="faq-container">
+                    
+                    <!-- FAQ Item 1 --><div class="faq-item bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="faq-question flex justify-between items-center p-5">
+                            <h4 class="font-semibold text-gray-800">How long does it take to get my refund?</h4>
+                            <svg class="arrow-down w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600 text-sm">
+                                Once you cancel your ticket, the refund is processed by us immediately. It typically takes <strong>5 to 7 business days</strong> to reflect in your original mode of payment (credit card, bank account, wallet, etc.).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 --><div class="faq-item bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="faq-question flex justify-between items-center p-5">
+                            <h4 class="font-semibold text-gray-800">What happens if my waitlisted (WL) train ticket isn't confirmed?</h4>
+                            <svg class="arrow-down w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600 text-sm">
+                                If your e-ticket remains fully waitlisted (WL) after the train's chart is prepared, it is <strong>automatically cancelled</strong>. You do not need to do anything. A full refund, after deducting a small IRCTC clerkage charge, will be processed to your account.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 --><div class="faq-item bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="faq-question flex justify-between items-center p-5">
+                            <h4 class="font-semibold text-gray-800">Why am I not getting a full refund?</h4>
+                            <svg class="arrow-down w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600 text-sm">
+                                All cancellations (except for auto-cancelled WL train tickets) are subject to cancellation fees. These fees are set by the bus operator or Indian Railways. Additionally, the initial service fee or convenience fee charged by blueBus at the time of booking is typically non-refundable.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 --><div class="faq-item bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="faq-question flex justify-between items-center p-5">
+                            <h4 class="font-semibold text-gray-800">What is a TDR and when should I file it?</h4>
+                            <svg class="arrow-down w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-answer px-5 pb-5">
+                            <p class="text-gray-600 text-sm">
+                                A TDR (Ticket Deposit Receipt) is a request for a refund from Indian Railways for specific situations where you couldn't travel. You should file a TDR if:
+                                <ul class="list-disc list-inside mt-2 text-sm text-gray-600">
+                                    <li>The train was delayed by more than 3 hours and you did not travel.</li>
+                                    <li>You missed a connecting train because your first train was late.</li>
+                                    <li>The AC failed in your coach.</li>
+                                    <li>Your coach was not attached to the train.</li>
+                                </ul>
+                                TDRs must be filed online within a specific time limit (usually a few hours from the train's departure/arrival).
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer --><footer class="bg-gray-800 text-gray-400 border-t border-gray-700">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <!-- blueBus Info --><div>
+                    <h5 class="text-xl font-bold text-white mb-3">blueBus</h5>
+                    <p class="text-sm">
+                        blueBus is India's leading online ticket booking platform, offering a simple and secure way to book your travel.
+                    </p>
+                </div>
+                <!-- Quick Links --><div>
+                    <h5 class="font-semibold text-white mb-3">Quick Links</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition-colors">Offers</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <!-- Legal --><div>
+                    <h5 class="font-semibold text-white mb-3">Legal</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm hover:text-white transition-colors">Terms & Conditions</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition-colors">Cancellation Policy</a></li>
+                    </ul>
+                </div>
+                <!-- Social Media --><div>
+                    <h5 class="font-semibold text-white mb-3">Follow Us</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.27 0 .34.04.67.11 1-3.56-.18-6.72-1.88-8.84-4.48-.37.63-.58 1.37-.58 2.15 0 1.48.75 2.79 1.9 3.55-.7-.02-1.37-.2-1.95-.5v.03c0 2.07 1.47 3.8 3.42 4.19-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.08.54 1.7 2.1 2.94 3.96 2.97-1.46 1.14-3.3 1.82-5.3 1.82-.34 0-.68-.02-1.02-.06 1.9 1.2 4.15 1.9 6.56 1.9 7.85 0 12.15-6.5 12.15-12.15 0-.18 0-.36-.01-.54.84-.6 1.56-1.36 2.14-2.23z"></path></svg>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96s4.46 9.96 9.96 9.96 9.96-4.46 9.96-9.96S17.5 2.04 12 2.04zm3.9 11.28h-2.18v6.5h-3v-6.5H9.06v-2.58h1.66v-1.9c0-1.4.7-3.48 3.48-3.48l2.26.02v2.48h-1.4c-.22 0-.5.1-.5.5v2.38h1.9l-.28 2.58z"></path></svg>
+                        </a>
+                        <a href="#" class="hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.227-1.669 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.669 4.771 4.919 4.919 1.266-.058 1.646.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.059 1.689.073 4.948.073s3.667-.014 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98-1.28-.059-1.69-.073-4.947-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.44-.645 1.44-1.44s-.645-1.44-1.44-1.44z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright --><div class="text-center pt-8 border-t border-gray-700">
+                <p class="text-sm">&copy; 2025 blueBus. All rights reserved. Built with ♥ in India.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for FAQ Accordion --><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const faqContainer = document.getElementById('faq-container');
+            
+            faqContainer.addEventListener('click', function (e) {
+                // Find the closest '.faq-question' element that was clicked
+                const question = e.target.closest('.faq-question');
+                if (!question) return; // Exit if the click wasn't on a question
+                
+                const item = question.parentElement;
+                
+                // Toggle the 'open' class on the parent item
+                item.classList.toggle('open');
+                
+                // Optional: Close other open items
+                const allItems = faqContainer.querySelectorAll('.faq-item');
+                allItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('open')) {
+                        otherItem.classList.remove('open');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

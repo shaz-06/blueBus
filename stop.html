@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bluBus | Verified Restroom Stops</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #60a5fa;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <!-- Navigation Bar (Consistent with main site) -->
+    <nav class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- bluBus Logo -->
+                <a href="blubus_website.html" class="flex items-center space-x-2">
+                     <img src="logo.png" alt="bluBus Logo" class="h-8 w-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                     <svg class="h-8 w-auto text-blue-600 hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21C16.4183 21 20 17.4183 20 13C20 8.58172 16.4183 5 12 5C7.58172 5 4 8.58172 4 13C4 17.4183 7.58172 21 12 21Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/>
+                        <path d="M10 3H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18.36 7.64014C19.5133 8.79344 20.158 10.3449 20.158 12.0001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5.64014 16.36C4.48684 15.2067 3.8421 13.6552 3.8421 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                     </svg>
+                     <span class="text-2xl font-extrabold text-gray-800 tracking-tight">blu<span class="text-blue-600">Bus</span></span>
+                </a>
+                
+                <!-- Navigation Links -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors">
+                        &larr; Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="min-h-screen flex flex-col items-center p-4">
+
+        <!-- Hero Section -->
+        <div class="w-full max-w-5xl mx-auto mt-12 text-center">
+            <div class="inline-block bg-blue-100 p-5 rounded-full mb-6">
+                <!-- Restroom Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V21M10.5 10.5V21M10.5 10.5C10.5 9.67157 11.1716 9 12 9C12.8284 9 13.5 9.67157 13.5 10.5M10.5 10.5C9.67157 10.5 9 9.82843 9 9C9 8.17157 9.67157 7.5 10.5 7.5H13.5C14.3284 7.5 15 8.17157 15 9C15 9.82843 14.3284 10.5 13.5 10.5M10.5 10.5V7.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 21V9.75A4.5 4.5 0 0110.5 5.25h3A4.5 4.5 0 0118 9.75V21" />
+                </svg>
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 tracking-tight">
+                Find Buses with Verified Restroom Stops
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                Travel with peace of mind. We've partnered with bus operators to highlight routes with clean, safe, and hygienic restroom facilities.
+            </p>
+        </div>
+
+        <!-- Benefits Section -->
+        <div class="w-full max-w-7xl mx-auto mt-16 px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Your Comfort is Our Priority</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Benefit Card 1: Hygiene First -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 flex flex-col items-start hover:shadow-lg hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
+                    <div class="bg-blue-100 p-3 rounded-lg mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-lg">Hygiene First</h3>
+                    <p class="text-gray-500 mt-1 text-sm">We prioritize partners who maintain the highest standards of cleanliness at their designated stops.</p>
+                </div>
+                
+                <!-- Benefit Card 2: Safe & Secure -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 flex flex-col items-start hover:shadow-lg hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
+                    <div class="bg-blue-100 p-3 rounded-lg mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.604-.368-3.14-.985-4.54a11.959 11.959 0 01-4.501-2.182A11.92 11.92 0 0012 2.75a11.92 11.92 0 00-4.015.964z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-lg">Safe & Secure</h3>
+                    <p class="text-gray-500 mt-1 text-sm">All verified stops are in well-lit, safe locations, suitable for all travelers, including families and solo women.</p>
+                </div>
+
+                <!-- Benefit Card 3: Family Friendly -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 flex flex-col items-start hover:shadow-lg hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
+                    <div class="bg-blue-100 p-3 rounded-lg mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.001M18 18.72v-2.172c0-.969-.785-1.75-1.75-1.75S14.5 15.58 14.5 16.549v2.172m0 0a2.25 2.25 0 01-2.25 2.25m0 0a2.25 2.25 0 01-2.25-2.25m2.25 2.25V16.549m2.25 2.172c0 .621-.504 1.125-1.125 1.125S18 19.342 18 18.72m-4.5 0v-2.172c0-.969-.785-1.75-1.75-1.75S10 15.58 10 16.549v2.172m0 0a2.25 2.25 0 01-2.25 2.25m0 0a2.25 2.25 0 01-2.25-2.25m2.25 2.25V16.549M8.25 16.549v-2.172c0-.969-.785-1.75-1.75-1.75S4.75 15.58 4.75 16.549v2.172m0 0a2.25 2.25 0 01-2.25 2.25m0 0a2.25 2.25 0 01-2.25-2.25m2.25 2.25V16.549m6-13.5h.008v.008H12v-.008z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-lg">Family Friendly</h3>
+                    <p class="text-gray-500 mt-1 text-sm">We ensure facilities are accessible and appropriate for travelers with children and elderly passengers.</p>
+                </div>
+
+                <!-- Benefit Card 4: Clearly Communicated -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 flex flex-col items-start hover:shadow-lg hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
+                    <div class="bg-blue-100 p-3 rounded-lg mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.092 1.21-.138 2.43-.138 3.662v.008c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.092-1.21.138-2.43.138-3.662v-.008z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75h.008v.008H12V6.75zm0 3.75h.008v.008H12v-.008zm0 3.75h.008v.008H12v-.008zm0 3.75h.008v.008H12v-.008z" />
+                        </svg>
+
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-lg">Clearly Communicated</h3>
+                    <p class="text-gray-500 mt-1 text-sm">Know in advance that your bus *will* make a scheduled stop for refreshments and restrooms.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How it Works Section -->
+        <div class="w-full max-w-5xl mx-auto mt-20 bg-white p-8 md:p-12 rounded-2xl border border-gray-200 shadow-lg">
+            <h2 class="text-3xl font-bold text-gray-800 text-center mb-10">How to Find Verified Stops</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <!-- Image -->
+                <div class="w-full md:w-1/2">
+                    <img src="https://placehold.co/600x400/3b82f6/ffffff?text=Example:\nBus+Listing+with\nRestroom+Icon&font=inter" alt="Example of bus listing with restroom stop icon" class="rounded-lg shadow-md w-full">
+                    <p class="text-center text-xs text-gray-500 mt-2">Example of how the icon appears in search results.</p>
+                </div>
+                <!-- Steps -->
+                <div class="w-full md:w-1/2 space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white font-bold rounded-full flex items-center justify-center">1</div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Look for the Icon</h3>
+                            <p class="text-gray-600">When searching for buses, simply look for the <span class="font-semibold text-blue-600">"Verified Restroom Stop"</span> icon next to the bus listing.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white font-bold rounded-full flex items-center justify-center">2</div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Check Amenities</h3>
+                            <p class="text-gray-600">Click on the bus details to see more information about the stop, including available amenities like food courts and waiting areas.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white font-bold rounded-full flex items-center justify-center">3</div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Book with Confidence</h3>
+                            <p class="text-gray-600">Complete your booking knowing your journey will include a planned, quality break.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- NEW: Urgent Restroom Stop Request Section -->
+        <div id="urgent-stop-section" class="w-full max-w-4xl mx-auto bg-yellow-50 p-8 rounded-2xl mt-16 border border-yellow-200">
+            <h2 class="text-3xl font-bold text-yellow-800 text-center mb-2">
+                Need an Urgent Stop?
+            </h2>
+            <p class="text-center text-gray-600 mb-6">If you have an urgent need for a restroom, you can send a discreet notification to your driver. Please use this feature responsibly.</p>
+            
+            <!-- Urgent Stop Form -->
+            <form id="urgent-stop-form" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end" novalidate>
+                <!-- Booking ID Input -->
+                <div class="relative md:col-span-1">
+                    <label for="booking-id" class="absolute -top-2.5 left-4 px-1 bg-yellow-50 text-xs font-medium text-gray-500">Booking ID / PNR</label>
+                    <div class="flex items-center border-2 border-gray-200 rounded-lg p-3 bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-1.5h5.25m-5.25 0h-3v-3.75m0 3.75v-3.75m0 3.75h3.75m9-9.75h3.75m0 0v3.75m0-3.75h-3.75m0 0V2.25m0 3.75v3.75m-3.75 0h3.75M3 12h18M3 12v3.75m18-3.75v3.75m-18 0h18M3 15.75h18M3 15.75v3.75M18 15.75v3.75M3 19.5h18" />
+                        </svg>
+                        <input type="text" id="booking-id" placeholder="Enter Booking ID" class="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400" required>
+                    </div>
+                    <span id="booking-id-error" class="text-red-500 text-xs mt-1 hidden">Please enter your Booking ID / PNR.</span>
+                </div>
+
+                <!-- Seat Number Input -->
+                <div class="relative md:col-span-1">
+                    <label for="seat-number" class="absolute -top-2.5 left-4 px-1 bg-yellow-50 text-xs font-medium text-gray-500">Seat Number</label>
+                    <div class="flex items-center border-2 border-gray-200 rounded-lg p-3 bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                        </svg>
+                        <input type="text" id="seat-number" placeholder="Enter Seat No." class="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400" required>
+                    </div>
+                    <span id="seat-number-error" class="text-red-500 text-xs mt-1 hidden">Please enter your Seat Number.</span>
+                </div>
+                
+                <!-- Search Button -->
+                <div class="relative md:col-span-1">
+                     <label class="absolute -top-2.5 left-4 px-1 bg-transparent text-xs font-medium text-transparent">.</label> <!-- Spacer label -->
+                    <button type="submit" class="w-full flex items-center justify-center gap-2 bg-yellow-500 text-white font-bold py-4 px-6 rounded-lg hover:bg-yellow-600 transition-all duration-300 shadow-lg shadow-yellow-500/30 hover:shadow-xl hover:shadow-yellow-500/50 transform hover:-translate-y-1">
+                        Send Urgent Request
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Success Message -->
+            <div id="stop-request-success" class="hidden text-center p-6 bg-green-100 border border-green-300 rounded-lg">
+                <h3 class="text-xl font-bold text-green-800">Request Sent!</h3>
+                <p class="text-green-700 mt-2">Your urgent stop request has been sent to the driver. Please wait for an announcement.</p>
+            </div>
+
+            <!-- NEW: Success Message & Status Tracker (Initially Hidden) -->
+            <div id="stop-request-status-container" class="hidden text-center">
+                <!-- Success Message -->
+                <div class="p-6 bg-green-100 border border-green-300 rounded-lg">
+                    <h3 class="text-xl font-bold text-green-800">Request Sent!</h3>
+                    <p class="text-green-700 mt-2">Your urgent stop request has been sent. Please monitor the status below.</p>
+                </div>
+
+                <!-- Status Tracker -->
+                <div class="mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-4">Live Request Status</h4>
+                    <ol class="flex items-center w-full max-w-md mx-auto">
+                        <!-- Step 1: Pending -->
+                        <li id="status-step-1" class="flex w-full items-center text-blue-600 after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:inline-block">
+                            <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12 shrink-0">
+                                <svg class="w-5 h-5 text-blue-600 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                            </span>
+                        </li>
+                        <!-- Step 2: Received -->
+                        <li id="status-step-2" class="flex w-full items-center text-gray-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:inline-block">
+                            <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0">
+                                <svg class="w-5 h-5 text-gray-500 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-1.707 1.707A1 1 0 003 14v4a1 1 0 001 1h12a1 1 0 001-1v-4a1 1 0 00-.293-.707L16 13.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+                            </span>
+                        </li>
+                        <!-- Step 3: Acknowledged -->
+                        <li id="status-step-3" class="flex items-center text-gray-500">
+                            <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0">
+                                <svg class="w-5 h-5 text-gray-500 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+                            </span>
+                        </li>
+                    </ol>
+                    <div class="flex justify-between text-xs font-semibold mt-2 max-w-md mx-auto">
+                        <span id="status-text-1" class="text-blue-600">Pending</span>
+                        <span id="status-text-2" class="text-gray-500">Received by Driver</span>
+                        <span id="status-text-3" class="text-gray-500">Acknowledged</span>
+                    </div>
+
+                    <p id="status-final-message" class="text-gray-700 font-semibold mt-6 hidden"></p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Search Form (CTA) -->
+        <div id="search-section" class="w-full max-w-4xl mx-auto bg-blue-50 p-8 rounded-2xl mt-16 border border-blue-200">
+            <h2 class="text-3xl font-bold text-blue-700 text-center mb-6">
+                Ready to book your comfortable journey?
+            </h2>
+            
+            <form id="search-form" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end" novalidate>
+                <!-- From Input -->
+                <div class="relative">
+                    <label for="from" class="absolute -top-2.5 left-4 px-1 bg-blue-50 text-xs font-medium text-gray-500">From</label>
+                    <div class="flex items-center border-2 border-gray-200 rounded-lg p-3 bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        <input type="text" id="from" placeholder="Enter source city" class="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400" required>
+                    </div>
+                    <span id="from-error" class="text-red-500 text-xs mt-1 hidden">Please enter a source city.</span>
+                </div>
+
+                <!-- To Input -->
+                <div class="relative">
+                    <label for="to" class="absolute -top-2.5 left-4 px-1 bg-blue-50 text-xs font-medium text-gray-500">To</label>
+                    <div class="flex items-center border-2 border-gray-200 rounded-lg p-3 bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        <input type="text" id="to" placeholder="Enter destination city" class="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400" required>
+                    </div>
+                    <span id="to-error" class="text-red-500 text-xs mt-1 hidden">Please enter a destination city.</span>
+                </div>
+                
+                <!-- Date Input -->
+                <div class="relative">
+                    <label for="date" class="absolute -top-2.5 left-4 px-1 bg-blue-50 text-xs font-medium text-gray-500">Date of Journey</label>
+                    <div class="flex items-center border-2 border-gray-200 rounded-lg p-3 bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <input type="date" id="date" class="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 cursor-pointer" required>
+                    </div>
+                    <span id="date-error" class="text-red-500 text-xs mt-1 hidden">Please select a date.</span>
+                </div>
+
+                <!-- Search Button -->
+                <div class="md:col-span-3 mt-4">
+                    <button type="submit" class="w-full flex items-center justify-center gap-2 bg-blue-600 text-white font-bold py-4 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/50 transform hover:-translate-y-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                        FIND BUSES NOW
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- NEW: Bus Results Section (Initially Hidden) -->
+        <div id="bus-results-section" class="w-full max-w-7xl mx-auto pt-8 hidden">
+             <!-- Header with route and back button -->
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 px-4 gap-4">
+                <div>
+                    <h1 id="results-heading" class="text-2xl md:text-3xl font-bold text-gray-800"></h1>
+                </div>
+                <button id="modify-search-btn" class="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-2 flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    Modify Search
+                </button>
+            </div>
+             <!-- Bus Listings Container -->
+            <div id="bus-listings-container" class="space-y-4 px-4">
+                <!-- Bus cards will be dynamically inserted here -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer (Consistent with main site) -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Solutions</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="blubus_website.html" class="text-base text-gray-300 hover:text-white">Bus Timetable</a></li>
+                        <li><a href="blubus_website.html" class="text-base text-gray-300 hover:text-white">Bus Tickets</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Train Tickets</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Support</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Cancellations</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Company</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">About</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Legal</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Privacy</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-8 flex items-center justify-between">
+                <p class="text-base text-gray-400">&copy; 2025 bluBus, Inc. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white"><span class="sr-only">Facebook</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><span class="sr-only">Instagram</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416 1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218 1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.345 2.525c.636-.247 1.363-.416 2.427-.465C9.795 2.013 10.148 2 12.315 2zm-1.163 1.802h2.326a2.404 2.404 0 01-.166.495c-.322.842-.838 1.517-1.482 1.89a2.402 2.402 0 01-1.99 0c-.644-.373-1.16-1.048-1.482-1.89a2.404 2.404 0 01-.166-.495h2.326zM12 6.848c-2.835 0-5.152 2.317-5.152 5.152s2.317 5.152 5.152 5.152 5.152-2.317 5.152-5.152-2.317-5.152-5.152-5.152zm0 8.404a3.252 3.252 0 110-6.504 3.252 3.252 0 010 6.504zm4.234-8.082a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z" clip-rule="evenodd" /></svg></a>
+                    <a href="#" class="text-gray-400 hover:t
+white"><span class="sr-only">Twitter</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        // --- NEW: Import Firebase SDK Modules ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, updateDoc, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', async () => { // Made async for Firebase auth
+            
+            // --- NEW: Firebase Setup ---
+            let db, auth, userId, appId;
+            let currentRequestUnsubscribe = null; // To store the onSnapshot unsubscribe function
+
+            try {
+                appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                const firebaseConfig = JSON.parse(__firebase_config);
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                setLogLevel('Debug'); // Enable Firestore logging
+
+                // Sign in
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                    console.log("Signed in with custom token.");
+                } else {
+                    await signInAnonymously(auth);
+                    console.log("Signed in anonymously.");
+                }
+                userId = auth.currentUser?.uid || crypto.randomUUID();
+                console.log("Firebase initialized. User ID:", userId);
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                // Optionally show an error message to the user on the page
+            }
+
+            // --- INPUTS AND FORM ---
+            const dateInput = document.getElementById('date');
+            const fromInput = document.getElementById('from');
+            const toInput = document.getElementById('to');
+            const searchForm = document.getElementById('search-form');
+            const searchSection = document.getElementById('search-section');
+
+            // --- ERROR SPANS ---
+            const fromError = document.getElementById('from-error');
+            const toError = document.getElementById('to-error');
+            const dateError = document.getElementById('date-error');
+
+            // --- NEW: URGENT STOP FORM ---
+            const urgentStopForm = document.getElementById('urgent-stop-form');
+            const bookingIdInput = document.getElementById('booking-id');
+            const seatNumberInput = document.getElementById('seat-number');
+            const bookingIdError = document.getElementById('booking-id-error');
+            const seatNumberError = document.getElementById('seat-number-error');
+            const stopRequestSuccess = document.getElementById('stop-request-success');
+            const stopRequestStatusContainer = document.getElementById('stop-request-status-container'); 
+
+            // --- NEW: BUS RESULTS SECTION ---
+            const busResultsSection = document.getElementById('bus-results-section');
+            const resultsHeading = document.getElementById('results-heading');
+            const busListingsContainer = document.getElementById('bus-listings-container');
+            const modifySearchBtn = document.getElementById('modify-search-btn');
+
+
+            // --- DATE AND TIME SETUP ---
+            if (dateInput) {
+                const today = new Date(); // Use system time
+                today.setHours(0, 0, 0, 0); // Normalize
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                const todayString = `${yyyy}-${mm}-${dd}`;
+                dateInput.value = todayString;
+                dateInput.min = todayString;
+            }
+
+            // --- VALIDATION HELPER ---
+            const validateInput = (input, errorSpan, message) => {
+                const parentDiv = input.closest('.flex'); // Get the parent with the border
+                if (!input.value.trim()) {
+                    errorSpan.textContent = message;
+                    errorSpan.classList.remove('hidden');
+                    parentDiv.classList.remove('border-gray-200');
+                    parentDiv.classList.add('border-red-500');
+                    return false;
+                } else {
+                    errorSpan.classList.add('hidden');
+                    parentDiv.classList.remove('border-red-500');
+                    parentDiv.classList.add('border-gray-200');
+                    return true;
+                }
+            };
+
+            // --- NEW: BUS RENDERING FUNCTIONS (from blubus_website.html) ---
+            const generateDummyBuses = () => [
+                 { id: 1, operator: 'KSRTC', type: 'Airavat Club Class', departs: '08:00 AM', arrives: '12:30 PM', duration: '4h 30m', price: 550, seats: 25, rating: 4.5, isPrimo: true, features: ['Live Tracking', 'M-Ticket', 'CCTV'] },
+                 { id: 2, operator: 'Sugama Tourist', type: 'Non A/C Sleeper', departs: '09:15 PM', arrives: '05:00 AM', duration: '7h 45m', price: 780, seats: 15, rating: 4.2, isPrimo: false, features: ['Blankets', 'Water Bottle'] },
+                 { id: 3, operator: 'VRL Travels', type: 'AC Sleeper (2+1)', departs: '10:00 PM', arrives: '06:20 AM', duration: '8h 20m', price: 950, seats: 5, rating: 4.8, isPrimo: true, features: ['Live Tracking', 'Charging Point', 'Reading Light'] },
+                 { id: 4, operator: 'KSRTC', type: 'Rajahamsa Executive', departs: '11:30 AM', arrives: '04:15 PM', duration: '4h 45m', price: 420, seats: 32, rating: 4.1, isPrimo: false, features: ['M-Ticket'] },
+            ];
+            
+            const timeToMinutes = (timeStr) => {
+                const [time, modifier] = timeStr.split(' ');
+                let [hours, minutes] = time.split(':').map(Number);
+                if (modifier === 'PM' && hours < 12) hours += 12;
+                if (modifier === 'AM' && hours === 12) hours = 0;
+                return hours * 60 + minutes;
+            };
+            
+            const durationToMinutes = (durationStr) => {
+                const parts = durationStr.split(' ');
+                let totalMinutes = 0;
+                parts.forEach(part => {
+                    if (part.includes('h')) totalMinutes += parseInt(part, 10) * 60;
+                    if (part.includes('m')) totalMinutes += parseInt(part, 10);
+                });
+                return totalMinutes;
+            };
+
+            const renderBuses = (buses, fromCity, toCity, container) => {
+                container.innerHTML = '';
+                
+                if (buses.length === 0) {
+                    container.innerHTML = `<div class="text-center py-16 px-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        <h3 class="mt-2 text-xl font-medium text-gray-900">No buses found</h3>
+                        <p class="mt-1 text-base text-gray-500">We couldn't find any buses for this route. Please try modifying your search.</p>
+                    </div>`;
+                    return;
+                }
+                
+                buses.forEach(bus => {
+                    const busCardHTML = `
+                        <div class="bg-white p-4 md:p-6 rounded-xl border border-gray-200 flex flex-col gap-4 hover:shadow-lg hover:border-blue-300 transition-all duration-300 animate-fade-in" style="animation: fadeIn 0.5s ease-out forwards;">
+                            <div class="flex flex-col md:flex-row items-start justify-between gap-4">
+                                <div class="w-full md:w-1/4">
+                                    <h3 class="font-bold text-lg md:text-xl text-gray-800">${bus.operator}</h3>
+                                    <p class="text-gray-500 text-sm">${bus.type}</p>
+                                    <div class="mt-2 flex items-center gap-2 text-sm font-semibold bg-green-100 text-green-800 px-2 py-1 rounded-full w-fit">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                        <span>${bus.rating}</span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex-grow flex items-center gap-2 md:gap-4 text-center">
+                                    <div><p class="font-semibold text-base md:text-lg">${bus.departs}</p><p class="text-xs text-gray-500">${fromCity}</p></div>
+                                    <div class="text-gray-400 text-xs md:text-sm whitespace-nowrap px-2">&#8594;<br>${bus.duration}</div>
+                                    <div><p class="font-semibold text-base md:text-lg">${bus.arrives}</p><p class="text-xs text-gray-500">${toCity}</p></div>
+                                </div>
+                                <div class="text-center w-full md:w-auto md:text-right flex-shrink-0">
+                                    <p class="text-xl font-bold text-gray-800">₹${bus.price}</p>
+                                    <p class="text-xs mt-1 ${bus.seats < 10 ? 'text-red-500 font-semibold' : 'text-gray-500'}">${bus.seats} seats left</p>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-200 pt-3 flex flex-wrap items-center justify-between gap-y-2 gap-x-4">
+                                <div class="flex items-center gap-x-4 gap-y-2 flex-wrap text-xs text-gray-600">
+                                    ${bus.isPrimo ? '<span class="font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded">bluBus Primo</span>' : ''}
+                                    ${bus.features.map(f => `<span>${f}</span>`).join('<span class="text-gray-300">|</span>')}
+                                </div>
+                                <button class="select-seats-btn w-full mt-2 md:mt-0 md:w-auto bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Select Seats</button>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', busCardHTML);
+                });
+            };
+            // --- End of Bus Rendering Functions ---
+
+            // --- Form Submission Handler (with Validation) ---
+            if (searchForm) {
+                searchForm.addEventListener('submit', (e) => {
+                    e.preventDefault(); // Always prevent default
+                    
+                    const isFromValid = validateInput(fromInput, fromError, "Please enter a source city.");
+                    const isToValid = validateInput(toInput, toError, "Please enter a destination city.");
+                    const isDateValid = validateInput(dateInput, dateError, "Please select a date.");
+
+                    if (isFromValid && isToValid && isDateValid) {
+                        // All fields are valid, proceed
+                        console.log(`Searching for buses from ${fromInput.value} to ${toInput.value} on ${dateInput.value}`);
+                        
+                        // ---- MODIFIED BEHAVIOR ----
+                        // Hide search form, show results section
+                        searchSection.classList.add('hidden');
+                        busResultsSection.classList.remove('hidden');
+
+                        // Populate results header
+                        const fromCity = fromInput.value.trim();
+                        const toCity = toInput.value.trim();
+                        const journeyDate = new Date(dateInput.value + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+                        resultsHeading.innerHTML = `<span class="block">${fromCity} to ${toCity}</span><span class="block text-lg font-normal text-gray-500 mt-1">${journeyDate}</span>`;
+
+                        // Render dummy buses
+                        renderBuses(generateDummyBuses(), fromCity, toCity, busListingsContainer);
+                        
+                        // Scroll to top of results
+                        window.scrollTo({ top: busResultsSection.offsetTop - 80, behavior: 'smooth' }); // -80 for nav height
+
+                    } else {
+                        console.log("Form is invalid.");
+                    }
+                });
+            }
+
+            // --- NEW: Modify Search Button Listener ---
+            if (modifySearchBtn) {
+                modifySearchBtn.addEventListener('click', () => {
+                    busResultsSection.classList.add('hidden');
+                    searchSection.classList.remove('hidden');
+                    window.scrollTo({ top: searchSection.offsetTop - 80, behavior: 'smooth' });
+
+                    // Reset search button state (in case it was changed)
+                    const searchButton = searchForm.querySelector('button[type="submit"]');
+                    searchButton.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                        FIND BUSES NOW
+                    `;
+                    searchButton.disabled = false;
+                    searchButton.classList.remove('bg-green-500', 'cursor-not-allowed');
+                    searchButton.classList.add('hover:bg-blue-700', 'hover:-translate-y-1', 'bg-blue-600');
+                });
+            }
+
+            // --- NEW: Handle "Select Seats" Clicks (with alert) ---
+            if (busListingsContainer) {
+                busListingsContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('select-seats-btn')) {
+                        // This environment doesn't have the main site's full booking flow.
+                        // We will just log a message instead of using alert().
+                        console.log("This would normally proceed to the seat selection page.");
+                        // We can't use alert() as per instructions.
+                        // We'll provide feedback by changing the button text briefly.
+                        const button = e.target;
+                        button.textContent = 'Not Implemented';
+                        button.disabled = true;
+                        setTimeout(() => {
+                            button.textContent = 'Select Seats';
+                            button.disabled = false;
+                        }, 2000);
+                    }
+                });
+            }
+
+            // --- Urgent Stop Form Submission Handler ---
+            if (urgentStopForm) {
+                urgentStopForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const isBookingIdValid = validateInput(bookingIdInput, bookingIdError, "Please enter your Booking ID / PNR.");
+                    const isSeatValid = validateInput(seatNumberInput, seatNumberError, "Please enter your Seat Number.");
+
+                    if (isBookingIdValid && isSeatValid) {
+                        console.log("Urgent stop request submitted!");
+                        urgentStopForm.classList.add('hidden');
+                        stopRequestSuccess.classList.add('hidden'); // Hide original simple success message
+                        stopRequestStatusContainer.classList.remove('hidden'); // NEW: Show status tracker container
+
+                        // --- NEW: Simulate Status Update ---
+                        const step2 = document.getElementById('status-step-2');
+                        const step3 = document.getElementById('status-step-3');
+                        const text2 = document.getElementById('status-text-2');
+                        const text3 = document.getElementById('status-text-3');
+                        const finalMessage = document.getElementById('status-final-message');
+
+                        // After 3 seconds, move to "Received"
+                        setTimeout(() => {
+                            step2.classList.remove('text-gray-500');
+                            step2.classList.add('text-blue-600');
+                            step2.querySelector('span').classList.remove('bg-gray-100');
+                            step2.querySelector('span').classList.add('bg-blue-100');
+                            step2.querySelector('svg').classList.remove('text-gray-500');
+                            step2.querySelector('svg').classList.add('text-blue-600');
+                            text2.classList.remove('text-gray-500');
+                            text2.classList.add('text-blue-600');
+                        }, 3000);
+
+                        // After 7 seconds, move to "Acknowledged"
+                        setTimeout(() => {
+                            step3.classList.remove('text-gray-500');
+                            step3.classList.add('text-blue-600');
+                            step3.querySelector('span').classList.remove('bg-gray-100');
+                            step3.querySelector('span').classList.add('bg-blue-100');
+                            step3.querySelector('svg').classList.remove('text-gray-500');
+                            step3.querySelector('svg').classList.add('text-blue-600');
+                            text3.classList.remove('text-gray-500');
+                            text3.classList.add('text-blue-600');
+
+                            // Show final message
+                            finalMessage.textContent = "The driver has acknowledged your request and will stop at the next safe location.";
+                            finalMessage.classList.remove('hidden');
+                        }, 7000);
+
+                    } else {
+                        console.log("Urgent stop form is invalid.");
+                    }
+                });
+            }
+
+            // --- NEW: Real-time Status Update Functions ---
+            
+            /**
+             * Attaches a real-time listener to the stop request document in Firestore.
+             * Updates the status tracker UI whenever the document changes.
+             */
+            function listenToStopRequestStatus(docRef) {
+                // Unsubscribe from any previous listener
+                if (currentRequestUnsubscribe) {
+                    currentRequestUnsubscribe();
+                }
+
+                currentRequestUnsubscribe = onSnapshot(docRef, (doc) => {
+                    if (!doc.exists()) {
+                        console.log("Request document not found.");
+                        return;
+                    }
+                    
+                    const data = doc.data();
+                    const status = data.status;
+                    console.log("Real-time status update:", status);
+
+                    // Get UI elements
+                    const step1 = document.getElementById('status-step-1');
+                    const step2 = document.getElementById('status-step-2');
+                    const step3 = document.getElementById('status-step-3');
+                    const text1 = document.getElementById('status-text-1');
+                    const text2 = document.getElementById('status-text-2');
+                    const text3 = document.getElementById('status-text-3');
+                    const finalMessage = document.getElementById('status-final-message');
+
+                    // Reset all to default (gray)
+                    [step1, step2, step3].forEach((step, index) => {
+                        const text = [text1, text2, text3][index];
+                        step.classList.remove('text-blue-600');
+                        step.classList.add('text-gray-500');
+                        step.querySelector('span').classList.remove('bg-blue-100');
+                        step.querySelector('span').classList.add('bg-gray-100');
+                        step.querySelector('svg').classList.remove('text-blue-600');
+                        step.querySelector('svg').classList.add('text-gray-500');
+                        text.classList.remove('text-blue-600');
+                        text.classList.add('text-gray-500');
+                    });
+                    finalMessage.classList.add('hidden');
+
+                    // Update UI based on status
+                    if (status === "pending" || status === "received" || status === "acknowledged") {
+                        // Step 1: Pending
+                        step1.classList.add('text-blue-600');
+                        step1.classList.remove('text-gray-500');
+                        step1.querySelector('span').classList.add('bg-blue-100');
+                        step1.querySelector('span').classList.remove('bg-gray-100');
+                        step1.querySelector('svg').classList.add('text-blue-600');
+                        step1.querySelector('svg').classList.remove('text-gray-500');
+                        text1.classList.add('text-blue-600');
+                        text1.classList.remove('text-gray-500');
+                    }
+                    if (status === "received" || status === "acknowledged") {
+                        // Step 2: Received
+                        step2.classList.add('text-blue-600');
+                        step2.classList.remove('text-gray-500');
+                        step2.querySelector('span').classList.add('bg-blue-100');
+                        step2.querySelector('span').classList.remove('bg-gray-100');
+                        step2.querySelector('svg').classList.add('text-blue-600');
+                        step2.querySelector('svg').classList.remove('text-gray-500');
+                        text2.classList.add('text-blue-600');
+                        text2.classList.remove('text-gray-500');
+                    }
+                    if (status === "acknowledged") {
+                        // Step 3: Acknowledged
+                        step3.classList.add('text-blue-600');
+                        step3.classList.remove('text-gray-500');
+                        step3.querySelector('span').classList.add('bg-blue-100');
+                        step3.querySelector('span').classList.remove('bg-gray-100');
+                        step3.querySelector('svg').classList.add('text-blue-600');
+                        step3.querySelector('svg').classList.remove('text-gray-500');
+                        text3.classList.add('text-blue-600');
+                        text3.classList.remove('text-gray-500');
+                        
+                        // Show final message
+                        finalMessage.textContent = "The driver has acknowledged your request and will stop at the next safe location.";
+                        finalMessage.classList.remove('hidden');
+                    }
+                });
+            }
+
+            /**
+             * Simulates a driver's app updating the Firestore document.
+             */
+            function simulateDriverResponse(docRef) {
+                console.log("Simulating driver response...");
+                // After 4 seconds, simulate driver seeing the request
+                setTimeout(async () => {
+                    try {
+                        await updateDoc(docRef, { status: "received" });
+                        console.log("Simulation: Driver 'Received' request.");
+                    } catch (e) {
+                        console.error("Simulation error (received):", e);
+                    }
+                }, 4000);
+
+                // After 8 seconds, simulate driver acknowledging the request
+                setTimeout(async () => {
+                     try {
+                        await updateDoc(docRef, { status: "acknowledged" });
+                        console.log("Simulation: Driver 'Acknowledged' request.");
+                    } catch (e) {
+                        console.error("Simulation error (acknowledged):", e);
+                    }
+                }, 8000);
+            }
+
+
+            // --- Urgent Stop Form Submission Handler (NOW ASYNC) ---
+            if (urgentStopForm) {
+                urgentStopForm.addEventListener('submit', async (e) => { // Made async
+                    e.preventDefault();
+                    
+                    const isBookingIdValid = validateInput(bookingIdInput, bookingIdError, "Please enter your Booking ID / PNR.");
+                    const isSeatValid = validateInput(seatNumberInput, seatNumberError, "Please enter your Seat Number.");
+
+                    if (isBookingIdValid && isSeatValid) {
+                        if (!db) {
+                            console.error("Firestore is not initialized. Cannot submit request.");
+                            // Show an error to the user
+                            return;
+                        }
+
+                        const bookingId = bookingIdInput.value.trim();
+                        const seatNumber = seatNumberInput.value.trim();
+
+                        // Use Booking ID as the document ID for easy retrieval
+                        const requestDocRef = doc(db, `/artifacts/${appId}/public/data/stop_requests`, bookingId);
+
+                        try {
+                            // Create the document in Firestore with "pending" status
+                            await setDoc(requestDocRef, {
+                                seat: seatNumber,
+                                status: "pending",
+                                requestedAt: new Date(),
+                                userId: userId
+                            });
+                            
+                            console.log("Urgent stop request written to Firestore.");
+                            
+                            // Hide form and show status tracker
+                            urgentStopForm.classList.add('hidden');
+                            stopRequestSuccess.classList.add('hidden'); 
+                            stopRequestStatusContainer.classList.remove('hidden'); 
+
+                            // Start listening for real-time updates
+                            listenToStopRequestStatus(requestDocRef);
+
+                            // Start simulating the driver's response
+                            simulateDriverResponse(requestDocRef);
+
+                        } catch (error) {
+                            console.error("Error writing stop request to Firestore:", error);
+                            // Optionally show an error to the user
+                        }
+
+                    } else {
+                        console.log("Urgent stop form is invalid.");
+                    }
+                });
+            }
+
+        });
+    </script>
+
+</body>
+</html>
+
+
+

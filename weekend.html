@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekend Trips Offer - blueBus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-bg {
+            background: url('BlueBus.png') no-repeat center center;
+            background-size: cover;
+        }
+        .coupon-code {
+            border: 2px dashed #93c5fd;
+            background-color: #eff6ff;
+        }
+        .copied-feedback {
+            display: none;
+            top: -30px;
+            right: 0;
+            background-color: #16a34a;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header --><header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="logo.png" alt="blueBus logo" class="h-8">
+                <h1 class="text-2xl font-bold text-blue-700">blueBus</h1>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-blue-600">Bus Tickets</a>
+                <a href="#" id="my-bookings-link-desktop" class="text-gray-600 hover:text-blue-600">My Bookings</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Contact Us</a>
+            </div>
+            <button id="menu-btn" class="md:hidden">
+                <i class="fas fa-bars text-2xl text-gray-700"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="index.html" class="block py-3 px-4 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600">Bus Tickets</a>
+            <a href="#" id="my-bookings-link-mobile" class="block py-3 px-4 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600">My Bookings</a>
+            <a href="#" class="block py-3 px-4 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600">Contact Us</a>
+        </div>
+    </header>
+
+    <!-- Main Content --><main>
+        <div id="main-offer-content">
+            <!-- Hero Section --><section class="hero-bg text-white">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Your Weekend Getaway Awaits!</h2>
+                    <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">Leave the city behind. Explore stunning destinations with our special weekend offer. Travel comfortably and affordably.</p>
+                    <div class="bg-white text-blue-800 rounded-xl shadow-2xl p-6 max-w-2xl mx-auto">
+                        <h3 class="text-2xl font-bold">Save 20% on Weekend Trips</h3>
+                        <p class="text-gray-600 mt-2 mb-4">Use this exclusive coupon code on your next booking.</p>
+                        <div class="flex justify-center items-center space-x-4">
+                            <div class="coupon-code p-3 rounded-lg w-full max-w-xs">
+                                <span id="coupon-text" class="text-2xl font-bold tracking-widest text-blue-700">BLUEWKND</span>
+                            </div>
+                            <div class="relative">
+                                <button id="copy-btn" onclick="copyCoupon()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                                    Copy Code
+                                </button>
+                                <div id="copied-feedback" class="copied-feedback absolute">Copied!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popular Weekend Routes --><section class="py-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h3 class="text-3xl font-bold text-center text-gray-800 mb-2">Popular Weekend Routes</h3>
+                    <p class="text-center text-gray-500 mb-10">From Bengaluru</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Route Card 1 --><div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                            <img src="https://placehold.co/400x250/34d399/ffffff?text=Goa" alt="Goa" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h4 class="text-xl font-bold text-gray-800">Bengaluru → Goa</h4>
+                                <p class="text-gray-600 mt-2">Sun, sand, and sea. The perfect party and relaxation hub.</p>
+                                <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">Book Now</button>
+                            </div>
+                        </div>
+                        <!-- Route Card 2 --><div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                            <img src="https://placehold.co/400x250/818cf8/ffffff?text=Coorg" alt="Coorg" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h4 class="text-xl font-bold text-gray-800">Bengaluru → Coorg</h4>
+                                <p class="text-gray-600 mt-2">Lush coffee plantations and misty hills await you.</p>
+                                <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">Book Now</button>
+                            </div>
+                        </div>
+                        <!-- Route Card 3 --><div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                            <img src="https://placehold.co/400x250/f87171/ffffff?text=Ooty" alt="Ooty" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h4 class="text-xl font-bold text-gray-800">Bengaluru → Ooty</h4>
+                                <p class="text-gray-600 mt-2">The 'Queen of Hill Stations' offers breathtaking views.</p>
+                                 <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">Book Now</button>
+                            </div>
+                        </div>
+                        <!-- Route Card 4 --><div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                            <img src="https://placehold.co/400x250/fbbf24/ffffff?text=Pondicherry" alt="Pondicherry" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h4 class="text-xl font-bold text-gray-800">Bengaluru → Pondicherry</h4>
+                                <p class="text-gray-600 mt-2">Experience French architecture and tranquil beaches.</p>
+                                 <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How to Avail --><section class="bg-blue-50 py-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h3 class="text-3xl font-bold text-center text-gray-800 mb-10">How to Avail the Offer</h3>
+                    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <div class="flex flex-col items-center">
+                            <div class="bg-blue-600 text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4">1</div>
+                            <h4 class="text-xl font-semibold mb-2">Search for your Bus</h4>
+                            <p class="text-gray-600">Select your destination and choose your travel dates (Friday to Sunday).</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="bg-blue-600 text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4">2</div>
+                            <h4 class="text-xl font-semibold mb-2">Apply the Coupon</h4>
+                            <p class="text-gray-600">Enter the code <span class="font-bold">BLUEWKND</span> at the checkout page.</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="bg-blue-600 text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4">3</div>
+                            <h4 class="text-xl font-semibold mb-2">Enjoy Your Trip!</h4>
+                            <p class="text-gray-600">Get an instant 20% discount on your booking and travel happily.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Terms and Conditions --><section class="py-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+                    <h3 class="text-2xl font-bold text-center text-gray-800 mb-8">Terms & Conditions</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Offer is valid for bus bookings made on the blueBus app and website.</li>
+                        <li>The coupon code <span class="font-bold">BLUEWKND</span> must be applied to avail the discount.</li>
+                        <li>The offer is applicable for travel on Fridays, Saturdays, and Sundays only.</li>
+                        <li>Discount is 20% of the booking value, up to a maximum of ₹250.</li>
+                        <li>This offer cannot be combined with any other offer or promotion.</li>
+                        <li>blueBus reserves the right to modify or cancel the offer at its discretion.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- Booking History Section -->
+        <section id="booking-history" class="hidden py-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center mb-10">
+                    <h3 class="text-3xl font-bold text-gray-800">My Booking History</h3>
+                    <button id="back-to-offers-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        &larr; Back to Offers
+                    </button>
+                </div>
+                <div class="space-y-6">
+                    <!-- Card 1 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col sm:flex-row justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Booking ID: BLU12345678</p>
+                            <h4 class="text-xl font-bold text-gray-800">Bengaluru &rarr; Goa</h4>
+                            <p class="text-gray-600 mt-1">Date: 20 Sep 2025</p>
+                            <p class="text-gray-600">Operator: BlueLine Travels</p>
+                        </div>
+                        <div class="mt-4 sm:mt-0 sm:text-right">
+                             <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full">Completed</span>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col sm:flex-row justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Booking ID: BLU87654321</p>
+                            <h4 class="text-xl font-bold text-gray-800">Chennai &rarr; Bengaluru</h4>
+                            <p class="text-gray-600 mt-1">Date: 15 Aug 2025</p>
+                            <p class="text-gray-600">Operator: ComfortCruiser</p>
+                        </div>
+                         <div class="mt-4 sm:mt-0 sm:text-right">
+                             <span class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full">Cancelled</span>
+                        </div>
+                    </div>
+                     <!-- Card 3 -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col sm:flex-row justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Booking ID: BLU98765432</p>
+                            <h4 class="text-xl font-bold text-gray-800">Bengaluru &rarr; Mumbai</h4>
+                            <p class="text-gray-600 mt-1">Date: 01 Jul 2025</p>
+                            <p class="text-gray-600">Operator: SpeedyBus</p>
+                        </div>
+                         <div class="mt-4 sm:mt-0 sm:text-right">
+                             <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer --><footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 blueBus. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyCoupon() {
+            const couponText = document.getElementById('coupon-text').innerText;
+            
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = couponText;
+            document.body.appendChild(tempTextArea);
+            
+            tempTextArea.select();
+            try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+                console.log('Fallback: Copying text command was ' + msg);
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+
+            document.body.removeChild(tempTextArea);
+
+            const feedbackElem = document.getElementById('copied-feedback');
+            feedbackElem.style.display = 'block';
+            setTimeout(() => {
+                feedbackElem.style.display = 'none';
+            }, 2000);
+        }
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Booking History Toggle
+        const desktopLink = document.getElementById('my-bookings-link-desktop');
+        const mobileLink = document.getElementById('my-bookings-link-mobile');
+        const bookingHistorySection = document.getElementById('booking-history');
+        const mainContent = document.getElementById('main-offer-content');
+        const backBtn = document.getElementById('back-to-offers-btn');
+
+        function showBookingHistory(e) {
+            e.preventDefault();
+            mainContent.classList.add('hidden');
+            bookingHistorySection.classList.remove('hidden');
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function showMainContent() {
+            bookingHistorySection.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        if (desktopLink && mobileLink && bookingHistorySection && mainContent && backBtn) {
+            desktopLink.addEventListener('click', showBookingHistory);
+            mobileLink.addEventListener('click', showBookingHistory);
+            backBtn.addEventListener('click', showMainContent);
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refer & Earn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+    <!-- Main container for the card -->
+    <div class="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden my-8">
+        
+        <!-- Header Section with Image Background -->
+        <div class="relative text-white text-center p-8 sm:p-12 overflow-hidden">
+            <!-- Background Image -->
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('BlueBus.png');"></div>
+            <!-- Purple Overlay for readability -->
+            <div class="absolute inset-0 bg-purple-700 opacity-75"></div>
+
+            <!-- Content -->
+            <div class="relative">
+                <h1 class="text-5xl font-bold mb-4">Refer & Earn!</h1>
+                <div class="flex justify-center my-4">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 5a2 2 0 002 2h2a2 2 0 00-2-2h-2a2 2 0 00-2 2v0z" />
+                    </svg>
+                </div>
+                <p class="text-lg opacity-90">Exciting rewards are only a tap away!</p>
+            </div>
+        </div>
+
+        <!-- Content Section with White Background -->
+        <div class="p-8 sm:p-10">
+
+            <!-- Info Points -->
+            <div class="space-y-6 mb-10">
+                <div class="flex items-start">
+                    <div class="mr-3 mt-1 flex-shrink-0">
+                        <svg class="w-4 h-4 text-purple-700" fill="currentColor" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-700 text-lg">
+                        Invite your friends who have not tried blueBus before to get incredible rewards.
+                    </p>
+                </div>
+                <div class="flex items-start">
+                    <div class="mr-3 mt-1 flex-shrink-0">
+                         <svg class="w-4 h-4 text-purple-700" fill="currentColor" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-700 text-lg">
+                       You would get <strong>₹100</strong> in your blueBus wallet once your friend completes their first trip with us (with minimum transaction value of 400).
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 text-center mb-6">FREQUENTLY ASKED QUESTIONS</h3>
+                <div class="space-y-4" id="faq-accordion">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-gray-100 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center text-left p-4 font-semibold text-gray-700">
+                            <span>How referral works?</span>
+                            <span class="plus-icon text-xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4">
+                            <p class="text-gray-600">Share your unique referral code with friends. When they sign up using your code and complete their first booking, you'll receive a reward in your blueBus wallet. It's that simple!</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-gray-100 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center text-left p-4 font-semibold text-gray-700">
+                            <span>How should I opt for a lightning fast refund?</span>
+                            <span class="plus-icon text-xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4">
+                            <p class="text-gray-600">Lightning fast refunds are typically processed to your blueBus wallet. When you cancel a ticket, choose the "Wallet Refund" option for the fastest credit.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-gray-100 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center text-left p-4 font-semibold text-gray-700">
+                            <span>Will my friend get a discount?</span>
+                            <span class="plus-icon text-xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4">
+                            <p class="text-gray-600">Yes! When your friend uses your referral code on their first booking, they will get an instant discount on their ticket fare as a welcome bonus.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Button -->
+            <a href="index.html" class="block w-full bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 transition duration-300 text-center">
+                SEARCH BUSES
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for the accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const plusIcon = header.querySelector('.plus-icon');
+
+                // Close other open accordions
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    if (item !== content && item.style.maxHeight) {
+                        item.style.maxHeight = null;
+                        item.previousElementSibling.querySelector('.plus-icon').textContent = '+';
+                    }
+                });
+                
+                // Toggle current accordion
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    plusIcon.textContent = '+';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    plusIcon.textContent = '−';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+

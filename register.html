@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Account | Modern Web App</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configure Tailwind to use Inter font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Import Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Apply the Inter font by default */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        /* Simple focus style for better accessibility */
+        input:focus, select:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            border-color: #3b82f6; /* blue-500 */
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+        .password-toggle-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 0.75rem; /* pr-3 */
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7281; /* gray-500 */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <!-- Top Bar -->
+        <div class="bg-gray-100 border-b border-gray-200">
+            <nav class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-10 items-center justify-between">
+                    <!-- Left Links -->
+                    <div class="flex items-center space-x-4 text-xs font-medium text-gray-600">
+                        <a href="#" class="hover:text-blue-600">AGENT LOGIN</a>
+                        <a href="#" class="hover:text-blue-600">CONTACT US</a>
+                        <a href="#" class="hover:text-blue-600">HELP & SUPPORT</a>
+                        <a href="#" class="rounded bg-red-500 px-2 py-1 text-white">DAILY DEALS</a>
+                        <a href="#" class="hover:text-blue-600">ALERTS</a>
+                    </div>
+                    <!-- Right Info -->
+                    <div class="flex items-center space-x-4 text-xs text-gray-600">
+                        <span>14-Nov-2025 [22:45:00]</span>
+                        <div class="flex items-center space-x-1">
+                            <button class="hover:text-blue-600">A-</button>
+                            <button class="hover:text-blue-600">A</button>
+                            <button class="hover:text-blue-600">A+</button>
+                        </div>
+                        <a href="#" class="hover:text-blue-600 font-medium">हिन्दी</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <!-- Left Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="flex items-center space-x-2">
+                        <img class="h-12 w-auto" src="trainlogo.png" alt="Your Company Logo">
+                    </a>
+                </div>
+
+                <!-- Center Navigation Links -->
+                <div class="hidden md:flex md:flex-1 md:items-center md:justify-center md:space-x-1 lg:space-x-3">
+                    <a href="#" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        <!-- Home Icon SVG -->
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+
+                          <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 10.707V17a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V10.707a1 1 0 01.293-.707l7-7z" clip-rule="evenodd" />
+                        </svg>
+                    
+                    </a>
+                    <a href="#" class="flex h-16 items-center border-b-2 border-transparent bg-blue-800 px-2 pt-1 text-sm font-medium text-white whitespace-nowrap">Blue Exclusive</a>
+                    <a href="train.html" class="flex h-16 items-center border-b-2 border-orange-500 px-1 pt-1 text-sm font-medium text-gray-900 whitespace-nowHrap">TRAINS</a>
+                    <a href="loyality.html" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap">LOYALTY</a>
+                    <a href="bluewallet.html" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap">IRCTC eWallet</a>
+                    <a href="index.html" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap">BUSES</a>
+                    <a href="flight.html" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap">FLIGHTS</a>
+                    <a href="hotel.html" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap">HOTELS</a>
+                    <a href="holiday.html" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap">HOLIDAYS</a>
+                    <a href="meal.html" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap">MEALS</a>
+                    <a href="promotion.html" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap">PROMOTIONS</a>
+                    <a href="more.html" class="flex h-16 items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap">MORE</a>
+                </div>
+
+                <!-- Right Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="flex items-center space-x-2">
+                        <img class="h-12 w-auto" src="trainlogo2.png" alt="Your Company Logo 2">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10 lg:py-16">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                
+                <!-- Left Column: Registration Form -->
+                <div class="md:col-span-2">
+                    <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+                        <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+                            Create Your Account
+                        </h1>
+                        <p class="mt-2 text-sm text-gray-600">
+                            Already have an account? 
+                            <a href="#" class="font-medium text-blue-600 hover:text-blue-500">Sign In</a>
+                        </p>
+
+                        <!-- Important Notices -->
+                        <div class="mt-6 space-y-3 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-sm text-yellow-800">
+                            <p><strong>Important:</strong> Garbage/Junk values in profile may lead to deactivation of your account.</p>
+                            <p><strong>Note:</strong> Opening Advance Reservation Period (ARP) ticket and Opening Tatkal ticket booking for unauthenticated users is allowed only after 4 days from date of user registration.</p>
+                        </div>
+
+                        <!-- Registration Form -->
+                        <form id="registrationForm" class="mt-8 space-y-6">
+                            
+                            <!-- User Name -->
+                            <div>
+                                <label for="username" class="block text-sm font-medium text-gray-700">User Name</label>
+                                <input type="text" id="username" name="username" required
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm h-10 px-3">
+                                <p id="username-error" class="mt-2 text-sm text-red-600 hidden">User Name is required.</p>
+                            </div>
+                            
+                            <!-- Full Name -->
+                            <div>
+                                <label for="fullname" class="block text-sm font-medium text-gray-700">Full Name</label>
+                                <input type="text" id="fullname" name="fullname" required
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm h-10 px-3">
+                            </div>
+
+                            <!-- Password -->
+                            <div>
+                                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                                <div class="relative mt-1">
+                                    <input type="password" id="password" name="password" required
+                                           class="block w-full rounded-md border-gray-300 shadow-sm sm:text-sm h-10 px-3 pr-10">
+                                    <span class="password-toggle-icon" onclick="togglePasswordVisibility('password')">
+                                        <!-- Eye Icon SVG -->
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Confirm Password -->
+                            <div>
+                                <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                                <div class="relative mt-1">
+                                    <input type="password" id="confirm-password" name="confirm-password" required
+                                           class="block w-full rounded-md border-gray-300 shadow-sm sm:text-sm h-10 px-3 pr-10">
+                                    <span class="password-toggle-icon" onclick="togglePasswordVisibility('confirm-password')">
+                                        <!-- Eye Icon SVG -->
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <p id="password-match-error" class="mt-2 text-sm text-red-600 hidden">Passwords do not match.</p>
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="email" name="email" required
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm h-10 px-3">
+                                <p id="email-error" class="mt-2 text-sm text-red-600 hidden">Invalid email ID may lead to deactivation of your account.</p>
+                            </div>
+
+                            <!-- Mobile Number -->
+                            <div>
+                                <label for="mobile" class="block text-sm font-medium text-gray-700">Mobile Number</label>
+                                <div class="flex mt-1">
+                                    <select id="country-code" name="country-code" class="rounded-l-md border-gray-300 shadow-sm sm:text-sm h-10">
+                                        <option>+91 - India</option>
+                                        <option>+1 - USA</option>
+                                        <option>+44 - UK</option>
+                                    </select>
+                                    <input type="tel" id="mobile" name="mobile" required
+                                           class="block w-full rounded-r-md border-l-0 border-gray-300 shadow-sm sm:text-sm h-10 px-3"
+                                           placeholder="Enter Mobile Number">
+                                </div>
+                                <p id="mobile-error" class="mt-2 text-sm text-red-600 hidden">Please submit Mobile Number without ISD Code.</p>
+                            </div>
+
+                            <!-- Captcha -->
+                            <div>
+                                <label for="captcha-input" class="block text-sm font-medium text-gray-700">Enter Captcha</label>
+                                <div class="flex items-center mt-1 space-x-3">
+                                    <div id="captcha-display" class="flex h-10 items-center justify-center rounded-md bg-gray-800 px-6 text-2xl font-bold tracking-widest text-white select-none">
+                                        <!-- Captcha text inserted by JS -->
+                                    </div>
+                                    <button type="button" id="refreshCaptcha" title="Refresh Captcha" class="p-2 text-gray-600 hover:text-blue-600">
+                                        <!-- Refresh Icon SVG -->
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <input type="text" id="captcha-input" name="captcha-input" required
+                                       class="mt-2 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm h-10 px-3">
+                                <p id="captcha-error" class="mt-2 text-sm text-red-600 hidden">Captcha does not match.</p>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div>
+                                <button type="submit"
+                                        class="flex w-full justify-center rounded-md border border-transparent bg-orange-500 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Column: Help & FAQ -->
+                <div class="md:col-span-1">
+                    <div class="space-y-6">
+                        <!-- Cybersecurity Info Graphic Placeholder -->
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                             <h2 class="text-xl font-semibold text-gray-900 mb-4">Cybersecurity Tip of the Day</h2>
+                             <img src="https://placehold.co/600x400/e0f2fe/0c4a6e?text=Cybersecurity+Graphic" alt="Cybersecurity Tip" class="rounded-lg w-full">
+                             <p class="mt-4 text-sm font-medium text-blue-800 bg-blue-100 p-3 rounded-md">
+                                Ensure to use different and strong passwords for different accounts.
+                             </p>
+                        </div>
+                        
+                        <!-- FAQ Accordion -->
+                        <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+                            <h2 class="text-2xl font-bold tracking-tight text-gray-900">
+                                Help & FAQ
+                            </h2>
+                            <p class="mt-2 text-sm text-gray-600">
+                                Find answers to some frequently asked questions below.
+                            </p>
+                            
+                            <div class="mt-6 flow-root">
+                                <div class="-my-4 divide-y divide-gray-200">
+                                    
+                                    <!-- FAQ Item 1 -->
+                                    <div class="accordion-item py-4">
+                                        <button class="accordion-button flex w-full items-center justify-between text-left text-gray-900">
+                                            <span class="font-medium">What is the Ticketing Website?</span>
+                                            <!-- Chevron Icon SVG -->
+                                            <svg class="accordion-icon h-5 w-5 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+                                        </button>
+                                        <div class="accordion-content hidden pt-3 pr-12 text-sm text-gray-600">
+                                            <p>This is the official website for booking train tickets online, providing services like reservations, cancellations, and checking train schedules.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- FAQ Item 2 -->
+                                    <div class="accordion-item py-4">
+                                        <button class="accordion-button flex w-full items-center justify-between text-left text-gray-900">
+                                            <span class="font-medium">Why do I need to register?</span>
+                                            <svg class="accordion-icon h-5 w-5 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+                                        </button>
+                                        <div class="accordion-content hidden pt-3 pr-12 text-sm text-gray-600">
+                                            <p>Registration is required to create a unique user profile, which is necessary for booking tickets, managing your journeys, and ensuring secure transactions.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- FAQ Item 3 -->
+                                    <div class="accordion-item py-4">
+                                        <button class="accordion-button flex w-full items-center justify-between text-left text-gray-900">
+                                            <span class="font-medium">How can I register?</span>
+                                            <svg class="accordion-icon h-5 w-5 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+                                        </button>
+                                        <div class="accordion-content hidden pt-3 pr-12 text-sm text-gray-600">
+                                            <p>You can register by filling out the form on this page with your personal details, including a unique User Name, valid email address, and mobile number.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- FAQ Item 4 -->
+                                    <div class="accordion-item py-4">
+                                        <button class="accordion-button flex w-full items-center justify-between text-left text-gray-900">
+                                            <span class="font-medium">Are there any charges for registering?</span>
+                                            <svg class="accordion-icon h-5 w-5 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+                                        </button>
+                                        <div class="accordion-content hidden pt-3 pr-12 text-sm text-gray-600">
+                                            <p>No, registration on this website is completely free of charge. You only pay for the tickets you book.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Add more FAQs as needed -->
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="mt-16 bg-gray-800 text-gray-400">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <!-- Footer Links Section 1 -->
+                <div class="grid grid-cols-2 gap-8 xl:col-span-2">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300">Services</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li><a href="#" class="text-base hover:text-white">Ticket Booking</a></li>
+                                <li><a href="#" class="text-base hover:text-white">PNR Status</a></li>
+                                <li><a href="#" class="text-base hover:text-white">Train Schedule</a></li>
+                                <li><a href="#" class="text-base hover:text-white">Cancel Ticket</a></li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300">Support</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li><a href="#" class="text-base hover:text-white">Contact Us</a></li>
+                                <li><a href="#" class="text-base hover:text-white">FAQs</a></li>
+                                <li><a href="#" class="text-base hover:text-white">User Guide</a></li>
+                                <li><a href="#" class="text-base hover:text-white">Feedback</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300">Company</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li><a href="#" class="text-base hover:text-white">About Us</a></li>
+                                <li><a href="#" class="text-base hover:text-white">Careers</a></li>
+                                <li><a href="#" class="text-base hover:text-white">Press</a></li>
+                                <li><a href="#" class="text-base hover:text-white">Blog</a></li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300">Legal</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li><a href="#" class="text-base hover:text-white">Privacy Policy</a></li>
+                                <li><a href="#" class="text-base hover:text-white">Terms of Use</a></li>
+                                <li><a href="#" class="text-base hover:text-white">Refund Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Newsletter Section -->
+                <div class="mt-8 xl:mt-0">
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300">Subscribe to our newsletter</h3>
+                    <p class="mt-4 text-base">Get the latest deals and updates straight to your inbox.</p>
+                    <form class="mt-4 sm:flex sm:max-w-md">
+                        <label for="footer-email" class="sr-only">Email address</label>
+                        <input type="email" id="footer-email" name="footer-email" required class="w-full min-w-0 appearance-none rounded-md border-gray-300 bg-white px-4 py-2 text-base text-gray-900 placeholder-gray-500 shadow-sm" placeholder="Enter your email">
+                        <div class="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+                            <button type="submit" class="flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-8 text-base md:flex md:items-center md:justify-between">
+                <p>&copy; 2025 Your Company, Inc. All rights reserved.</p>
+                <!-- Social Media Icons (placeholders) -->
+                <div class="flex space-x-6 md:order-2">
+                    <a href="#" class="hover:text-white">
+                        <span class="sr-only">Facebook</span>
+                        <!-- Placeholder SVG -->
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript block -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Password Visibility Toggle ---
+            window.togglePasswordVisibility = function(inputId) {
+                const input = document.getElementById(inputId);
+                const icon = input.nextElementSibling.querySelector('svg');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    // SVG for "eye-off"
+                    icon.innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L12 12" />
+                    `;
+                } else {
+                    input.type = 'password';
+                    // SVG for "eye"
+                    icon.innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    `;
+                }
+            }
+            
+            // --- FAQ Accordion ---
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const button = item.querySelector('.accordion-button');
+                const content = item.querySelector('.accordion-content');
+                const icon = item.querySelector('.accordion-icon');
+                
+                button.addEventListener('click', () => {
+                    const isHidden = content.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        content.classList.remove('hidden');
+                        icon.style.transform = 'rotate(180deg)';
+                    } else {
+                        content.classList.add('hidden');
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+            // --- Captcha Generation ---
+            const captchaDisplay = document.getElementById('captcha-display');
+            const refreshCaptchaButton = document.getElementById('refreshCaptcha');
+            let currentCaptcha = '';
+
+            function generateCaptcha() {
+                const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                let captcha = '';
+                for (let i = 0; i < 6; i++) {
+                    captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                currentCaptcha = captcha;
+                captchaDisplay.textContent = captcha;
+            }
+
+            refreshCaptchaButton.addEventListener('click', generateCaptcha);
+            
+            // Initial Captcha load
+            generateCaptcha();
+
+            // --- Form Validation ---
+            const form = document.getElementById('registrationForm');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Stop actual submission for this demo
+                
+                let isValid = true;
+
+                // Clear all previous errors
+                document.querySelectorAll('.text-red-600').forEach(el => el.classList.add('hidden'));
+
+                // Username check
+                const username = document.getElementById('username');
+                if (username.value.trim() === '') {
+                    document.getElementById('username-error').classList.remove('hidden');
+                    isValid = false;
+                }
+                
+                // Email check (simple)
+                const email = document.getElementById('email');
+                if (!email.value.includes('@')) {
+                    document.getElementById('email-error').classList.remove('hidden');
+                    isValid = false;
+                }
+
+                // Mobile check
+                const mobile = document.getElementById('mobile');
+                if (mobile.value.length < 10) {
+                     // Using the "Please submit..." error from the screenshot
+                    document.getElementById('mobile-error').classList.remove('hidden');
+                    isValid = false;
+                }
+
+                // Password match check
+                const password = document.getElementById('password');
+                const confirmPassword = document.getElementById('confirm-password');
+                if (password.value !== confirmPassword.value || password.value === '') {
+                    document.getElementById('password-match-error').classList.remove('hidden');
+                    isValid = false;
+                }
+
+                // Captcha check
+                const captchaInput = document.getElementById('captcha-input');
+                if (captchaInput.value !== currentCaptcha) {
+                    document.getElementById('captcha-error').classList.remove('hidden');
+                    isValid = false;
+                    generateCaptcha(); // Refresh captcha on failure
+                }
+
+                if (isValid) {
+                    // In a real app, you'd submit the form here.
+                    // For this demo, we'll just show a success message.
+                    alert('Form submitted successfully! (Demo)');
+                    form.reset();
+                    generateCaptcha();
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>

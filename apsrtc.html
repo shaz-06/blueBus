@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Buses - blueBus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Styles for seat selection */
+        .seat {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+        .seat.sleeper {
+            width: 80px;
+            height: 35px;
+        }
+        .seat.available {
+            background-color: #f8fafc;
+        }
+        .seat.available:hover {
+            background-color: #e2e8f0;
+        }
+        .seat.booked {
+            background-color: #e2e8f0;
+            cursor: not-allowed;
+            color: #94a3b8;
+        }
+        .seat.selected {
+            background-color: #2563eb;
+            color: white;
+            border-color: #1d4ed8;
+        }
+        .seat-gap {
+             width: 40px;
+             height: 40px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" id="home-link-logo">
+                <div class="flex items-center text-2xl font-bold text-blue-700">
+                    <svg class="h-8 w-8 mr-2 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6m-6 4h6m-6 4h6"/>
+                    </svg>
+                    <span>blueBus</span>
+                </div>
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#" id="home-link-nav" class="text-gray-600 hover:text-blue-600">Home</a>
+                <a href="index.html#offers-section" class="text-gray-600 hover:text-blue-600">Offers</a>
+                <a href="#" id="my-bookings-link" class="text-gray-600 hover:text-blue-600">My Bookings</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Contact</a>
+            </nav>
+            <button id="mobile-menu-btn" class="md:hidden">
+                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+        <a href="#" id="mobile-home-link" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-blue-600">Home</a>
+        <a href="#offers-section" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-blue-600">Offers</a>
+        <a href="#" id="mobile-my-bookings-link" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-blue-600">My Bookings</a>
+        <a href="#" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-blue-600">Contact</a>
+    </div>
+
+    <!-- Search Section -->
+    <section id="search-section" class="bg-gradient-to-r from-blue-600 to-blue-800 py-12 md:py-20 relative">
+        <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://placehold.co/1920x1080/EBF8FF/EBF8FF');"></div>
+        <div class="container mx-auto px-4 relative">
+            <div class="bg-white/10 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-lg max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-center">
+                    <!-- From Input -->
+                    <div class="md:col-span-3 flex items-center bg-white rounded-lg p-3 shadow-sm">
+                        <svg class="w-6 h-6 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <input id="from-input" type="text" placeholder="FROM" class="w-full bg-transparent focus:outline-none text-gray-700 font-medium">
+                    </div>
+                    <!-- Swap Icon -->
+                    <div class="hidden md:flex justify-center md:col-span-1">
+                        <button id="swap-button" class="bg-white p-2 rounded-full text-gray-500 hover:bg-gray-200 transition-colors duration-300">
+                           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </button>
+                    </div>
+                    <!-- To Input -->
+                    <div class="md:col-span-3 flex items-center bg-white rounded-lg p-3 shadow-sm">
+                        <svg class="w-6 h-6 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <input id="to-input" type="text" placeholder="TO" class="w-full bg-transparent focus:outline-none text-gray-700 font-medium">
+                    </div>
+                    <!-- Date Input -->
+                    <div class="md:col-span-3 flex items-center bg-white rounded-lg p-3 shadow-sm">
+                         <svg class="w-6 h-6 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <input id="date-input" type="date" class="w-full bg-transparent focus:outline-none text-gray-700 font-medium">
+                    </div>
+                </div>
+                <button id="search-button" class="w-full mt-6 bg-yellow-400 text-blue-900 font-bold text-lg py-4 rounded-lg shadow-lg hover:bg-yellow-500 transition-all duration-300 transform hover:scale-105">
+                    SEARCH BUSES
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Search Results Message -->
+    <div id="search-message" class="container mx-auto px-4 text-center py-4 hidden">
+        <p class="text-lg"></p>
+    </div>
+
+    <!-- Routes & Timings Section -->
+    <main class="container mx-auto px-4 py-12 md:py-16">
+        <div class="max-w-5xl mx-auto">
+             <h2 class="text-3xl font-bold text-gray-800 mb-8">Popular Bus Routes & Timings</h2>
+
+             <!-- Route Card 1 -->
+             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6 flex flex-col md:flex-row items-center transform hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="p-6 flex-grow">
+                    <h3 class="text-2xl font-bold text-gray-900">Hyderabad to Vijayawada</h3>
+                    <div class="flex flex-wrap gap-x-6 gap-y-2 text-gray-600 mt-3">
+                        <span><strong>Distance:</strong> 274 Km</span>
+                        <span><strong>Duration:</strong> 6 Hr 29 Min (Approx)</span>
+                        <span><strong>First Bus:</strong> 00:40</span>
+                        <span><strong>Last Bus:</strong> 00:01</span>
+                    </div>
+                </div>
+                <div class="p-6 text-center border-t md:border-t-0 md:border-l border-gray-200 w-full md:w-auto">
+                    <p class="text-gray-600 text-sm">From <span class="text-xl font-bold text-black">INR 412</span></p>
+                    <button class="book-now-btn mt-2 w-full md:w-auto bg-blue-600 text-white font-bold py-2 px-8 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300" data-route="Hyderabad to Vijayawada">
+                        Book Now
+                    </button>
+                </div>
+             </div>
+
+             <!-- Route Card 2 -->
+             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6 flex flex-col md:flex-row items-center transform hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="p-6 flex-grow">
+                    <h3 class="text-2xl font-bold text-gray-900">Bangalore to Chennai</h3>
+                    <div class="flex flex-wrap gap-x-6 gap-y-2 text-gray-600 mt-3">
+                        <span><strong>Distance:</strong> 346 Km</span>
+                        <span><strong>Duration:</strong> 6 Hr 30 Min (Approx)</span>
+                        <span><strong>First Bus:</strong> 05:00</span>
+                        <span><strong>Last Bus:</strong> 23:59</span>
+                    </div>
+                </div>
+                <div class="p-6 text-center border-t md:border-t-0 md:border-l border-gray-200 w-full md:w-auto">
+                    <p class="text-gray-600 text-sm">From <span class="text-xl font-bold text-black">INR 550</span></p>
+                    <button class="book-now-btn mt-2 w-full md:w-auto bg-blue-600 text-white font-bold py-2 px-8 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300" data-route="Bangalore to Chennai">
+                        Book Now
+                    </button>
+                </div>
+             </div>
+        </div>
+    </main>
+
+    <!-- Bus Results Section (Initially Hidden) -->
+    <section id="bus-results-section" class="hidden container mx-auto px-4 py-12 md:py-16">
+        <div class="max-w-5xl mx-auto">
+            <h2 id="bus-results-title" class="text-3xl font-bold text-gray-800 mb-8">Available Buses</h2>
+            <div id="bus-list" class="space-y-6">
+                <!-- Bus cards will be injected here by JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Booking History Section (Initially Hidden) -->
+    <section id="booking-history-section" class="hidden container mx-auto px-4 py-12 md:py-16">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">My Bookings</h2>
+            <div id="booking-history-list" class="space-y-6">
+                <!-- Booking history cards will be injected here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Seat Selection Modal -->
+    <div id="seat-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-full overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="p-4 border-b flex justify-between items-center">
+                <div>
+                    <h3 id="modal-bus-operator" class="text-xl font-bold text-gray-800"></h3>
+                    <p id="modal-bus-type" class="text-sm text-gray-500"></p>
+                </div>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-700 text-3xl leading-none">&times;</button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div id="seat-selection-view">
+                <div class="p-6 md:flex">
+                    <!-- Seat Layout -->
+                    <div class="flex-grow md:border-r pr-6">
+                        <h4 class="font-bold mb-4 text-center">Select Your Seats</h4>
+                        <div id="seat-layout-container" class="mx-auto flex justify-center"></div>
+                        <!-- Legend -->
+                        <div class="mt-4 flex justify-center items-center space-x-4 text-sm">
+                            <div class="flex items-center"><div class="w-4 h-4 rounded bg-gray-200 mr-2"></div>Booked</div>
+                            <div class="flex items-center"><div class="w-4 h-4 rounded bg-white border mr-2"></div>Available</div>
+                            <div class="flex items-center"><div class="w-4 h-4 rounded bg-blue-600 mr-2"></div>Selected</div>
+                        </div>
+                    </div>
+                    <!-- Booking Summary -->
+                    <div class="w-full md:w-64 mt-6 md:mt-0 md:pl-6">
+                        <h4 class="font-bold mb-4">Booking Summary</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                             <p class="text-sm">Selected Seats: <span id="selected-seats-list" class="font-bold">None</span></p>
+                            <p id="total-fare-container" class="text-lg font-bold mt-2 hidden">Total Fare: <span id="total-fare">INR 0</span></p>
+                        </div>
+                        <button id="proceed-btn" class="w-full mt-4 bg-green-500 text-white font-bold py-3 rounded-lg shadow-md hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors" disabled>
+                            Proceed to Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment View (hidden initially) -->
+            <div id="payment-view" class="hidden p-6 text-center">
+                 <h3 class="text-2xl font-bold text-gray-800 mb-4">Confirm Your Booking</h3>
+                 <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg max-w-md mx-auto mb-6 text-left">
+                    <p class="mb-2"><strong>Bus:</strong> <span id="confirm-operator"></span></p>
+                    <p><strong>Seats:</strong> <span id="confirm-seats"></span></p>
+                    <div class="mt-4 pt-4 border-t border-blue-200 space-y-1">
+                         <div class="flex justify-between text-gray-600">
+                             <span>Base Fare</span>
+                             <span id="confirm-base-fare"></span>
+                         </div>
+                         <div class="flex justify-between text-gray-600">
+                             <span>Taxes & Fees</span>
+                             <span id="confirm-taxes"></span>
+                         </div>
+                         <div class="flex justify-between text-gray-600">
+                             <span>Booking Fee</span>
+                             <span id="confirm-booking-fee"></span>
+                         </div>
+                         <div class="flex justify-between text-green-600">
+                             <span>Discount</span>
+                             <span id="confirm-discount"></span>
+                         </div>
+                         <div class="flex justify-between font-bold text-xl mt-2 text-gray-900 border-t pt-2">
+                             <span>Total Amount</span>
+                             <span id="confirm-total-fare"></span>
+                         </div>
+                    </div>
+                 </div>
+                 <button id="confirm-booking-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700">
+                    Confirm & Pay
+                </button>
+            </div>
+            
+            <!-- Success View (hidden initially) -->
+            <div id="success-view" class="hidden p-8 text-center">
+                 <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                 <h3 class="text-2xl font-bold text-gray-800 mb-2">Booking Successful!</h3>
+                 <p class="text-gray-600">Your ticket has been confirmed. Happy travels!</p>
+                 <button id="close-success-btn" class="mt-6 bg-blue-600 text-white font-bold py-2 px-6 rounded-lg">Done</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-4 py-8 text-center">
+            <p>&copy; 2025 blueBus. All rights reserved.</p>
+            <p class="text-sm text-gray-400 mt-1">Your trusted travel partner.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- DOM ELEMENT SELECTIONS ---
+        const fromInput = document.getElementById('from-input');
+        const toInput = document.getElementById('to-input');
+        const dateInput = document.getElementById('date-input');
+        const swapButton = document.getElementById('swap-button');
+        const searchButton = document.getElementById('search-button');
+        const searchMessage = document.getElementById('search-message');
+        const bookNowButtons = document.querySelectorAll('.book-now-btn');
+        const busResultsSection = document.getElementById('bus-results-section');
+        const busResultsTitle = document.getElementById('bus-results-title');
+        const busListContainer = document.getElementById('bus-list');
+
+        // Modal elements
+        const seatModal = document.getElementById('seat-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const modalBusOperator = document.getElementById('modal-bus-operator');
+        const modalBusType = document.getElementById('modal-bus-type');
+        const seatLayoutContainer = document.getElementById('seat-layout-container');
+        const selectedSeatsList = document.getElementById('selected-seats-list');
+        const totalFareEl = document.getElementById('total-fare');
+        const totalFareContainer = document.getElementById('total-fare-container');
+        const proceedBtn = document.getElementById('proceed-btn');
+        
+        // Modal views
+        const seatSelectionView = document.getElementById('seat-selection-view');
+        const paymentView = document.getElementById('payment-view');
+        const successView = document.getElementById('success-view');
+
+        // Payment view elements
+        const confirmOperator = document.getElementById('confirm-operator');
+        const confirmSeats = document.getElementById('confirm-seats');
+        const confirmBaseFare = document.getElementById('confirm-base-fare');
+        const confirmTaxes = document.getElementById('confirm-taxes');
+        const confirmBookingFee = document.getElementById('confirm-booking-fee');
+        const confirmDiscount = document.getElementById('confirm-discount');
+        const confirmTotalFare = document.getElementById('confirm-total-fare');
+        const confirmBookingBtn = document.getElementById('confirm-booking-btn');
+        const closeSuccessBtn = document.getElementById('close-success-btn');
+        
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Navigation links
+        const homeLinkLogo = document.getElementById('home-link-logo');
+        const homeLinkNav = document.getElementById('home-link-nav');
+        const myBookingsLink = document.getElementById('my-bookings-link');
+        const mobileHomeLink = document.getElementById('mobile-home-link');
+        const mobileMyBookingsLink = document.getElementById('mobile-my-bookings-link');
+        
+        // Page sections
+        const mainContent = document.querySelector('main');
+        const searchSection = document.getElementById('search-section');
+        const bookingHistorySection = document.getElementById('booking-history-section');
+        const bookingHistoryList = document.getElementById('booking-history-list');
+
+        // --- GLOBAL STATE & DATA ---
+        let currentPricePerSeat = 0;
+        let selectedSeats = [];
+        let currentRoute = ''; 
+
+        const busData = {
+            "Hyderabad to Vijayawada": [
+                { operator: "Morning Star Travels", type: "A/C Sleeper (2+1)", departure: "22:30", arrival: "04:30", duration: "6h 0m", rating: 4.5, price: 750 },
+                { operator: "Orange Tours & Travels", type: "Non-A/C Seater (2+2)", departure: "23:00", arrival: "05:30", duration: "6h 30m", rating: 4.2, price: 450 },
+                { operator: "IntrCity SmartBus", type: "A/C Seater/Sleeper (2+1)", departure: "23:45", arrival: "06:00", duration: "6h 15m", rating: 4.8, price: 900 },
+            ],
+            "Bangalore to Chennai": [
+                 { operator: "SRS Travels", type: "A/C Sleeper (2+1)", departure: "22:00", arrival: "04:30", duration: "6h 30m", rating: 4.3, price: 800 },
+                 { operator: "KPN Travels", type: "Non-A/C Seater/Sleeper (2+1)", departure: "22:45", arrival: "05:15", duration: "6h 30m", rating: 4.0, price: 550 },
+                 { operator: "National Travels", type: "A/C Seater (2+2)", departure: "23:15", arrival: "05:45", duration: "6h 30m", rating: 4.1, price: 650 },
+            ]
+        };
+
+        // --- INITIALIZATION ---
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+        dateInput.value = today; 
+
+        // --- EVENT LISTENERS ---
+        swapButton.addEventListener('click', () => {
+            [fromInput.value, toInput.value] = [toInput.value, fromInput.value];
+        });
+
+        searchButton.addEventListener('click', handleSearch);
+        
+        bookNowButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                const route = button.dataset.route;
+                const [from, to] = route.split(' to ');
+                
+                fromInput.value = from;
+                toInput.value = to;
+                dateInput.value = today;
+
+                displayBusesForRoute(route, dateInput.value);
+            });
+        });
+
+        busListContainer.addEventListener('click', e => {
+            if (e.target && e.target.classList.contains('select-seats-btn')) {
+                const button = e.target;
+                currentPricePerSeat = parseFloat(button.dataset.price);
+                openSeatSelectionModal(button.dataset.operator, button.dataset.type);
+            }
+        });
+
+        seatLayoutContainer.addEventListener('click', e => {
+            if (e.target && e.target.classList.contains('available')) {
+                handleSeatClick(e.target);
+            }
+        });
+
+        proceedBtn.addEventListener('click', showPaymentView);
+        confirmBookingBtn.addEventListener('click', handleConfirmBooking);
+        
+        // Modal closing listeners
+        closeModalBtn.addEventListener('click', closeModal);
+        seatModal.addEventListener('click', e => { if (e.target === seatModal) closeModal(); });
+        closeSuccessBtn.addEventListener('click', closeModal);
+        
+        // Navigation listeners
+        [homeLinkLogo, homeLinkNav, mobileHomeLink].forEach(link => {
+            link.addEventListener('click', (e) => { e.preventDefault(); showMainContent(); });
+        });
+        [myBookingsLink, mobileMyBookingsLink].forEach(link => {
+            link.addEventListener('click', (e) => { e.preventDefault(); showBookingHistory(); });
+        });
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        
+        // Booking cancellation
+        bookingHistoryList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('cancel-booking-btn')) {
+                handleCancelBooking(e.target.dataset.bookingId);
+            }
+        });
+
+
+        // --- FUNCTIONS ---
+
+        function calculateDynamicPrice(basePrice, selectedDateString) {
+            let dynamicPrice = basePrice;
+            
+            // Create date in a way that avoids timezone issues with YYYY-MM-DD format
+            const parts = selectedDateString.split('-');
+            const selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+            const dayOfWeek = selectedDate.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+
+            // 20% surge for weekends (Fri, Sat, Sun)
+            if (dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6) {
+                dynamicPrice *= 1.20;
+            }
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // 10% surge for same-day booking
+            if (selectedDate.getTime() === today.getTime()) {
+                dynamicPrice *= 1.10;
+            }
+
+            return Math.round(dynamicPrice);
+        }
+
+        function handleSearch() {
+            const from = fromInput.value.trim();
+            const to = toInput.value.trim();
+            const date = dateInput.value;
+            
+            if (!from || !to || !date) {
+                const messageP = searchMessage.querySelector('p');
+                messageP.textContent = 'Please fill in all fields to search for buses.';
+                messageP.classList.add('text-red-500');
+                searchMessage.classList.remove('hidden');
+                return;
+            }
+            searchMessage.classList.add('hidden');
+
+            const searchKey = `${from} to ${to}`.toLowerCase();
+            const foundRouteKey = Object.keys(busData).find(key => key.toLowerCase() === searchKey);
+
+            if (foundRouteKey) {
+                displayBusesForRoute(foundRouteKey, dateInput.value);
+            } else {
+                const fromDisplay = from.charAt(0).toUpperCase() + from.slice(1);
+                const toDisplay = to.charAt(0).toUpperCase() + to.slice(1);
+                busResultsTitle.textContent = `Buses from ${fromDisplay} to ${toDisplay}`;
+                busListContainer.innerHTML = '<p class="text-center text-gray-500 py-8">Sorry, no buses are available for the selected route.</p>';
+                busResultsSection.classList.remove('hidden');
+                busResultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function displayBusesForRoute(routeKey, selectedDate) {
+            currentRoute = routeKey; 
+            const buses = busData[routeKey] || [];
+            
+            busResultsTitle.textContent = `Available Buses for ${routeKey}`;
+            busListContainer.innerHTML = ''; 
+
+            if (buses.length > 0) {
+                const busesWithDynamicPrice = buses.map(bus => {
+                    return {
+                        ...bus,
+                        displayPrice: calculateDynamicPrice(bus.price, selectedDate)
+                    };
+                });
+                busesWithDynamicPrice.forEach(bus => {
+                    busListContainer.insertAdjacentHTML('beforeend', createBusCard(bus));
+                });
+            } else {
+                busListContainer.innerHTML = '<p class="text-center text-gray-500">No buses found for this route currently.</p>';
+            }
+            
+            busResultsSection.classList.remove('hidden');
+            busResultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function createBusCard(bus) {
+            return `
+                <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row items-center transform hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    <div class="p-6 flex-grow w-full">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-800">${bus.operator}</h4>
+                                <p class="text-gray-500 text-sm">${bus.type}</p>
+                            </div>
+                            <div class="bg-green-600 text-white text-sm font-bold px-2 py-1 rounded-md flex items-center">
+                                <span>${bus.rating}</span>
+                                <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center text-center">
+                            <div><p class="text-lg font-bold text-gray-900">${bus.departure}</p><p class="text-sm text-gray-500">Departure</p></div>
+                            <div class="text-xs text-gray-400"><p>${bus.duration}</p><div class="w-full h-px bg-gray-200 my-1"></div></div>
+                            <div><p class="text-lg font-bold text-gray-900">${bus.arrival}</p><p class="text-sm text-gray-500">Arrival</p></div>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center border-t md:border-t-0 md:border-l border-gray-200 w-full md:w-auto md:min-w-[180px]">
+                        <p class="text-xl font-bold text-black">INR ${bus.displayPrice}</p>
+                         <button class="select-seats-btn mt-2 w-full md:w-auto bg-green-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-colors duration-300"
+                            data-operator="${bus.operator}" data-type="${bus.type}" data-price="${bus.displayPrice}">
+                            Select Seats
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // --- Modal & Booking Flow Functions ---
+
+        function openSeatSelectionModal(operator, type) {
+            resetModal();
+            modalBusOperator.textContent = operator;
+            modalBusType.textContent = type;
+            generateSeatLayout(type);
+            seatModal.classList.remove('hidden');
+            seatModal.classList.add('flex');
+        }
+
+        function generateSeatLayout(type) {
+             seatLayoutContainer.innerHTML = '';
+             let layout;
+             if (type.includes('Sleeper (2+1)')) {
+                 layout = [
+                    ['U3', null, 'U1', 'U2'], ['L3', null, 'L1', 'L2'],
+                    ['U6', null, 'U4', 'U5'], ['L6', null, 'L4', 'L5'],
+                    ['U9', null, 'U7', 'U8'], ['L9', null, 'L7', 'L8'],
+                 ];
+             } else { // Seater (2+2)
+                  layout = [
+                    ['1', '2', null, '3', '4'], ['5', '6', null, '7', '8'],
+                    ['9', '10', null, '11', '12'], ['13', '14', null, '15', '16'],
+                    ['17', '18', null, '19', '20'],
+                 ];
+             }
+
+             const layoutGrid = document.createElement('div');
+             layoutGrid.className = 'grid gap-2';
+             layout.forEach(row => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'flex gap-2 justify-center';
+                row.forEach(seatId => {
+                    if (seatId === null) {
+                        rowDiv.appendChild(document.createElement('div')).className = 'seat-gap';
+                    } else {
+                        const seat = document.createElement('div');
+                        seat.className = `seat ${type.includes('Sleeper') ? 'sleeper' : ''} available`;
+                        seat.textContent = seatId;
+                        seat.dataset.seatId = seatId;
+                        // Randomly mark some seats as booked
+                        if (Math.random() > 0.7) {
+                           seat.classList.replace('available', 'booked');
+                        }
+                        rowDiv.appendChild(seat);
+                    }
+                });
+                layoutGrid.appendChild(rowDiv);
+             });
+             seatLayoutContainer.appendChild(layoutGrid);
+        }
+
+        function handleSeatClick(seat) {
+            const seatId = seat.dataset.seatId;
+            if (selectedSeats.includes(seatId)) {
+                selectedSeats = selectedSeats.filter(s => s !== seatId);
+                seat.classList.remove('selected');
+            } else {
+                selectedSeats.push(seatId);
+                seat.classList.add('selected');
+            }
+            updateBookingSummary();
+        }
+        
+        function updateBookingSummary() {
+            if (selectedSeats.length > 0) {
+                selectedSeatsList.textContent = selectedSeats.join(', ');
+                totalFareEl.textContent = `INR ${selectedSeats.length * currentPricePerSeat}`;
+                totalFareContainer.classList.remove('hidden');
+                proceedBtn.disabled = false;
+            } else {
+                selectedSeatsList.textContent = 'None';
+                totalFareContainer.classList.add('hidden');
+                proceedBtn.disabled = true;
+            }
+        }
+
+        function showPaymentView() {
+            const baseFare = selectedSeats.length * currentPricePerSeat;
+            const taxes = baseFare * 0.05; // 5% tax
+            const bookingFee = 25.00; // Fixed booking fee
+            const discount = 0.00; 
+            const totalFare = baseFare + taxes + bookingFee - discount;
+
+            confirmBaseFare.textContent = `INR ${baseFare.toFixed(2)}`;
+            confirmTaxes.textContent = `INR ${taxes.toFixed(2)}`;
+            confirmBookingFee.textContent = `INR ${bookingFee.toFixed(2)}`;
+            confirmDiscount.textContent = `- INR ${discount.toFixed(2)}`;
+            confirmTotalFare.textContent = `INR ${totalFare.toFixed(2)}`;
+            
+            confirmOperator.textContent = modalBusOperator.textContent;
+            confirmSeats.textContent = selectedSeats.join(', ');
+
+            seatSelectionView.classList.add('hidden');
+            paymentView.classList.remove('hidden');
+        }
+
+        function handleConfirmBooking() {
+             const bookingDetails = {
+                id: 'BB' + Date.now(),
+                operator: modalBusOperator.textContent,
+                type: modalBusType.textContent,
+                route: currentRoute,
+                date: new Date(dateInput.value).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric'}),
+                seats: selectedSeats.join(', '),
+                fare: confirmTotalFare.textContent,
+                status: 'Upcoming'
+             };
+
+             let bookings = JSON.parse(localStorage.getItem('blueBusBookings')) || [];
+             bookings.unshift(bookingDetails);
+             localStorage.setItem('blueBusBookings', JSON.stringify(bookings));
+
+             paymentView.classList.add('hidden');
+             successView.classList.remove('hidden');
+        }
+        
+        function resetModal() {
+            selectedSeats = [];
+            currentPricePerSeat = 0;
+            updateBookingSummary();
+            seatSelectionView.classList.remove('hidden');
+            paymentView.classList.add('hidden');
+            successView.classList.add('hidden');
+        }
+
+        function closeModal() {
+            seatModal.classList.add('hidden');
+            seatModal.classList.remove('flex');
+        }
+        
+        // --- Navigation & Page View Functions ---
+        
+        function showMainContent() {
+            mainContent.classList.remove('hidden');
+            searchSection.classList.remove('hidden');
+            busResultsSection.classList.add('hidden'); 
+            bookingHistorySection.classList.add('hidden');
+            mobileMenu.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showBookingHistory() {
+            mainContent.classList.add('hidden');
+            searchSection.classList.add('hidden');
+            busResultsSection.classList.add('hidden');
+            bookingHistorySection.classList.remove('hidden');
+            mobileMenu.classList.add('hidden');
+            displayBookingHistory();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function displayBookingHistory() {
+            let bookings = JSON.parse(localStorage.getItem('blueBusBookings')) || [];
+            bookingHistoryList.innerHTML = '';
+            
+            const currentDate = new Date(today);
+            currentDate.setHours(0, 0, 0, 0);
+            let bookingsUpdated = false;
+
+            // Automatically update status of past bookings
+            bookings.forEach(booking => {
+                const bookingDate = new Date(booking.date);
+                if (booking.status === 'Upcoming' && bookingDate < currentDate) {
+                    booking.status = 'Completed';
+                    bookingsUpdated = true;
+                }
+            });
+
+            if (bookingsUpdated) {
+                localStorage.setItem('blueBusBookings', JSON.stringify(bookings));
+            }
+
+            if (bookings.length === 0) {
+                bookingHistoryList.innerHTML = `
+                    <div class="text-center py-12 bg-white rounded-xl shadow-md">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
+                        <h3 class="mt-2 text-xl font-medium text-gray-900">No bookings yet</h3>
+                        <p class="mt-1 text-sm text-gray-500">You haven't booked any trips. Let's find one!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            bookings.forEach(booking => {
+                bookingHistoryList.insertAdjacentHTML('beforeend', createBookingCard(booking));
+            });
+        }
+
+        function createBookingCard(booking) {
+            const isCancelled = booking.status === 'Cancelled';
+            const isCompleted = booking.status === 'Completed';
+            const bookingDate = new Date(booking.date);
+            const currentDate = new Date(today);
+            currentDate.setHours(0,0,0,0);
+            const isUpcoming = booking.status === 'Upcoming' && bookingDate >= currentDate;
+            
+            let statusColor = 'border-blue-500';
+            let statusTextColor = 'text-blue-600';
+            let cardOpacity = '';
+
+            if (isCancelled) {
+                statusColor = 'border-red-500';
+                statusTextColor = 'text-red-600';
+                cardOpacity = 'opacity-70';
+            } else if (isCompleted) {
+                statusColor = 'border-gray-400';
+                statusTextColor = 'text-gray-500';
+                cardOpacity = 'opacity-80';
+            }
+
+            return `
+                <div class="bg-white rounded-xl shadow-md overflow-hidden p-6 border-l-4 ${statusColor} ${cardOpacity}">
+                    <div class="md:flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium ${statusTextColor}">${booking.status.toUpperCase()}</p>
+                            <h4 class="text-2xl font-bold text-gray-800 mt-1">${booking.route}</h4>
+                            <p class="text-gray-600">${booking.operator} - ${booking.type}</p>
+                        </div>
+                        <div class="mt-4 md:mt-0 md:text-right">
+                            <p class="text-lg font-bold text-gray-900">${booking.fare}</p>
+                            <p class="text-sm text-gray-500">Booking ID: ${booking.id}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-200 md:flex justify-between items-center text-gray-600">
+                        <div>
+                            <p><strong>Date:</strong> ${booking.date}</p>
+                            <p><strong>Seats:</strong> ${booking.seats}</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            ${isUpcoming ? `<button data-booking-id="${booking.id}" class="cancel-booking-btn w-full md:w-auto bg-red-100 text-red-700 font-bold py-2 px-6 rounded-lg hover:bg-red-200 transition-colors">Cancel Booking</button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleCancelBooking(bookingId) {
+            let bookings = JSON.parse(localStorage.getItem('blueBusBookings')) || [];
+            const bookingIndex = bookings.findIndex(b => b.id === bookingId);
+            
+            if (bookingIndex > -1) {
+                bookings[bookingIndex].status = 'Cancelled';
+                localStorage.setItem('blueBusBookings', JSON.stringify(bookings));
+                displayBookingHistory(); // Refresh the list
+            }
+        }
+    </script>
+
+</body>
+</html>
+

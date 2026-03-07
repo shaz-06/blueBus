@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Next Nave Generation eTicketing System</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    <!-- Added flatpickr calendar CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <style>
+        /* Custom styles for IRCTC theme */
+        .irctc-blue {
+            background-color: #021B79;
+        }
+        .irctc-dark-blue {
+            background-color: #1a2c5f;
+        }
+        .irctc-orange {
+            background-color: #5683eb;
+        }
+        .irctc-orange-hover:hover {
+            background-color: #e66a1a;
+        }
+        .irctc-footer-bg {
+            background-color: #2c1e4a; /* Dark purple from screenshot */
+        }
+        .irctc-social-gradient {
+            background-image: linear-gradient(to right, #4a1e76, #d23a70); /* Gradient from screenshot */
+        }
+        
+        /* Active tab style */
+        .tab-btn.active {
+            border-color: #5683eb;
+            color: #5683eb;
+            background-color: white;
+            z-index: 10;
+        }
+        .tab-btn {
+            border-bottom-width: 3px;
+            border-color: transparent;
+        }
+
+        /* Results page specific styles */
+        .filter-header {
+            border-bottom: 2px solid #5683eb;
+        }
+        .time-filter-btn {
+            background-color: #0c3d94;
+            color: white;
+            transition: background-color 0.2s;
+        }
+        /* Added active state for time filter buttons */
+        .time-filter-btn.active {
+            background-color: #5683eb; /* Orange to show selection */
+            border-color: #5683eb;
+        }
+        .train-card {
+            border-bottom: 1px solid #ddd;
+        }
+        /* Style for the new class filter dropdown */
+        #class-filter-dropdown {
+            z-index: 50;
+        }
+        /* Style for the new quota filter dropdown */
+        #quota-filter-dropdown {
+            z-index: 50;
+        }
+        /* NEW: Style for the Sort By dropdown */
+        #sort-by-dropdown {
+            z-index: 50;
+        }
+        #sort-by-dropdown button.active {
+            background-color: #1a2c5f; /* Dark blue active state */
+            color: white;
+        }
+
+        /* NEW: Chatbot Styles */
+        #chat-window.show {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .chat-message {
+            max-w-[80%];
+            padding: 10px 14px;
+            border-radius: 16px;
+        }
+        .chat-message.bot {
+            background-color: #e2e8f0; /* bg-gray-200 */
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-message.user {
+            background-color: #1d4ed8; /* bg-blue-700 */
+            color: white;
+            align-self: flex-end;
+            margin-left: auto; /* Push to right */
+            border-bottom-right-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Top Bar -->
+    <div class="irctc-dark-blue text-white text-xs p-2">
+        <div class="container mx-auto max-w-7xl flex justify-between items-center">
+            <div class="flex space-x-4">
+                <a href="#" class="bg-blue-600 px-3 py-1 rounded text-white font-semibold">LOGIN</a>
+                <a href="register.html" class="hover:text-gray-300">REGISTER</a>
+                <a href="#" class="hover:text-gray-300">AGENT LOGIN</a>
+                <a href="#" class="hover:text-gray-300">CONTACT US</a>
+                <a href="#" class="hover:text-gray-300">HELP & SUPPORT</a>
+                <a href="#" class="hover:text-gray-300">DAILY DEALS</a>
+                <a href="#" class="hover:text-gray-300">ALERTS</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-4">
+                <span>[ 25-Oct-2025 15:13:41 ]</span>
+                <span>A-</span>
+                <span>A</span>
+                <span>A+</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto max-w-7xl flex justify-between items-center p-2">
+            <!-- Left Logo -->
+            <a href="#">
+                <img src="trainlogo.png" alt="blueRail Logo" class="h-16" onerror="this.onerror=null; this.src='https://placehold.co/100x70/EFEFEF/333333?text=IRCTC+Logo';">
+            </a>
+
+            <!-- Main Navigation -->
+            <nav class="hidden lg:flex space-x-4 font-semibold text-gray-700">
+                <a href="#" class="hover:text-blue-700">blueRail</a>
+                <a href="#" class="text-orange-500 border-b-2 border-orange-500 pb-1">TRAINS</a>
+                <a href="#" class="hover:text-blue-700">LOYALTY</a>
+                <a href="#" class="hover:text-blue-700">Blue eWallet</a>
+                <a href="#" class="hover:text-blue-700">BUSES</a>
+                <a href="#" class="hover:text-blue-700">FLIGHTS</a>
+                <a href="#" class="hover:text-blue-700">HOTELS</a>
+                <a href="#" class="hover:text-blue-700">HOLIDAYS</a>
+                <a href="#" class="hover:text-blue-700">MEALS</a>
+                <a href="#" class="hover:text-blue-700">PROMOTIONS</a>
+                <a href="#" class="hover:text-blue-700">MORE</a>
+            </nav>
+
+            <!-- Right Logo -->
+            <div class="flex items-center space-x-2">
+                <span class="text-right text-sm font-semibold text-gray-800 hidden md:block">
+                    blueRailways<br>Safety | Security | Punctuality
+                </span>
+                <img src="trainlogo2.png" alt="blue Railways Logo" class="h-16" onerror="this.onerror=null; this.src='https://placehold.co/80x70/EFEFEF/333333?text=Rail+Logo';">
+            </div>
+        </div>
+    </header>
+
+    <!-- 
+        HOMEPAGE CONTENT WRAPPER 
+        This div will be hidden when search is clicked
+    -->
+    <div id="homepage-content">
+        <!-- Hero Section -->
+        <main class="container mx-auto max-w-7xl mt-4 p-4">
+            <div class="lg:grid lg:grid-cols-12 gap-6">
+                
+                <!-- Left Side: Booking Form -->
+                <div class="lg:col-span-5 bg-white p-4 rounded-lg shadow-lg relative -mt-16 md:-mt-20 z-20 border border-gray-200">
+                    
+                    <!-- Tabs -->
+                    <div class="flex justify-start border-b-2 border-gray-200">
+                        <button class="tab-btn active text-lg font-bold py-2 px-4" data-tab="book-ticket">
+                            <i class="fa-solid fa-ticket-alt mr-2"></i> BOOK TICKET
+                        </button>
+                        <button class="tab-btn text-lg font-bold py-2 px-4 text-gray-500" data-tab="pnr-status">
+                            <i class="fa-solid fa-clipboard-check mr-2"></i> PNR STATUS
+                        </button>
+                        <button class="tab-btn text-lg font-bold py-2 px-4 text-gray-500" data-tab="charts-vacancy">
+                            <i class="fa-solid fa-chart-bar mr-2"></i> CHARTS / VACANCY
+                        </button>
+                    </div>
+
+                    <!-- Booking Form Content -->
+                    <div id="book-ticket-content" class="tab-content mt-4">
+                        <form class="space-y-4">
+                            <!-- From Station -->
+                            <div>
+                                <label for="from-station-input" class="text-xs text-gray-500 font-medium">From</label>
+                                <div class="relative mt-1">
+                                    <i class="fa-solid fa-location-arrow absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="text" id="from-station-input" class="w-full border border-gray-300 rounded-lg p-3 pl-10" placeholder="KSR BENGALURU - SBC">
+                                </div>
+                            </div>
+                            
+                            <!-- To Station -->
+                            <div>
+                                <label for="to-station-input" class="text-xs text-gray-500 font-medium">To</label>
+                                <div class="relative mt-1">
+                                    <i class="fa-solid fa-map-marker-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="text" id="to-station-input" class="w-full border border-gray-300 rounded-lg p-3 pl-10" placeholder="UDUPI - UD">
+                                </div>
+                            </div>
+
+                            <!-- Date & Class -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Date -->
+                                <div>
+                                    <label for="date-input" class="text-xs text-gray-500 font-medium">Date</label>
+                                    <div class="relative mt-1">
+                                        <i class="fa-solid fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                        <!-- Added id="date-input" for flatpickr -->
+                                        <input type="text" id="date-input" class="w-full border border-gray-300 rounded-lg p-3 pl-10" placeholder="25/10/2025">
+                                    </div>
+                                </div>
+                                
+                                <!-- Class -->
+                                <div class="relative">
+                                    <label for="class-input" class="absolute left-3 top-2 text-xs text-gray-500">Class</label>
+                                    <select id="class-input" class="w-full border border-gray-300 rounded-lg p-3 pt-6 bg-white appearance-none">
+                                        <option>All Classes</option>
+                                        <option>Sleeper (SL)</option>
+                                        <option>AC 3 Tier (3A)</option>
+                                        <option>AC 2 Tier (2A)</option>
+                                        <option>AC First Class (1A)</option>
+                                        <option>AC 3 Economy (3E)</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down absolute right-3 top-8 text-gray-400"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Quota -->
+                            <div class="relative">
+                                <label for="quota-input" class="absolute left-3 top-2 text-xs text-gray-500">Quota</label>
+                                <select id="quota-input" class="w-full border border-gray-300 rounded-lg p-3 pt-6 bg-white appearance-none">
+                                    <option>GENERAL</option>
+                                    <option>LADIES</option>
+                                    <option>LOWER BERTH/SR.CITIZEN</option>
+                                    <option>TATKAL</option>
+                                    <option>PREMIUM TATKAL</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-3 top-8 text-gray-400"></i>
+                            </div>
+
+                            <!-- Checkboxes -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <label class="flex items-center"><input type="checkbox" class="form-checkbox rounded mr-2"> Person With Disability Concession</label>
+                                <label class="flex items-center"><input type="checkbox" class="form-checkbox rounded mr-2"> Flexible With Date</label>
+                                <label class="flex items-center"><input type="checkbox" class="form-checkbox rounded mr-2"> Train with Available Berth</label>
+                                <label class="flex items-center"><input type="checkbox" class="form-checkbox rounded mr-2"> Railway Pass Concession</label>
+                            </div>
+
+                            <!-- Error Message (Hidden by default) -->
+                            <div id="search-error" class="hidden text-red-600 text-sm font-semibold text-center">
+                                Please fill the required fields.
+                            </div>
+
+                            <!-- Search Buttons -->
+                            <div class="flex flex-col md:flex-row gap-4">
+                                <button id="search-btn" class="w-full irctc-orange irctc-orange-hover text-white font-bold py-3 px-6 rounded-lg text-lg">Search</button>
+                                <a href="diksha.html" class="w-full bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg text-lg hover:bg-gray-300 text-center">Easy Booking on AskDISHA</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- PNR Status Content (Hidden) -->
+                    <div id="pnr-status-content" class="tab-content mt-4" style="display: none;">
+                        <h3 class="text-xl font-bold mb-4">Check PNR Status</h3>
+                        <p>PNR Status functionality is not implemented in this demo.</p>
+                    </div>
+
+                    <!-- Charts / Vacancy Content (Hidden) -->
+                    <div id="charts-vacancy-content" class="tab-content mt-4" style="display: none;">
+                        <h3 class="text-xl font-bold mb-4">Charts & Vacancy</h3>
+                        <p>Charts & Vacancy functionality is not implemented in this demo.</p>
+                    </div>
+                </div>
+
+                <!-- Right Side: Hero Image -->
+                <div class="lg:col-span-7">
+                    <img src="vande.jpg" alt="Vande Bharat Express" class="w-full h-auto rounded-lg shadow-lg"  onerror="this.onerror=null; this.src='https://placehold.co/800x600/EFEFEF/333333?text=Hero+Image';">
+                </div>
+            </div>
+        </main>
+        
+        <!-- Services Section -->
+        <section class="container mx-auto max-w-7xl mt-12 p-4 bg-white rounded-lg shadow-lg border border-gray-200">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">Have you not found the right one?</h2>
+            <h3 class="text-xl font-light text-center text-gray-600 mb-8">Find a service suitable for you here.</h3>
+            
+            <!-- Service Icons Grid -->
+            <!-- Updated grid for 5 columns max -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+                
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-plane-departure text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">FLIGHTS</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-hotel text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">HOTELS</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-tv text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">RAIL DRISHTI</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-utensils text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">E-CATERING</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-bus text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">BUS</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-umbrella-beach text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">HOLIDAY PACKAGES</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-train-subway text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">TOURIST TRAIN</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-mountain-sun text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">HILL RAILWAYS</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-train-tram text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">CHARTER TRAIN</span>
+                </a>
+
+                <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
+                    <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
+                        <i class="fa-solid fa-image text-4xl text-gray-600"></i>
+                    </div>
+                    <span class="font-semibold text-gray-700">GALLERY</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Banner Ad -->
+        <section class="container mx-auto max-w-7xl mt-8 p-4">
+            <img src="https://placehold.co/1200x150/EFEFEF/333333?text=Promotional+Banner+Ad" alt="Promotional Banner" class="w-full h-auto rounded-lg">
+        </section>
+
+    </div> <!-- End of homepage-content -->
+
+    <!-- 
+        RESULTS PAGE CONTENT (Hidden by default)
+        This div will be shown when search is clicked
+    -->
+    <div id="results-page-content" class="hidden">
+        <main class="container mx-auto max-w-7xl mt-4 p-4">
+            <!-- Modify Search Bar -->
+            <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                    <div class="relative">
+                        <span class="font-semibold" id="results-from-station">KSR BENGALURU</span>
+                    </div>
+                    <div class="relative">
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    </div>
+                    <div class="relative">
+                        <span class="font-semibold" id="results-to-station">UDUPI</span>
+                    </div>
+                    
+                    <!-- Results Date Picker -->
+                    <div id="results-date-picker" class="relative cursor-pointer border border-gray-300 rounded p-2 text-center">
+                        <i class="fa-solid fa-calendar-alt text-gray-500 mr-2"></i>
+                        <span class="font-semibold" id="results-date">25/10/2025</span>
+                    </div>
+                    
+                    <!-- Results Class Picker -->
+                    <div class="relative">
+                        <!-- Made this a button -->
+                        <button id="class-filter-btn" class="w-full border border-gray-300 rounded p-2 text-left font-semibold flex justify-between items-center">
+                            <span id="results-class">All Classes</span>
+                            <i class="fa-solid fa-chevron-down text-gray-500"></i>
+                        </button>
+                        <!-- New Dropdown for Class Filter -->
+                        <div id="class-filter-dropdown" class="hidden absolute top-full left-0 mt-1 bg-white text-black p-4 rounded shadow-lg border w-64">
+                            <label class="flex items-center"><input type="checkbox" data-class="1A" class="form-checkbox rounded mr-2 filter-class-dropdown">AC First Class (1A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="2A" class="form-checkbox rounded mr-2 filter-class-dropdown">AC 2 Tier (2A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="3A" class="form-checkbox rounded mr-2 filter-class-dropdown">AC 3 Tier (3A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="SL" class="form-checkbox rounded mr-2 filter-class-dropdown">Sleeper (SL)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="3E" class="form-checkbox rounded mr-2 filter-class-dropdown">AC 3 Economy (3E)</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Quota Picker -->
+                    <div class="relative">
+                        <!-- Made this a button -->
+                        <button id="quota-filter-btn" class="w-full border border-gray-300 rounded p-2 text-left font-semibold flex justify-between items-center">
+                            <span id="results-quota">GENERAL</span>
+                            <i class="fa-solid fa-chevron-down text-gray-500"></i>
+                        </button>
+                        <!-- New Dropdown for Quota Filter -->
+                        <div id="quota-filter-dropdown" class="hidden absolute top-full left-0 mt-1 bg-white text-black p-4 rounded shadow-lg border w-64">
+                            <div class="space-y-2" id="quota-radio-group">
+                                <label class="flex items-center"><input type="radio" name="quota" value="GENERAL" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio" checked>GENERAL</label>
+                                <label class="flex items-center"><input type="radio" name="quota" value="LADIES" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">LADIES</label>
+                                <label class="flex items-center"><input type="radio" name="quota" value="LOWER BERTH/SR.CITIZEN" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">LOWER BERTH/SR.CITIZEN</label>
+                                <label class="flex items-center"><input type="radio" name="quota" value="TATKAL" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">TATKAL</label>
+                                <label class="flex items-center"><input type="radio" name="quota" value="PREMIUM TATKAL" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">PREMIUM TATKAL</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="modify-search-btn" class="w-full irctc-orange irctc-orange-hover text-white font-bold py-2 px-4 rounded-lg">Modify Search</button>
+                </div>
+            </div>
+
+            <!-- Main Results Area -->
+            <div class="lg:grid lg:grid-cols-12 gap-6 mt-6">
+                
+                <!-- Left Side: Filters -->
+                <div class="lg:col-span-3 bg-white p-4 rounded-lg shadow-lg border border-gray-200 h-fit">
+                    <div class="flex justify-between items-center pb-2 filter-header">
+                        <h3 class="text-lg font-bold">Refine Results</h3>
+                        <a href="#" id="reset-filters-btn" class="text-blue-600 text-sm hover:underline">Reset Filters</a>
+                    </div>
+                    
+                    <!-- Journey Class Filter -->
+                    <div class="mt-4">
+                        <h4 class="font-semibold mb-2">JOURNEY CLASS</h4>
+                        <div class="space-y-1 text-sm">
+                            <label class="flex items-center"><input type="checkbox" data-class="1A" class="form-checkbox rounded mr-2 filter-class">AC First Class (1A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="2A" class="form-checkbox rounded mr-2 filter-class">AC 2 Tier (2A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="3A" class="form-checkbox rounded mr-2 filter-class">AC 3 Tier (3A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="SL" class="form-checkbox rounded mr-2 filter-class">Sleeper (SL)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="3E" class="form-checkbox rounded mr-2 filter-class">AC 3 Economy (3E)</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Departure Time Filter -->
+                    <div class="mt-6">
+                        <h4 class="font-semibold mb-2">DEPARTURE TIME</h4>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <button class="time-filter-btn departure-time-btn p-2 rounded" data-range="00:00-06:00">00:00 - 06:00<br>Early Morning</button>
+                            <button class="time-filter-btn departure-time-btn p-2 rounded" data-range="06:00-12:00">06:00 - 12:00<br>Morning</button>
+                            <button class="time-filter-btn departure-time-btn p-2 rounded" data-range="12:00-18:00">12:00 - 18:00<br>Mid Day</button>
+                            <button class="time-filter-btn departure-time-btn p-2 rounded" data-range="18:00-24:00">18:00 - 24:00<br>Night</button>
+                        </div>
+                    </div>
+
+                    <!-- From/To Station Filter -->
+                    <div class="mt-6">
+                        <h4 class="font-semibold mb-2">FROM STATIONS</h4>
+                        <label class="flex items-center text-sm"><input type="checkbox" class="form-checkbox rounded mr-2" checked><span id="filter-from-station">KSR BENGALURU</span></label>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="font-semibold mb-2">TO STATIONS</h4>
+                        <label class="flex items-center text-sm"><input type="checkbox" class="form-checkbox rounded mr-2" checked><span id="filter-to-station">UDUPI</span></label>
+                    </div>
+                </div>
+
+                <!-- Right Side: Train List -->
+                <!-- Added id="train-list-container" -->
+                <div class="lg:col-span-9 mt-4 lg:mt-0" id="train-list-container">
+                    <!-- Results Header -->
+                    <div class="bg-white p-3 rounded-lg shadow-lg border border-gray-200 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-lg font-bold">
+                                2 Results For <span id="header-from-station">KSR BENGALURU</span> <i class="fa-solid fa-arrow-right text-sm"></i> <span id="header-to-station">UDUPI</span>
+                                | <span id="header-date-display">Sat, 25 Oct 2025</span> For Quota <span id="header-quota">General</span>
+                            </h2>
+                        </div>
+                        <div class="flex space-x-2">
+                            <a href="#" id="prev-day-btn" class="text-blue-600 hover:underline"><i class="fa-solid fa-chevron-left"></i> Previous Day</a>
+                            <a href="#" id="next-day-btn" class="text-blue-600 hover:underline">Next Day <i class="fa-solid fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- NEW: Sort Buttons Bar (from new screenshot) -->
+                    <!-- Updated styling to match new screenshot -->
+                    <!-- Wrapped in a relative container for the dropdown -->
+                    <div class="relative flex space-x-1 my-4">
+                        <button id="sort-by-btn" class="bg-blue-800 text-white py-2 px-4 rounded font-bold text-sm w-44 text-left flex justify-between items-center">
+                            <span id="sort-by-text">Sort By | Duration</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+                        <button class="bg-white border border-orange-500 text-gray-800 py-2 px-4 rounded font-bold text-sm hover:bg-gray-50">Show Available Trains</button>
+                    
+                        <!-- NEW: Sort By Dropdown -->
+                        <div id="sort-by-dropdown" class="hidden absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md border border-gray-300 w-96 p-2" style="--tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); z-index: 50;">
+                            <div class="grid grid-cols-2 gap-2">
+                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50 active" data-value="Duration" data-text="Duration">
+                                    Duration<br>Early First
+                                </button>
+                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="DurationLate" data-text="Duration">
+                                    Duration<br>Late First
+                                </button>
+                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="Departure" data-text="Departure">
+                                    Departure<br>Early First
+                                </button>
+                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="DepartureLate" data-text="Departure">
+                                    Departure<br>Late First
+                                </button>
+                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="Arrival" data-text="Arrival">
+                                    Arrival<br>Early First
+                                </button>
+                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="ArrivalLate" data-text="Arrival">
+                                    Arrival<br>Late First
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Train Card 1 -->
+                    <!-- Added data attributes for filtering and SORTING -->
+                    <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 mt-4 train-card" 
+                        data-departure-time="18:50" 
+                        data-classes="SL,3E,3A,2A"
+                        data-duration-mins="566"
+                        data-departure-mins="1130"
+                        data-arrival-mins="1696">
+                        <!-- Top Row: Name, Runs On -->
+                        <div class="flex justify-between items-center pb-3">
+                            <div>
+                                <h3 class="text-xl font-bold text-blue-900">PANCHAGANGA EXP (16595)</h3>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-gray-600">Runs On: M T W T F S S</span><br>
+                                <a href="#" class="text-blue-600 font-semibold hover:underline open-schedule-modal" data-train-name="PANCHAGANGA EXP (16595)">Train Schedule</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Mid Row: Timing -->
+                        <div class="flex flex-col md:flex-row justify-between items-center py-3">
+                            <div class="text-center md:text-left">
+                                <span class="text-xl font-bold">18:50</span> | <span id="card1-from-station">KSR BENGALURU</span><br>
+                                <span class="text-gray-600">Sat, 25 Oct</span>
+                            </div>
+                            <div class="text-gray-600 my-2 md:my-0">
+                                --- 09:26 ---
+                            </div>
+                            <div class="text-center md:text-right">
+                                <span class="text-xl font-bold">04:16</span> | <span id="card1-to-station">UDUPI</span><br>
+                                <span class="text-gray-600">Sun, 26 Oct</span>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row: Classes & Book -->
+                        <div class="flex flex-col md:flex-row justify-between items-center pt-3">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                    <span class="font-semibold">Sleeper (SL)</span><br>
+                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                </a>
+                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                    <span class="font-semibold">AC 3 Economy (3E)</span><br>
+                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                </a>
+                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                    <span class="font-semibold">AC 3 Tier (3A)</span><br>
+                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                </a>
+                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                    <span class="font-semibold">AC 2 Tier (2A)</span><br>
+                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                </a>
+                            </div>
+                            <div class="flex space-x-2 mt-4 md:mt-0">
+                                <button class="bg-orange-100 border border-orange-300 text-orange-700 py-2 px-4 rounded font-semibold hover:bg-orange-200">Book Now</button>
+                                <button class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded font-semibold hover:bg-gray-200">OTHER DATES</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Train Card 2 -->
+                    <!-- Added data attributes for filtering and SORTING -->
+                    <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 mt-4 train-card"
+                        data-departure-time="20:25"
+                        data-classes="SL,3A,2A,1A"
+                        data-duration-mins="855"
+                        data-departure-mins="1225"
+                        data-arrival-mins="2080">
+                        <!-- Top Row: Name, Runs On -->
+                        <div class="flex justify-between items-center pb-3">
+                            <div>
+                                <h3 class="text-xl font-bold text-blue-900">SMVB MRDW EXP (16585)</h3>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-gray-600">Runs On: M T W T F S S</span><br>
+                                <a href="#" class="text-blue-600 font-semibold hover:underline open-schedule-modal" data-train-name="SMVB MRDW EXP (16585)">Train Schedule</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Mid Row: Timing -->
+                        <div class="flex flex-col md:flex-row justify-between items-center py-3">
+                            <div class="text-center md:text-left">
+                                <span class="text-xl font-bold">20:25</span> | <span id="card2-from-station">KSR BENGALURU</span><br>
+                                <span class="text-gray-600">Sat, 25 Oct</span>
+                            </div>
+                            <div class="text-gray-600 my-2 md:my-0">
+                                --- 14:15 ---
+                            </div>
+                            <div class="text-center md:text-right">
+                                <span class="text-xl font-bold">10:40</span> | <span id="card2-to-station">UDUPI</span><br>
+                                <span class="text-gray-600">Sun, 26 Oct</span>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row: Classes & Book -->
+                        <div class="flex flex-col md:flex-row justify-between items-center pt-3">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                    <span class="font-semibold">Sleeper (SL)</span><br>
+                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                </a>
+                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                    <span class="font-semibold">AC 3 Tier (3A)</span><br>
+                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                </a>
+                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                    <span class="font-semibold">AC 2 Tier (2A)</span><br>
+                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                </a>
+                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                    <span class="font-semibold">AC First Class (1A)</span><br>
+                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                </a>
+                            </div>
+                            <div class="flex space-x-2 mt-4 md:mt-0">
+                                <button class="bg-orange-100 border border-orange-300 text-orange-700 py-2 px-4 rounded font-semibold hover:bg-orange-200">Book Now</button>
+                                <button class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded font-semibold hover:bg-gray-200">OTHER DATES</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- No Results Message (Hidden by default) -->
+                    <div id="no-results-message" class="hidden text-center mt-8 p-4 bg-white rounded-lg shadow-lg border">
+                        <h3 class="text-xl font-bold text-gray-700">No trains found</h3>
+                        <p class="text-gray-500">Please try changing your filters or click "Reset Filters".</p>
+                    </div>
+
+                </div>
+            </div>
+        </main> <!-- Changed from </div> to </main> for semantic HTML -->
+    </div> <!-- End of results-page-content -->
+
+    <!-- NEW: Floating Chatbot -->
+    <div id="chatbot-container" class="fixed bottom-4 right-4 z-50">
+        <!-- Chat Window (Hidden by default) -->
+        <div id="chat-window" class="hidden fixed bottom-20 right-4 w-full max-w-sm h-full max-h-[70vh] bg-white rounded-lg shadow-xl flex flex-col transition-all duration-300 ease-out origin-bottom-right transform scale-95 opacity-0">
+            <!-- Chat Header -->
+            <div class="bg-blue-800 text-white p-4 flex items-center space-x-3 rounded-t-lg">
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                    <!-- Placeholder for bot avatar, using Font Awesome icon -->
+                    <i class="fa-solid fa-robot text-2xl text-blue-800"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">AskDisha 2.0</h3>
+                    <p class="text-xs">NextGen AI Ticketing</p>
+                </div>
+                <button id="chat-close-btn" class="ml-auto text-white text-2xl font-bold">&times;</button>
+            </div>
+            
+            <!-- Message Area -->
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-100">
+                <!-- Initial Bot Message -->
+                <div class="chat-message bot">
+                    <p>Welcome to blueRail! How can I help you with your booking today?</p>
+                </div>
+            </div>
+            
+            <!-- Input Area -->
+            <div class="p-3 border-t bg-white rounded-b-lg flex items-center space-x-2">
+                <input type="text" id="chat-input" placeholder="Type your message..." class="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="chat-send-btn" class="w-10 h-10 bg-blue-700 text-white rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+                <button id="chat-mic-btn" class="w-10 h-10 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Chat Toggle Button -->
+        <button id="chat-toggle-btn" class="irctc-orange w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 ease-in-out transform hover:scale-110">
+            <i class="fa-solid fa-comment-dots text-white text-3xl"></i>
+            <i class="fa-solid fa-times text-white text-3xl hidden"></i>
+        </button>
+    </div>
+    <!-- End of Chatbot -->
+
+
+    <!-- Footer -->
+    <footer class="mt-12">
+        <!-- Social Bar -->
+        <div class="irctc-social-gradient p-4">
+            <div class="container mx-auto max-w-7xl flex justify-between items-center">
+                <span class="font-semibold text-white">Get Connected with us on social networks</span>
+                <div class="flex space-x-2">
+                    <!-- Social Icons -->
+                    <a href="#" class="w-8 h-8 rounded-full bg-blue-800 text-white flex items-center justify-center"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-pink-600 text-white flex items-center justify-center"><i class="fab fa-instagram"></i></a>
+                    <a href="#" classq-="w-8 h-8 rounded-full bg-blue-700 text-white flex items-center justify-center"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center"><i class="fab fa-pinterest"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center"><i class="fab fa-tumblr"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-yellow-500 text-gray-800 flex items-center justify-center"><i class="fab fa-snapchat-ghost"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-blue-400 text-white flex items-center justify-center"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Footer Links -->
+        <div class="irctc-footer-bg text-gray-300 p-8">
+            <div class="container mx-auto max-w-7xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <h5 class="font-bold text-white mb-3">IRCTC Trains</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">General Information</a></li>
+                        <li><a href="#" class="hover:text-white">Important Information</a></li>
+                        <li><a href="#" class="hover:text-white">Agents</a></li>
+                        <li><a href="#" class="hover:text-white">Enquiries</a></li>
+                    </ul>
+                </div>
+                <!-- Column 2 -->
+                <div>
+                    <h5 class="font-bold text-white mb-3">How To</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">IRCTC Official App</a></li>
+                        <li><a href="#" class="hover:text-white">Advertise with us</a></li>
+                        <li><a href="#" class="hover:text-white">Refund Rules</a></li>
+                        <li><a href="#" class="hover:text-white">Person With Disability Facilities</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3 -->
+                <div>
+                    <h5 class="font-bold text-white mb-3">IRCTC eWallet</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">IRCTC Co-branded Card Benefits</a></li>
+                        <li><a href="#" class="hover:text-white">IRCTC-IPAY Payment Gateway</a></li>
+                        <li><a href="#" class="hover:text-white">IRCTC Zone</a></li>
+                        <li><a href="#" class="hover:text-white">DMRC Ticket Booking at IRCTC</a></li>
+                    </ul>
+                </div>
+                <!-- Column 4 -->
+                <div>
+                    <h5 class="font-bold text-white mb-3">For Newly Migrated Agents</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">Mobile Zone</a></li>
+                        <li><a href="#" class="hover:text-white">Policies</a></li>
+                        <li><a href="#" class="hover:text-white">Ask Disha ChatBot</a></li>
+                        <li><a href="#" class="hover:text-white">About us</a></li>
+                    </ul>
+                </div>
+                <!-- Column 5 -->
+                <div>
+                    <h5 class="font-bold text-white mb-3">Help & Support</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white">E-Pantry</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Added flatpickr calendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        // FIX: Wait for the DOM to be fully loaded before running the script
+        document.addEventListener('DOMContentLoaded', (event) => {
+        
+            // --- Homepage Tab functionality ---
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.getAttribute('data-tab');
+
+                    // Update button styles
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Show/hide content
+                    tabContents.forEach(content => {
+                        if (content.id === `${targetTab}-content`) {
+                            content.style.display = 'block';
+                        } else {
+                            content.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // --- Page Navigation Functionality ---
+            const searchBtn = document.getElementById('search-btn');
+            const modifySearchBtn = document.getElementById('modify-search-btn');
+            const homepageContent = document.getElementById('homepage-content');
+            const resultsPageContent = document.getElementById('results-page-content');
+
+            // --- Homepage Inputs ---
+            const fromInput = document.getElementById('from-station-input');
+            const toInput = document.getElementById('to-station-input');
+            const dateInput = document.getElementById('date-input');
+            const classInput = document.getElementById('class-input');
+            const quotaInput = document.getElementById('quota-input');
+            
+            // --- Results Page Display Elements ---
+            const resultsFrom = document.getElementById('results-from-station');
+            const resultsTo = document.getElementById('results-to-station');
+            const resultsDate = document.getElementById('results-date');
+            const resultsClass = document.getElementById('results-class');
+            const resultsQuota = document.getElementById('results-quota');
+            
+            const headerFrom = document.getElementById('header-from-station');
+            const headerTo = document.getElementById('header-to-station');
+            const headerQuota = document.getElementById('header-quota');
+            const headerDateSpan = document.getElementById('header-date-display'); // Added
+
+            const filterFrom = document.getElementById('filter-from-station');
+            const filterTo = document.getElementById('filter-to-station');
+
+            const card1From = document.getElementById('card1-from-station');
+            const card1To = document.getElementById('card1-to-station');
+            const card2From = document.getElementById('card2-from-station');
+            const card2To = document.getElementById('card2-to-station');
+
+            // --- Added Error Message Element ---
+            const errorMsg = document.getElementById('search-error');
+            
+            // --- Added Filter Elements ---
+            const filterCheckboxes = document.querySelectorAll('.filter-class');
+            const timeFilterButtons = document.querySelectorAll('.departure-time-btn');
+            
+            const trainListContainer = document.getElementById('train-list-container');
+            const allTrainCards = trainListContainer.querySelectorAll('.train-card');
+            
+            const noResultsMessage = document.getElementById('no-results-message');
+            const resetFiltersBtn = document.getElementById('reset-filters-btn');
+
+            // --- New Class Dropdown Elements ---
+            const classFilterBtn = document.getElementById('class-filter-btn');
+            const classFilterDropdown = document.getElementById('class-filter-dropdown');
+            const dropdownCheckboxes = document.querySelectorAll('.filter-class-dropdown');
+
+            // --- New Quota Dropdown Elements ---
+            const quotaFilterBtn = document.getElementById('quota-filter-btn');
+            const quotaFilterDropdown = document.getElementById('quota-filter-dropdown');
+            const quotaRadioButtons = document.querySelectorAll('.quota-filter-radio');
+            const quotaRadioGroup = document.getElementById('quota-radio-group');
+
+            // --- NEW: Sort By Dropdown Elements ---
+            const sortByBtn = document.getElementById('sort-by-btn');
+            const sortByDropdown = document.getElementById('sort-by-dropdown');
+            const sortOptions = document.querySelectorAll('.sort-option');
+            const sortByText = document.getElementById('sort-by-text');
+
+            // --- NEW: Prev/Next Day Buttons ---
+            const prevDayBtn = document.getElementById('prev-day-btn');
+            const nextDayBtn = document.getElementById('next-day-btn');
+
+
+            // --- NEW HELPER FUNCTIONS ---
+
+            /**
+             * Updates the text of the class filter button based on selections.
+             */
+            function updateClassFilterButtonText() {
+                // FIX: Add null check
+                if (!resultsClass) return; 
+                
+                const selected = [];
+                dropdownCheckboxes.forEach(cb => {
+                    if (cb.checked) {
+                        selected.push(cb.getAttribute('data-class'));
+                    }
+                });
+                
+                if (selected.length === 0) {
+                    resultsClass.textContent = 'All Classes';
+                } else if (selected.length === 1) {
+                    // Find the full text from the label, e.g., "Sleeper (SL)"
+                    const label = document.querySelector(`label [data-class="${selected[0]}"].filter-class-dropdown`).parentElement.textContent.trim();
+                    resultsClass.textContent = label;
+                } else {
+                    resultsClass.textContent = `${selected.length} Classes`;
+                }
+            }
+
+            /**
+             * Syncs checkboxes between the sidebar and the dropdown.
+             * @param {string} sourceClass - The class of the checkbox list that was changed.
+             * @param {string} targetClass - The class of the checkbox list to sync to.
+             * @param {HTMLElement} sourceEl - The checkbox element that triggered the change.
+             */
+            function syncCheckboxes(sourceClass, targetClass, sourceEl) {
+                const dataClass = sourceEl.getAttribute('data-class');
+                const isChecked = sourceEl.checked;
+                // Find the corresponding checkbox in the *other* list and set its state
+                document.querySelectorAll(`.${targetClass}[data-class="${dataClass}"]`).forEach(cb => {
+                    cb.checked = isChecked;
+                });
+            }
+
+            /**
+             * Sorts the train cards in the list container.
+             * @param {string} sortValue - The sorting criteria (e.g., 'Duration', 'DepartureLate').
+             */
+            function sortTrains(sortValue) {
+                // FIX: Add null check
+                if (!trainListContainer) return;
+
+                // 1. Get all *visible* train cards into an array to respect filters
+                const cards = Array.from(trainListContainer.querySelectorAll('.train-card[style*="display: block"], .train-card:not([style*="display: none"])'));
+                
+                // 2. Sort the array
+                cards.sort((a, b) => {
+                    const durationA = parseInt(a.getAttribute('data-duration-mins'));
+                    const durationB = parseInt(b.getAttribute('data-duration-mins'));
+                    const departureA = parseInt(a.getAttribute('data-departure-mins'));
+                    const departureB = parseInt(b.getAttribute('data-departure-mins'));
+                    const arrivalA = parseInt(a.getAttribute('data-arrival-mins'));
+                    const arrivalB = parseInt(b.getAttribute('data-arrival-mins'));
+
+                    switch (sortValue) {
+                        case 'Duration': return durationA - durationB;
+                        case 'DurationLate': return durationB - durationA;
+                        case 'Departure': return departureA - departureB;
+                        case 'DepartureLate': return departureB - departureA;
+                        case 'Arrival': return arrivalA - arrivalB;
+                        case 'ArrivalLate': return arrivalB - arrivalA;
+                        default: return durationA - durationB; // Default to Duration Early
+                    }
+                });
+                
+                // 3. Re-append the sorted cards to the container
+                cards.forEach(card => {
+                    trainListContainer.appendChild(card);
+                });
+            }
+
+
+            // --- PAGE NAVIGATION ---
+
+            // Go to Results Page
+            if (searchBtn) {
+                searchBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // FIX: Add null checks for form inputs
+                    if (!fromInput || !toInput || !dateInput || !classInput || !quotaInput || !errorMsg) return;
+
+                    // Get values from form
+                    const fromValue = fromInput.value || fromInput.placeholder.split(' - ')[0]; // Use placeholder as fallback
+                    const toValue = toInput.value || toInput.placeholder.split(' - ')[0]; // Use placeholder as fallback
+                    const dateValue = dateInput.value;
+                    
+                    // --- Validation Check ---
+                    if (dateValue.trim() === '') { // Only check date, as others have fallbacks
+                        errorMsg.style.display = 'block'; // Show error
+                        return; // Stop the function here
+                    } else {
+                        errorMsg.style.display = 'none'; // Hide error if all fields are good
+                    }
+                    
+                    // --- Continue if validation passes ---
+                    const classValue = classInput.options[classInput.selectedIndex].text;
+                    const quotaValue = quotaInput.options[quotaInput.selectedIndex].text;
+
+                    // Set values on results page (with null checks)
+                    if (resultsFrom) resultsFrom.textContent = fromValue;
+                    if (resultsTo) resultsTo.textContent = toValue;
+                    if (resultsDate) resultsDate.textContent = dateValue;
+                    if (resultsClass) resultsClass.textContent = classValue;
+                    if (resultsQuota) resultsQuota.textContent = quotaValue;
+                    
+                    if (headerFrom) headerFrom.textContent = fromValue;
+                    if (headerTo) headerTo.textContent = toValue;
+                    if (headerQuota) headerQuota.textContent = quotaValue;
+                    
+                    if (filterFrom) filterFrom.textContent = fromValue;
+                    if (filterTo) filterTo.textContent = toValue;
+                    
+                    if (card1From) card1From.textContent = fromValue;
+                    if (card1To) card1To.textContent = toValue;
+                    if (card2From) card2From.textContent = fromValue;
+                    if (card2To) card2To.textContent = toValue;
+
+                    // Sync quota radio button
+                    if (quotaRadioButtons) {
+                        quotaRadioButtons.forEach(radio => {
+                            radio.checked = (radio.value === quotaValue);
+                        });
+                    }
+
+                    // Switch pages
+                    if (homepageContent) homepageContent.classList.add('hidden');
+                    if (resultsPageContent) resultsPageContent.classList.remove('hidden');
+                    window.scrollTo(0, 0); // Scroll to top
+                    
+                    // Sync calendars
+                    if (homeCalendar && resultsCalendar) {
+                        const selectedDate = homeCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00"); // Use a fallback
+                        resultsCalendar.setDate(selectedDate, true); // true to trigger onChange
+                    }
+                    
+                    // Call filter function to ensure list is correct on load
+                    filterTrains();
+                    // Call text update function to set initial "All Classes" text
+                    updateClassFilterButtonText();
+                    // Call sort function to set initial sort order
+                    sortTrains('Duration');
+                });
+            }
+
+            // Go back to Homepage
+            if (modifySearchBtn) {
+                modifySearchBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Sync calendar back to homepage
+                    if (resultsCalendar && homeCalendar) {
+                        const selectedDate = resultsCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00");
+                        homeCalendar.setDate(selectedDate, false); // false to not trigger onChange
+                    }
+
+                    if (resultsPageContent) resultsPageContent.classList.add('hidden');
+                    if (homepageContent) homepageContent.classList.remove('hidden');
+                    window.scrollTo(0, 0); // Scroll to top
+                });
+            }
+
+            // --- Helper function to format date for the header ---
+            function formatHeaderDate(dateObj) {
+                if (!dateObj) return "Invalid Date";
+                const options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' };
+                // Use en-GB for d/m/y format, replace commas
+                return new Intl.DateTimeFormat('en-GB', options).format(dateObj).replace(/,/g, '');
+            }
+            
+            // Reset Filters
+            if (resetFiltersBtn) {
+                resetFiltersBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    filterCheckboxes.forEach(checkbox => checkbox.checked = false);
+                    timeFilterButtons.forEach(button => button.classList.remove('active'));
+                    // Also reset dropdown checkboxes
+                    dropdownCheckboxes.forEach(checkbox => checkbox.checked = false);
+                    
+                    filterTrains();
+                    updateClassFilterButtonText(); // Reset button text
+
+                    // NEW: Reset availability status
+                    document.querySelectorAll('.refresh-availability-btn').forEach(button => {
+                            const classNameSpan = button.querySelector('.font-semibold');
+                            if (classNameSpan) { // Check if it has been modified
+                                button.innerHTML = `
+                                    <span class="font-semibold">${classNameSpan.textContent}</span><br>
+                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                `;
+                            }
+                    });
+                });
+            }
+
+            // --- Main filter function ---
+            function filterTrains() {
+                // 1. Get selected class filters
+                const selectedClasses = [];
+                filterCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        selectedClasses.push(checkbox.getAttribute('data-class'));
+                    }
+                });
+
+                // 2. Get selected time filters
+                const selectedTimeRanges = [];
+                timeFilterButtons.forEach(button => {
+                    if (button.classList.contains('active')) {
+                        selectedTimeRanges.push(button.getAttribute('data-range').split('-'));
+                    }
+                });
+
+                let visibleTrainCount = 0;
+
+                // 3. Loop through each train card
+                allTrainCards.forEach(card => {
+                    let showCard = true; // Assume visible by default
+                    
+                    // --- Check against class filters ---
+                    if (selectedClasses.length > 0) {
+                        const trainClasses = card.getAttribute('data-classes').split(',');
+                        // Check if *any* of the train's classes are in the selected list
+                        const classMatch = trainClasses.some(trainClass => selectedClasses.includes(trainClass));
+                        if (!classMatch) {
+                            showCard = false;
+                        }
+                    }
+
+                    // --- Check against time filters (if card is still visible) ---
+                    if (showCard && selectedTimeRanges.length > 0) {
+                        const trainTime = card.getAttribute('data-departure-time'); // e.g., "18:50"
+                        
+                        // Check if train time falls into *any* selected range
+                        const timeMatch = selectedTimeRanges.some(range => {
+                            const startTime = range[0]; // "00:00"
+                            const endTime = range[1];   // "06:00"
+                            return trainTime >= startTime && (endTime === "24:00" ? trainTime <= endTime : trainTime < endTime);
+                        });
+                        
+                        if (!timeMatch) {
+                            showCard = false;
+                        }
+                    }
+
+                    // --- Show or hide the card ---
+                    if (showCard) {
+                        card.style.display = 'block';
+                        visibleTrainCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // --- Show/hide the 'No results' message ---
+                if (noResultsMessage) {
+                    if (visibleTrainCount === 0) {
+                        noResultsMessage.style.display = 'block';
+                    } else {
+                        noResultsMessage.style.display = 'none';
+                    }
+                }
+            }
+
+            // --- NEW: ADDED EVENT LISTENERS FOR FILTERS ---
+
+            // Sidebar Class Filter Listeners
+            filterCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    syncCheckboxes('filter-class', 'filter-class-dropdown', e.target);
+                    updateClassFilterButtonText();
+                    filterTrains();
+                });
+            });
+
+            // Departure Time Filter Listeners
+            timeFilterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.classList.toggle('active');
+                    filterTrains();
+                });
+            });
+
+            // --- Initialize Calendars ---
+            let homeCalendar;
+            let resultsCalendar;
+
+            if (document.getElementById('date-input')) {
+                homeCalendar = flatpickr("#date-input", {
+                    dateFormat: "d/m/Y", // Match the format
+                    defaultDate: "25/10/2025" // Set default for demo
+                });
+            }
+
+            if (document.getElementById('results-date-picker')) {
+                resultsCalendar = flatpickr("#results-date-picker", {
+                    dateFormat: "d/m/Y",
+                    defaultDate: "25/10/2025", // Set default for demo
+                    // When this calendar changes, update the text span inside it
+                    onChange: function(selectedDates, dateStr, instance) {
+                        if(resultsDate) {
+                            resultsDate.textContent = dateStr;
+                        }
+                        // Update the header date as well
+                        if(headerDateSpan && selectedDates[0]) {
+                            headerDateSpan.textContent = formatHeaderDate(selectedDates[0]);
+                        }
+                    }
+                });
+            }
+
+            // --- Previous/Next Day Button Logic ---
+            if (prevDayBtn) {
+                prevDayBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (!resultsCalendar) return;
+                    const currentDate = resultsCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00");
+                    const prevDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
+                    resultsCalendar.setDate(prevDate, true); // true to trigger onChange
+                });
+            }
+
+            if (nextDayBtn) {
+                nextDayBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (!resultsCalendar) return;
+                    const currentDate = resultsCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00");
+                    const nextDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
+                    resultsCalendar.setDate(nextDate, true); // true to trigger onChange
+                });
+            }
+
+            // --- NEW: DROPDOWN INTERACTIVITY ---
+
+            /**
+             * Helper to toggle dropdowns and close others
+             * @param {HTMLElement} dropdown - The dropdown element to toggle
+             */
+            function toggleDropdown(dropdown) {
+                if (!dropdown) return;
+                // Close all other dropdowns first
+                [classFilterDropdown, quotaFilterDropdown, sortByDropdown].forEach(d => {
+                    if (d && d !== dropdown) { // Check if d exists
+                        d.classList.add('hidden');
+                    }
+                });
+                // Toggle the target dropdown
+                dropdown.classList.toggle('hidden');
+            }
+
+            // Class Filter Dropdown Button
+            if (classFilterBtn) {
+                classFilterBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent window click listener
+                    toggleDropdown(classFilterDropdown);
+                });
+            }
+
+            // Quota Filter Dropdown Button
+            if (quotaFilterBtn) {
+                quotaFilterBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleDropdown(quotaFilterDropdown);
+                });
+            }
+
+            // Sort By Dropdown Button
+            if (sortByBtn) {
+                sortByBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleDropdown(sortByDropdown);
+                });
+            }
+
+            // Global click listener to close all dropdowns
+            window.addEventListener('click', () => {
+                if (classFilterDropdown) classFilterDropdown.classList.add('hidden');
+                if (quotaFilterDropdown) quotaFilterDropdown.classList.add('hidden');
+                if (sortByDropdown) sortByDropdown.classList.add('hidden');
+            });
+
+            // Stop propagation inside dropdowns to prevent closing
+            [classFilterDropdown, quotaFilterDropdown, sortByDropdown].forEach(dropdown => {
+                if (dropdown) { // Add null check
+                    dropdown.addEventListener('click', e => e.stopPropagation());
+                }
+            });
+
+            // Dropdown Class Checkbox Listeners
+            dropdownCheckboxes.forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    syncCheckboxes('filter-class-dropdown', 'filter-class', e.target);
+                    updateClassFilterButtonText();
+                    filterTrains(); // Re-run filter
+                });
+            });
+
+            // Quota Radio Button Listeners
+            if (quotaRadioGroup) {
+                quotaRadioGroup.addEventListener('change', (e) => {
+                    if (e.target.type === 'radio') {
+                        const newValue = e.target.value;
+                        
+                        // Update button text
+                        if (resultsQuota) resultsQuota.textContent = newValue;
+                        
+                        // Update header text
+                        if (headerQuota) headerQuota.textContent = newValue;
+                        
+                        // Sync homepage select (match by text value)
+                        if (quotaInput) {
+                            for (let i = 0; i < quotaInput.options.length; i++) {
+                                if (quotaInput.options[i].text === newValue) {
+                                    quotaInput.selectedIndex = i;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        // Close dropdown
+                        if (quotaFilterDropdown) quotaFilterDropdown.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Sort Option Button Listeners
+            sortOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const sortValue = option.getAttribute('data-value');
+                    const sortText = option.getAttribute('data-text');
+                    
+                    // Update main button text
+                    if (sortByText) sortByText.textContent = `Sort By | ${sortText}`;
+                    
+                    // Update active class
+                    sortOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    
+                    // Call the new sort function
+                    sortTrains(sortValue);
+                    
+                    // Close dropdown
+                    if (sortByDropdown) sortByDropdown.classList.add('hidden');
+                });
+            });
+
+
+            // --- NEW: AVAILABILITY REFRESH LOGIC ---
+            const refreshButtons = document.querySelectorAll('.refresh-availability-btn');
+            
+            refreshButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Find the elements to update
+                    const classNameSpan = button.querySelector('.font-semibold');
+                    const statusSpan = button.querySelector('.font-bold');
+
+                    // Check if already loading
+                    if (!statusSpan || statusSpan.textContent.includes('Checking...')) {
+                        return; 
+                    }
+
+                    // Store original content in a data attribute if not already stored
+                    if (!button.dataset.originalContent) {
+                        button.dataset.originalContent = button.innerHTML;
+                    }
+
+                    // 1. Show loading state
+                    statusSpan.innerHTML = 'Checking... <i class="fa-solid fa-spinner fa-spin"></i>';
+                    statusSpan.classList.remove('text-green-600', 'text-orange-600', 'text-red-600');
+                    statusSpan.classList.add('text-blue-600'); // Loading color
+
+                    // 2. Simulate API call
+                    setTimeout(() => {
+                        // Generate random availability
+                        const randomStatus = Math.random();
+                        let newStatusText = '';
+                        let newStatusColor = '';
+
+                        if (randomStatus > 0.4) { // Available
+                            const seats = Math.floor(Math.random() * 200) + 10;
+                            newStatusText = `Available ${seats}`;
+                            newStatusColor = 'text-green-600';
+                        } else if (randomStatus > 0.1) { // Waitlisted
+                            const seats = Math.floor(Math.random() * 50) + 1;
+                            newStatusText = `WL ${seats}`;
+                            newStatusColor = 'text-orange-600';
+                        } else { // Not Available
+                            newStatusText = 'Not Available';
+                            newStatusColor = 'text-red-600';
+                        }
+
+                        // 3. Update UI
+                        // Re-create the inner HTML structure
+                        button.innerHTML = `
+                            <span class="font-semibold">${classNameSpan.textContent}</span><br>
+                            <span class="${newStatusColor} font-bold">${newStatusText}</span>
+                        `;
+
+                    }, 1000 + Math.random() * 500); // Simulate network delay
+                });
+            });
+
+            
+            // --- NEW: TRAIN SCHEDULE MODAL LOGIC ---
+            const modalOverlay = document.getElementById('train-schedule-modal-overlay');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const modalTrainName = document.getElementById('modal-train-name');
+            const openModalLinks = document.querySelectorAll('.open-schedule-modal');
+            
+            // Static data elements in modal (could be updated dynamically)
+            const modalTrainNameStatic = document.getElementById('modal-train-name-static');
+            const modalTrainNumberStatic = document.getElementById('modal-train-number-static');
+
+            openModalLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Get train name from the link
+                    const trainName = link.getAttribute('data-train-name');
+                    
+                    // Update modal title
+                    if (modalTrainName) modalTrainName.textContent = `Train Schedule - ${trainName}`;
+                    
+                    // --- (Demo enhancement) ---
+                    // In a real app, you'd fetch data for *this* train.
+                    // For this demo, we'll just update the static part if we can.
+                    if (trainName.includes('16595')) {
+                        if (modalTrainNameStatic) modalTrainNameStatic.textContent = 'PANCHAGANGA EXP';
+                        if (modalTrainNumberStatic) modalTrainNumberStatic.textContent = '16595';
+                    } else if (trainName.includes('16585')) {
+                        if (modalTrainNameStatic) modalTrainNameStatic.textContent = 'SMVB MRDW EXP';
+                        if (modalTrainNumberStatic) modalTrainNumberStatic.textContent = '16585';
+                        // Note: The schedule table below is still for 16595 as we only have that data.
+                    }
+                    // --- End of demo enhancement ---
+
+                    // --- NEW: REAL-TIME DATE LOGIC ---
+                    if (resultsCalendar && modalOverlay) {
+                        const selectedDate = resultsCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00"); // "Day 1"
+                        const scheduleRows = modalOverlay.querySelectorAll('tbody.divide-y tr');
+
+                        scheduleRows.forEach(row => {
+                            // Ensure cells exist
+                            if (row.cells.length < 9) return; 
+                            
+                            const arrivalCell = row.cells[4];
+                            const departureCell = row.cells[5];
+                            const dayNumber = parseInt(row.cells[8].textContent, 10);
+
+                            if (isNaN(dayNumber) || !arrivalCell || !departureCell) return; // Skip if day number is invalid or cells are missing
+
+                            // 1. Restore original time (if it was stored)
+                            if (arrivalCell.dataset.originalTime) {
+                                arrivalCell.innerHTML = arrivalCell.dataset.originalTime;
+                            } else {
+                                // Store it for the first time
+                                arrivalCell.dataset.originalTime = arrivalCell.innerHTML;
+                            }
+                            
+                            if (departureCell.dataset.originalTime) {
+                                departureCell.innerHTML = departureCell.dataset.originalTime;
+                            } else {
+                                departureCell.dataset.originalTime = departureCell.innerHTML;
+                            }
+
+                            // 2. Calculate the new date for this row
+                            const scheduleRowDate = new Date(selectedDate.getTime());
+                            scheduleRowDate.setDate(scheduleRowDate.getDate() + (dayNumber - 1));
+                            
+                            // 3. Format the date (e.g., "Sat 25 Oct")
+                            const options = { weekday: 'short', day: '2-digit', month: 'short' };
+                            const dateString = new Intl.DateTimeFormat('en-GB', options).format(scheduleRowDate).replace(/,/g, '');
+
+                            // 4. Inject the new date
+                            if (arrivalCell.innerHTML.trim() !== '--') {
+                                arrivalCell.innerHTML += `<br><small class="text-gray-500 schedule-date-display">${dateString}</small>`;
+                            }
+                            if (departureCell.innerHTML.trim() !== '--') {
+                                departureCell.innerHTML += `<br><small class="text-gray-500 schedule-date-display">${dateString}</small>`;
+                            }
+                        });
+                    }
+                    // --- END OF NEW LOGIC ---
+
+                    // Show the modal
+                    if (modalOverlay) {
+                        modalOverlay.classList.remove('hidden');
+                        modalOverlay.classList.add('flex');
+                    }
+                });
+            });
+
+            // Close modal with 'x' button
+            if (modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', () => {
+                    if (modalOverlay) {
+                        modalOverlay.classList.add('hidden');
+                        modalOverlay.classList.remove('flex');
+                    }
+                });
+            }
+            
+            // Close modal by clicking overlay
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', (e) => {
+                    // Check if the click is on the overlay itself, not its children
+                    if (e.target === modalOverlay) {
+                        modalOverlay.classList.add('hidden');
+                        modalOverlay.classList.remove('flex');
+                    }
+                });
+            }
+
+            // --- NEW: CHATBOT LOGIC ---
+            const chatToggleBtn = document.getElementById('chat-toggle-btn');
+            const chatWindow = document.getElementById('chat-window');
+            const chatCloseBtn = document.getElementById('chat-close-btn');
+            const chatMessages = document.getElementById('chat-messages');
+            const chatInput = document.getElementById('chat-input');
+            const chatSendBtn = document.getElementById('chat-send-btn');
+            
+            // --- FIX: Check if chatToggleBtn exists before using it ---
+            let toggleIconOpen = null;
+            let toggleIconClose = null;
+
+            if (chatToggleBtn) {
+                toggleIconOpen = chatToggleBtn.querySelector('.fa-comment-dots');
+                toggleIconClose = chatToggleBtn.querySelector('.fa-times');
+            }
+
+            // Function to toggle the chat window
+            function toggleChatWindow() {
+                // Add null checks inside the function as well
+                if (chatWindow) {
+                    chatWindow.classList.toggle('show');
+                }
+                if (toggleIconOpen) {
+                    toggleIconOpen.classList.toggle('hidden');
+                }
+                if (toggleIconClose) {
+                    toggleIconClose.classList.toggle('hidden');
+                }
+            }
+
+            // Function to add a message to the chat
+            function addMessage(message, sender) {
+                // Add null check
+                if (!chatMessages) return; 
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('chat-message', sender);
+                messageDiv.innerHTML = `<p>${message}</p>`; // Use innerHTML to render any HTML (like links)
+                chatMessages.appendChild(messageDiv);
+                // Scroll to the bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Function to handle sending a message
+            function sendMessage() {
+                // Add null check
+                if (!chatInput) return; 
+                const userMessage = chatInput.value.trim();
+                if (userMessage === '') return;
+
+                // 1. Add user message to chat
+                addMessage(userMessage, 'user');
+                chatInput.value = '';
+
+                // 2. Simulate bot response
+                setTimeout(() => {
+                    let botResponse = "I'm sorry, I don't understand that. You can ask me to 'book a ticket', about 'classes', 'quotas', 'refunds', or 'PNR status'.";
+                    const userMsgLower = userMessage.toLowerCase();
+
+                    if (userMsgLower.includes('book')) {
+                        botResponse = 'Sure! Where would you like to go? Please tell me the "From" and "To" stations.';
+                    } else if (userMsgLower.includes('pnr')) {
+                        botResponse = 'To check your PNR status, please click the "PNR STATUS" tab on the main booking form. You will need your 10-digit PNR number.';
+                    } else if (userMsgLower.includes('hello') || userMsgLower.includes('hi')) {
+                        botResponse = 'Hello! How can I assist you with your train booking? You can ask about booking, PNR, quotas, or classes.';
+                    } else if (userMsgLower.includes('quota') || userMsgLower.includes('tatkal') || userMsgLower.includes('ladies')) {
+                        botResponse = "We support several quotas: <br><b>GENERAL</b>: For all passengers. <br><b>TATKAL</b>: For last-minute bookings, opens one day in advance. <br><b>LADIES</b>: For female passengers. <br><b>LOWER BERTH/SR.CITIZEN</b>: For senior citizens and female passengers 45+.";
+                    } else if (userMsgLower.includes('class') || userMsgLower.includes('sleeper') || userMsgLower.includes('3a')) {
+                        botResponse = "We offer many classes: <br><b>SL (Sleeper)</b>: Non-AC berths. <br><b>3A (AC 3 Tier)</b>: AC berths. <br><b>2A (AC 2 Tier)</b>: More spacious AC berths. <br><b>1A (AC First Class)</b>: Private AC cabins.";
+                    } else if (userMsgLower.includes('refund')) {
+                        botResponse = 'For refund rules, please check the "Refund Rules" link in the footer of the page. Refunds depend on when you cancel your ticket.';
+                    } else if (userMsgLower.includes('help') || userMsgLower.includes('contact')) {
+                        botResponse = 'For help, you can check the "CONTACT US" or "HELP & SUPPORT" links at the very top of the page.';
+                    } else if (userMsgLower.includes('schedule')) {
+                        botResponse = "You can check the train schedule on the search results page. After searching, click the 'Train Schedule' link on any train card.";
+                    }
+                    
+                    addMessage(botResponse, 'bot');
+                }, 1000);
+            }
+
+            // Event Listeners (with null checks)
+            if (chatToggleBtn) {
+                chatToggleBtn.addEventListener('click', toggleChatWindow);
+            }
+            if (chatCloseBtn) {
+                chatCloseBtn.addEventListener('click', toggleChatWindow);
+            }
+            if (chatSendBtn) {
+                chatSendBtn.addEventListener('click', sendMessage);
+            }
+            
+            // Allow sending with 'Enter' key
+            if (chatInput) {
+                chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        sendMessage();
+                    }
+                });
+            }
+
+        
+        }); // End of DOMContentLoaded
+    </script>
+
+</body>
+</html>

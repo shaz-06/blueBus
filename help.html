@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blueBus Help Center</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Set Inter as the default font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for the accordion */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-toggle.active + .faq-content {
+            /* max-height is set by JS to scrollHeight */
+        }
+        .faq-toggle.active .chevron {
+            transform: rotate(180deg);
+        }
+        .chevron {
+            transition: transform 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header / Navbar --><nav class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo / Brand --><div class="flex-shrink-0 flex items-center">
+                    <!-- Logo Image --><img src="logo.png" alt="blueBus Logo" class="h-8 mr-2">
+                    <span class="font-bold text-2xl">blueBus</span>
+                </div>
+                <!-- Navigation Links --><div class="hidden md:flex space-x-8">
+                    <a href="#" class="hover:text-blue-200 transition-colors">Home</a>
+                    <a href="#" class="hover:text-blue-200 transition-colors">My Bookings</a>
+                    <a href="#" class="font-semibold text-white border-b-2 border-white" aria-current="page">Help</a>
+                </div>
+                <!-- Mobile Menu Button (optional) --><div class="md:hidden">
+                    <button class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Help Hero Section --><header class="bg-blue-700 text-white py-16 sm:py-24 relative overflow-hidden" style="background-image: url('BlueBus.png'); background-size: cover; background-position: center;">
+        <!-- Overlay to improve text readability --><div class="absolute inset-0 bg-blue-800 opacity-70"></div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">How can we help you?</h1>
+            <p class="text-lg md:text-xl text-blue-100 mb-8">Find answers to your questions about bookings, refunds, and more.</p>
+            
+            <!-- Search Bar --><form class_disabled="max-w-2xl mx-auto" id="search-form">
+                <div class="relative">
+                    <input
+                        type="search"
+                        id="search-input"
+                        placeholder="Search for topics, e.g. 'cancellation'"
+                        class="w-full p-4 pr-12 text-gray-900 rounded-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    <button type="submit" class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 hover:text-blue-600">
+                        <!-- Search Icon SVG --><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </header>
+
+    <!-- Main Content --><main class="container mx-auto max-w-6xl py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+
+        <!-- Search Results Section (Initially Hidden) -->
+        <section id="search-results-container" class="hidden mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Search Results</h2>
+            <div id="search-results-list" class="space-y-4">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Topic Categories --><section id="browse-topics-section">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Browse Help Topics</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+                <!-- Category Card: Bus Tickets --><a href="busticket.html" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
+                        <!-- Bus Icon --><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v11.494m0-11.494c-2.43 0-4.418 1.988-4.418 4.418s1.988 4.418 4.418 4.418 4.418-1.988 4.418-4.418S14.43 6.253 12 6.253z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.182 11.671c.24-.712.38-1.46.38-2.253 0-4.142-3.358-7.5-7.5-7.5S4.568 5.276 4.568 9.418c0 .793.14 1.541.38 2.253m14.234 0c-.24.712-.38 1.46-.38 2.253 0 4.142-3.358 7.5-7.5 7.5s-7.5-3.358-7.5-7.5c0-.793.14-1.541.38-2.253m14.234 0H4.948" /></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-700 group-hover:text-blue-600">Bus Tickets</h3>
+                </a>
+                
+                <!-- Category Card: Train Tickets --><a href="traintickets.html" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
+                        <!-- Train Icon --><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-6 0V6a2.25 2.25 0 0 1 2.25-2.25h3.75a2.25 2.25 0 0 1 2.25 2.25v12.75m0-3.75h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-1.5c-.621 0-1.125-.504-1.125-1.125v-2.25c0-.621.504-1.125 1.125-1.125h.375m-6 0h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-1.5c-.621 0-1.125-.504-1.125-1.125v-2.25c0-.621.504-1.125 1.125-1.125h.375M9 6h6M15 6h-.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125h.375m-6 0h.375c.621 0 1.125.504 1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125h.375" /></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-700 group-hover:text-blue-600">Train Tickets</h3>
+                </a>
+
+                <!-- Category Card: Cancellations & Refunds --><a href="cancellations.html" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
+                        <!-- Refresh Icon --><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-700 group-hover:text-blue-600">Cancellations</h3>
+                </a>
+
+                <!-- Category Card: Payments & Offers --><a href="offers.html" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
+                        <!-- Credit Card Icon --><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h6m3-3.75l-3 3m0 0l-3-3m3 3V15m6-1.5h.008v.008H18V15Zm-3 0h.008v.008H15V15Z" /></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-700 group-hover:text-blue-600">Payments & Offers</h3>
+                </a>
+
+                <!-- Category Card: My Account --><a href="account.html" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 group hover:-translate-y-1 col-span-2 md:col-span-1">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
+                        <!-- User Icon --><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-700 group-hover:text-blue-600">My Account</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- FAQ Section --><section id="faq-section" class="mt-16 sm:mt-24">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Frequently Asked Questions</h2>
+            <div class="max-w-3xl mx-auto space-y-4">
+
+                <!-- FAQ Item 1 --><div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <button class="faq-toggle w-full flex justify-between items-center p-5 font-semibold text-left text-gray-700 focus:outline-none">
+                        <span>How do I cancel my bus or train ticket?</span>
+                        <!-- Chevron Icon --><svg class="chevron w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                    </button>
+                    <div class="faq-content">
+                        <p class="p-5 border-t border-gray-200 text-gray-600 leading-relaxed">
+                            You can cancel your ticket through the "My Bookings" section of the app or website. Select the booking you wish to cancel and click on the "Cancel Ticket" button. Please note that cancellation policies and fees vary by operator.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 --><div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <button class="faq-toggle w-full flex justify-between items-center p-5 font-semibold text-left text-gray-700 focus:outline-none">
+                        <span>When will I get my refund after cancellation?</span>
+                        <!-- Chevron Icon --><svg class="chevron w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                    </button>
+                    <div class="faq-content">
+                        <p class="p-5 border-t border-gray-200 text-gray-600 leading-relaxed">
+                            Refunds are typically processed within 5-7 business days from the date of cancellation. The amount will be credited back to your original source of payment. In some cases, it may take up to 10 days depending on your bank.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 --><div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <button class="faq-toggle w-full flex justify-between items-center p-5 font-semibold text-left text-gray-700 focus:outline-none">
+                        <span>Can I change my boarding point or drop-off point?</span>
+                        <!-- Chevron Icon --><svg class="chevron w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                    </button>
+                    <div class="faq-content">
+                        <p class="p-5 border-t border-gray-200 text-gray-600 leading-relaxed">
+                            This depends on the bus operator's policy. Some operators allow you to change your boarding point up to a few hours before departure. You can check this option in the "My Bookings" section. Changes to drop-off points are generally not permitted after booking.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 --><div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <button class="faq-toggle w-full flex justify-between items-center p-5 font-semibold text-left text-gray-700 focus:outline-none">
+                        <span>I missed my bus/train. What should I do?</span>
+                        <!-- Chevron Icon --><svg class="chevron w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                    </button>
+                    <div class="faq-content">
+                        <p class="p-5 border-t border-gray-200 text-gray-600 leading-relaxed">
+                            Unfortunately, if you miss your bus or train, the ticket is considered a "No Show" and is non-refundable. We recommend contacting the operator directly to see if they can accommodate you on a later service, but this is not guaranteed.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Contact Support Section --><section id="contact-section" class="bg-blue-50 border border-blue-200 rounded-lg max-w-4xl mx-auto mt-16 sm:mt-24 p-8 sm:p-12">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="flex-shrink-0 mb-6 md:mb-0 md:mr-8">
+                    <!-- Lifebuoy Icon --><svg class="w-20 h-20 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 10.5 4.5m0 0L4.5 10.5m6-6v6m0 0L10.5 10.5m0-6L4.5 4.5m6 6 6-6m-6 6 6 6" /></svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3">Still looking for answers?</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Our customer support team is available 24/7 to help you with any questions or issues you may have. Please don't hesitate to reach out.</p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="chat.html" class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 text-center">
+                            Chat With Us
+                        </a>
+                        <a href="email.html" class="w-full sm:w-auto px-6 py-3 bg-white text-blue-600 border border-blue-600 font-semibold rounded-lg shadow-sm hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 text-center">
+                            Email Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright --><div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+                &copy; 2025 blueBus. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Accordion and Search --><script>
+        // All help topics
+        const helpTopics = [
+            {
+                title: 'How do I cancel my bus or train ticket?',
+                content: 'You can cancel your ticket through the "My Bookings" section of the app or website. Select the booking you wish to cancel and click on the "Cancel Ticket" button. Please note that cancellation policies and fees vary by operator.',
+                category: 'Cancellations'
+            },
+            {
+                title: 'When will I get my refund after cancellation?',
+                content: 'Refunds are typically processed within 5-7 business days from the date of cancellation. The amount will be credited back to your original source of payment. In some cases, it may take up to 10 days depending on your bank.',
+                category: 'Cancellations'
+            },
+            {
+                title: 'Can I change my boarding point or drop-off point?',
+                content: 'This depends on the bus operator\'s policy. Some operators allow you to change your boarding point up to a few hours before departure. You can check this option in the "My Bookings" section. Changes to drop-off points are generally not permitted after booking.',
+                category: 'Bus Tickets'
+            },
+            {
+                title: 'I missed my bus/train. What should I do?',
+                content: 'Unfortunately, if you miss your bus or train, the ticket is considered a "No Show" and is non-refundable. We recommend contacting the operator directly to see if they can accommodate you on a later service, but this is not guaranteed.',
+                category: 'Bus Tickets'
+            },
+            {
+                title: 'What payment methods are accepted?',
+                content: 'We accept all major credit cards (Visa, MasterCard, Amex), debit cards, net banking, and popular UPI wallets like Google Pay, PhonePe, and Paytm.',
+                category: 'Payments & Offers'
+            },
+            {
+                title: 'How do I apply a coupon code?',
+                content: 'You can apply a coupon code on the payment page. Look for the "Apply Coupon" or "Have a promo code?" link, enter your code, and click apply to see the discount.',
+                category: 'Payments & Offers'
+            },
+            {
+                title: 'How do I reset my account password?',
+                content: 'On the login screen, click the "Forgot Password" link. Enter your registered email address or mobile number, and we will send you instructions to reset your password.',
+                category: 'My Account'
+            },
+            {
+                title: 'Is my train ticket confirmed?',
+                content: 'You can check the status of your train ticket in the "My Bookings" section. A "Confirmed" status (CNF) means your seat is confirmed. A "Waitlisted" (WL) status means you are in the queue.',
+                category: 'Train Tickets'
+            }
+        ];
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // --- Accordion Logic ---
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+            faqToggles.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    button.classList.toggle('active');
+
+                    if (button.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    } else {
+                        content.style.maxHeight = '0';
+                    }
+                    
+                    faqToggles.forEach(otherButton => {
+                        if (otherButton !== button && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.style.maxHeight = '0';
+                        }
+                    });
+                });
+            });
+
+            // --- Search Logic ---
+            const searchForm = document.getElementById('search-form');
+            const searchInput = document.getElementById('search-input');
+            const resultsContainer = document.getElementById('search-results-container');
+            const resultsList = document.getElementById('search-results-list');
+            
+            // Get main content sections to hide/show
+            const browseTopicsSection = document.getElementById('browse-topics-section');
+            const faqSection = document.getElementById('faq-section');
+            const contactSection = document.getElementById('contact-section');
+
+            // Handle search form submission (prevents page reload)
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                performSearch(searchInput.value);
+            });
+
+            // Handle real-time input in the search bar
+            searchInput.addEventListener('input', function(e) {
+                performSearch(e.target.value);
+            });
+
+            function performSearch(query) {
+                const searchTerm = query.trim().toLowerCase();
+                
+                // Clear previous results
+                resultsList.innerHTML = '';
+
+                if (searchTerm.length === 0) {
+                    // If search is cleared, hide results and show main content
+                    resultsContainer.classList.add('hidden');
+                    browseTopicsSection.classList.remove('hidden');
+                    faqSection.classList.remove('hidden');
+                    contactSection.classList.remove('hidden');
+                    return;
+                }
+
+                const filteredTopics = helpTopics.filter(topic => 
+                    topic.title.toLowerCase().includes(searchTerm) || 
+                    topic.content.toLowerCase().includes(searchTerm)
+                );
+
+                if (filteredTopics.length > 0) {
+                    filteredTopics.forEach(topic => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'bg-white p-6 rounded-lg shadow-sm border border-gray-200';
+                        resultItem.innerHTML = `
+                            <h3 class="font-semibold text-lg text-blue-600 mb-2">${highlightText(topic.title, searchTerm)}</h3>
+                            <p class="text-gray-600">${highlightText(topic.content, searchTerm)}</p>
+                            <p class="text-sm text-gray-400 mt-3">Category: ${topic.category}</p>
+                        `;
+                        resultsList.appendChild(resultItem);
+                    });
+                } else {
+                    // Show no results message
+                    resultsList.innerHTML = `
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 text-center">
+                            <h3 class="font-semibold text-lg text-gray-700 mb-2">No results found</h3>
+                            <p class="text-gray-600">We couldn't find any help topics matching your search. Please try different keywords.</p>
+                        </div>
+                    `;
+                }
+
+                // Show results container and hide main content
+                resultsContainer.classList.remove('hidden');
+                browseTopicsSection.classList.add('hidden');
+                faqSection.classList.add('hidden');
+                contactSection.classList.add('hidden');
+            }
+
+            // Helper function to highlight the search term in results
+            function highlightText(text, term) {
+                if (!term) return text;
+                const regex = new RegExp(`(${escapeRegExp(term)})`, 'gi');
+                return text.replace(regex, '<mark class="bg-yellow-200 rounded">$1</mark>');
+            }
+
+            // Helper function to escape regex special characters
+            function escapeRegExp(string) {
+                return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
+
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

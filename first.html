@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers - blueBus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .coupon-card {
+            background: linear-gradient(135deg, #F0F5FF 0%, #E6F0FF 100%);
+            border: 1px dashed #4A90E2;
+            position: relative;
+            padding-left: 1.75rem; /* 28px */
+        }
+        .coupon-card::before, .coupon-card::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: #f0f2f5;
+            border-radius: 50%;
+            border: 1px dashed #4A90E2;
+        }
+        .coupon-card::before {
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .coupon-card::after {
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .circle-cutout {
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background-color: #f0f2f5;
+            border-radius: 50%;
+        }
+        .copy-btn-feedback {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-md sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto p-4 flex items-center gap-4">
+            <img src="logo.png" alt="blueBus Logo" class="h-8 w-auto">
+            <h1 class="text-2xl font-bold">blueBus</h1>
+            <h2 class="text-xl font-medium ml-auto">All Offers</h2>
+        </div>
+    </header>
+
+    <!-- Offers Container -->
+    <main class="max-w-4xl mx-auto p-4 md:p-6">
+        <div class="space-y-6">
+
+            <!-- Offer 1: First Ride Free -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <div class="p-6 flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <!-- Icon -->
+                    <div class="flex-shrink-0">
+                        <div class="bg-blue-100 text-blue-600 p-4 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div>
+                    </div>
+                    <!-- Offer Details -->
+                    <div class="flex-grow">
+                        <p class="text-sm font-medium text-blue-600">First Ride Offer</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1">First Ride Free! (Up to ₹300)</h3>
+                        <p class="text-gray-500 mt-2">Welcome to blueBus! Get your first ride on us. Max discount ₹300.</p>
+                    </div>
+                    <!-- Coupon Code -->
+                    <div class="w-full md:w-auto mt-4 md:mt-0">
+                       <div class="coupon-card rounded-lg p-4 text-center relative overflow-visible">
+                           <div class="circle-cutout"></div>
+                           <span class="text-gray-500 text-sm">Use code:</span>
+                           <div class="flex items-center justify-center gap-2 mt-2">
+                               <p id="code-1" class="text-xl font-bold text-blue-700 tracking-widest">BLUEFIRST</p>
+                               <button onclick="copyCode('code-1', this)" class="copy-btn-feedback bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                                   Copy
+                               </button>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-2">
+                    <a href="#" class="text-xs text-gray-500 hover:text-blue-600">Terms & Conditions apply</a>
+                </div>
+            </div>
+
+            <!-- Offer 2: Festive Discount -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <div class="p-6 flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <!-- Icon -->
+                    <div class="flex-shrink-0">
+                        <div class="bg-orange-100 text-orange-600 p-4 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                    </div>
+                    <!-- Offer Details -->
+                    <div class="flex-grow">
+                        <p class="text-sm font-medium text-orange-600">Festive Special</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1">Flat 20% OFF on all bookings</h3>
+                        <p class="text-gray-500 mt-2">Celebrate the season with amazing discounts on your travel.</p>
+                    </div>
+                    <!-- Coupon Code -->
+                    <div class="w-full md:w-auto mt-4 md:mt-0">
+                       <div class="coupon-card rounded-lg p-4 text-center relative overflow-visible">
+                           <div class="circle-cutout"></div>
+                           <span class="text-gray-500 text-sm">Use code:</span>
+                           <div class="flex items-center justify-center gap-2 mt-2">
+                               <p id="code-2" class="text-xl font-bold text-blue-700 tracking-widest">FESTIVE20</p>
+                               <button onclick="copyCode('code-2', this)" class="copy-btn-feedback bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                                   Copy
+                               </button>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-2">
+                    <a href="#" class="text-xs text-gray-500 hover:text-blue-600">Terms & Conditions apply</a>
+                </div>
+            </div>
+
+            <!-- Offer 3: Bank Offer -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <div class="p-6 flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <!-- Icon -->
+                    <div class="flex-shrink-0">
+                        <div class="bg-green-100 text-green-600 p-4 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        </div>
+                    </div>
+                    <!-- Offer Details -->
+                    <div class="flex-grow">
+                        <p class="text-sm font-medium text-green-600">Bank Offer</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1">Get 15% Cashback with HDFC Bank</h3>
+                        <p class="text-gray-500 mt-2">Pay using HDFC Bank cards to avail this exciting cashback offer.</p>
+                    </div>
+                    <!-- Coupon Code -->
+                    <div class="w-full md:w-auto mt-4 md:mt-0">
+                       <div class="coupon-card rounded-lg p-4 text-center relative overflow-visible">
+                           <div class="circle-cutout"></div>
+                           <span class="text-gray-500 text-sm">Use code:</span>
+                           <div class="flex items-center justify-center gap-2 mt-2">
+                               <p id="code-3" class="text-xl font-bold text-blue-700 tracking-widest">BLUEHDFC</p>
+                               <button onclick="copyCode('code-3', this)" class="copy-btn-feedback bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                                   Copy
+                               </button>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-2">
+                    <a href="#" class="text-xs text-gray-500 hover:text-blue-600">Terms & Conditions apply</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function copyCode(elementId, buttonElement) {
+            const codeElement = document.getElementById(elementId);
+            const textToCopy = codeElement.innerText;
+            
+            // A workaround for clipboard API in secure contexts (like iframes)
+            const textArea = document.createElement('textarea');
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                buttonElement.innerText = 'Copied!';
+                buttonElement.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                buttonElement.classList.add('bg-green-500');
+                
+                setTimeout(() => {
+                    buttonElement.innerText = 'Copy';
+                    buttonElement.classList.remove('bg-green-500');
+                    buttonElement.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                }, 2000);
+
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexiTicket</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+    <!-- Main container for the ticket information card -->
+    <div class="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden my-8">
+        
+        <!-- Header Section with Blue Background -->
+        <div class="relative text-white text-center p-8 sm:p-12 overflow-hidden">
+            <!-- Background Image with Blur -->
+            <div class="absolute inset-0 bg-cover bg-center filter blur-sm" style="background-image: url('BlueBus.png'); z-index: 0;"></div>
+            <!-- Blue Overlay for readability -->
+            <div class="absolute inset-0 bg-blue-800 opacity-60" style="z-index: 1;"></div>
+
+            <!-- Content -->
+            <div class="relative" style="z-index: 2;">
+                <p class="text-lg mb-2">Introducing</p>
+                <h1 class="text-5xl font-bold mb-6">FlexiTicket</h1>
+                
+                <!-- FlexiTicket Icon -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-yellow-400 text-blue-900 font-bold p-4 rounded-lg w-48">
+                        <div class="flex items-center justify-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform -rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform rotate-135" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                        </div>
+                        <p class="text-sm leading-tight mt-1">FREE</p>
+                        <p class="text-sm leading-tight">DATE CHANGE</p>
+                        <p class="text-xs leading-tight">AT NO EXTRA RATE</p>
+                    </div>
+                </div>
+
+                <p class="text-lg">Get amazing benefits on Date Change and Cancellation</p>
+            </div>
+        </div>
+
+        <!-- Content Section with White Background -->
+        <div class="p-8 sm:p-10">
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">HOW DO I CHOOSE A FLEXI TICKET?</h2>
+            <p class="text-gray-600 text-center mb-6">Choose a bus that has a Flexi ticket tag on it.</p>
+            
+            <!-- Image for Flexi Ticket Tag -->
+            <img src="flexi.png" alt="Flexi Ticket Tag Example" class="w-full h-auto rounded-lg mb-6 shadow-md" onerror="this.src='https://placehold.co/600x400/CCCCCC/FFFFFF?text=Image+Not+Found'">
+
+
+            <p class="text-gray-600 text-center mb-6">Look out for this tag when you search for buses</p>
+
+            <!-- Highlighted Info Boxes -->
+            <div class="space-y-4 mb-8">
+                <div class="bg-gray-100 p-4 rounded-lg">
+                    <div class="flex">
+                        <div class="mr-3 mt-1 flex-shrink-0">
+                            <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 16 16">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-700">
+                            With flexi ticket, you can change your travel date for free up to 8 hours before departure.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg">
+                    <div class="flex">
+                        <div class="mr-3 mt-1 flex-shrink-0">
+                             <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 16 16">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-700">
+                           Get minimum 50% refund if you cancel your ticket at least 12 hours before the departure.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 text-center mb-6">FREQUENTLY ASKED QUESTIONS</h3>
+                <div class="space-y-4" id="faq-accordion">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-gray-100 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center text-left p-4 font-semibold text-gray-700">
+                            <span>What does Free date change mean?</span>
+                            <span class="plus-icon text-xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4">
+                            <p class="text-gray-600">Free date change means you can reschedule your trip to a future date without any penalty or change fees, as long as it's done within the specified time frame before departure.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-gray-100 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center text-left p-4 font-semibold text-gray-700">
+                            <span>How much refund will I get on cancellation?</span>
+                            <span class="plus-icon text-xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4">
+                            <p class="text-gray-600">With a FlexiTicket, you are guaranteed a minimum refund of 50% if you cancel your ticket at least 12 hours before the scheduled departure time.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-gray-100 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center text-left p-4 font-semibold text-gray-700">
+                            <span>How do I select a FlexiTicket bus?</span>
+                            <span class="plus-icon text-xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4">
+                            <p class="text-gray-600">When searching for buses, look for the "FlexiTicket" tag next to the bus service listing. You can filter your search to show only buses with this option.</p>
+                        </div>
+                    </div>
+                     <!-- FAQ Item 4 -->
+                    <div class="bg-gray-100 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center text-left p-4 font-semibold text-gray-700">
+                            <span>How do I know if my existing booking is FlexiTicket?</span>
+                            <span class="plus-icon text-xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4">
+                            <p class="text-gray-600">You can check your ticket details in your booking history. If your ticket is a FlexiTicket, it will be clearly mentioned in the ticket information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Button -->
+            <a href="index.html" class="block w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition duration-300 text-center">
+                SEARCH BUSES
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for the accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const plusIcon = header.querySelector('.plus-icon');
+
+                // Close other open accordions
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    if (item !== content && item.style.maxHeight) {
+                        item.style.maxHeight = null;
+                        item.previousElementSibling.querySelector('.plus-icon').textContent = '+';
+                    }
+                });
+                
+                // Toggle current accordion
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    plusIcon.textContent = '+';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    plusIcon.textContent = '−';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+

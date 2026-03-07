@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blueBus - Book Bus & Train Tickets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        body.chat-open {
+            overflow: hidden;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('BlueBus.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .offer-card {
+            transition: all 0.3s ease-in-out;
+        }
+        .offer-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .active-tab {
+            border-bottom-color: #3b82f6;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .tab-inactive {
+            border-bottom-color: transparent;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Styles for seat selection */
+        .seat {
+            border: 1px solid #93c5fd;
+            transition: background-color 0.2s;
+        }
+        .seat-available:hover {
+            background-color: #dbeafe;
+        }
+        .seat-selected {
+            background-color: #3b82f6 !important;
+            color: white;
+            border-color: #2563eb;
+        }
+        .seat-booked {
+            background-color: #e5e7eb;
+            color: #6b7280;
+            cursor: not-allowed;
+            border-color: #d1d5db;
+        }
+        /* Modal styles */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            animation: slideInUp 0.3s;
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .result-action-area .book-btn, .result-action-area .price-text {
+            transition: all 0.2s ease-in-out;
+        }
+        .result-action-area:hover .book-btn {
+            background-color: #1d4ed8; /* blue-700 */
+            transform: scale(1.05);
+        }
+        .result-action-area:hover .price-text {
+            color: #1d4ed8; /* blue-700 */
+            transform: scale(1.05);
+            display: inline-block;
+        }
+        #seatTooltip {
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .nav-link {
+            position: relative;
+            padding-bottom: 4px; /* Space for the underline */
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+         /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* --- AI Chat Styles --- */
+        .chat-fab {
+            transition: all 0.3s ease;
+            background-image: linear-gradient(to right, #3b82f6, #60a5fa);
+            animation: pulseFab 2.5s infinite ease-in-out;
+        }
+        .chat-fab:hover {
+            animation-play-state: paused;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.5);
+            /* Added brightness filter on hover */
+            filter: brightness(1.1);
+        }
+        .chat-modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s;
+        }
+        .chat-modal-content {
+            animation: slideInBottom 0.4s ease-out;
+            max-height: 85vh;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        @keyframes slideInBottom {
+             from { opacity: 0; transform: translateY(100px); }
+             to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOutBottom {
+             from { opacity: 1; transform: translateY(0); }
+             to { opacity: 0; transform: translateY(100px); }
+        }
+        .chat-modal-content.fade-out {
+             animation: fadeOutBottom 0.3s ease-in;
+        }
+        @keyframes pulseFab {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 20px rgba(59, 130, 246, 0.6);
+            }
+        }
+        .chat-header {
+            background-image: linear-gradient(to right, #3b82f6, #60a5fa);
+            padding: 1rem 1.5rem;
+            color: white;
+            border-bottom: none;
+            border-radius: 1rem 1rem 0 0;
+            flex-shrink: 0;
+        }
+        .chat-header h3 {
+             font-weight: 700;
+             font-size: 1.25rem;
+        }
+        .chat-header button {
+            color: #dbeafe;
+            transition: color 0.2s;
+        }
+         .chat-header button:hover {
+            color: white;
+        }
+        .chat-body {
+            height: 400px;
+            background-color: white;
+            padding: 1.25rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .chat-bubble {
+            max-width: 80%;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+             line-height: 1.5;
+        }
+        .chat-bubble-ai {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            border-bottom-left-radius: 0.25rem;
+        }
+        .chat-bubble-user {
+            background-color: #3b82f6;
+            color: white;
+            border-bottom-right-radius: 0.25rem;
+        }
+         .chat-bubble-ai a {
+            color: #2563eb;
+            text-decoration: underline;
+            font-weight: 500;
+         }
+        .chat-bubble-ai-typing {
+            animation: typing-bubble 1.2s infinite ease-in-out;
+        }
+        @keyframes typing-bubble {
+             0%, 100% { opacity: 0.5; transform: scale(0.8); }
+             50% { opacity: 1; transform: scale(1); }
+        }
+        #chatSuggestions {
+            background-color: #f9fafb;
+            padding: 0.75rem;
+            border-top: 1px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+        .suggestion-btn {
+            background-color: white;
+            color: #3b82f6;
+            border: 1px solid #dbeafe;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .suggestion-btn:hover {
+            background-color: #eff6ff;
+            border-color: #bfdbfe;
+            transform: translateY(-1px);
+             box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .chat-footer {
+            background-color: #f9fafb;
+            border-radius: 0 0 1rem 1rem;
+             flex-shrink: 0;
+        }
+        #chatInput {
+            border-color: #d1d5db;
+            padding: 0.75rem 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        #chatInput:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+             outline: none;
+        }
+        .chat-footer button[type="submit"] {
+            background-image: linear-gradient(to right, #3b82f6, #60a5fa);
+            transition: all 0.2s ease;
+             box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+        }
+        .chat-footer button[type="submit"]:hover {
+            transform: scale(1.05);
+             box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-2 cursor-pointer" id="homeLink">
+                    <!-- Updated src to logo.png -->
+                    <img src="logo.png" alt="blueBus Logo" class="h-8 w-8" onerror="this.src='https://placehold.co/32x32/3B82F6/FFFFFF?text=B'">
+                    <span class="text-2xl font-bold text-blue-600">blueBus</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#offersSection" id="offersLink" class="nav-link text-gray-600 hover:text-blue-600">Offers</a>
+                    <div class="relative" id="myBookingsDropdown">
+                        <button id="myBookingsBtn" class="nav-link text-gray-600 hover:text-blue-600 flex items-center">
+                            My Bookings
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="myBookingsMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                            <a href="#" id="busTicketsLink" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Bus Tickets</a>
+                            <a href="#" id="trainTicketsLink" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Train Tickets</a>
+                            <a href="#" id="cancelLink" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cancel</a>
+                        </div>
+                    </div>
+                    <a href="help.html" id="helpLink" class="nav-link text-gray-600 hover:text-blue-600">Help</a>
+                    <a href="stop.html" id="restroomBtn" class="nav-link text-gray-600 hover:text-blue-600">Restroom Stop</a>
+                </div>
+                <button id="loginBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center space-x-2">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                    <span>Login / Signup</span>
+                </button>
+                 <div id="profileIcon" class="hidden items-center space-x-2 cursor-pointer">
+                        <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=U" class="rounded-full h-10 w-10 border-2 border-blue-500" alt="User Avatar">
+                        <span id="usernameDisplay" class="font-medium">User</span>
+                 </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="app">
+        <!-- Dynamic content will be injected here -->
+    </main>
+    
+    <!-- E-Receipt Modal -->
+    <div id="receiptModal" class="fixed inset-0 z-50 flex items-center justify-center modal-backdrop hidden">
+        <div id="receiptContent" class="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 modal-content"></div>
+    </div>
+
+    <!-- Custom Message Modal -->
+    <div id="messageModal" class="fixed inset-0 z-[60] flex items-center justify-center modal-backdrop hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 modal-content p-6">
+            <div class="flex justify-between items-center mb-4"> <h3 id="messageTitle" class="text-xl font-bold">Message</h3> <button id="closeMessageModal" class="text-3xl text-gray-500 hover:text-gray-800 leading-none">&times;</button> </div>
+            <p id="messageBody" class="text-gray-700"></p>
+            <button id="okMessageModal" class="mt-6 w-full bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600">OK</button>
+        </div>
+    </div>
+
+    <!-- AI Chat FAB -->
+    <button id="aiChatFab" class="chat-fab fixed bottom-6 right-6 text-white p-4 rounded-full shadow-lg z-40">
+        <img src="image_238766.png" alt="Chat with Shetty" class="w-8 h-8 rounded-full" onerror="this.src='https://placehold.co/32x32/3B82F6/FFFFFF?text=R'">
+    </button>
+
+    <!-- AI Chat Modal -->
+    <div id="aiChatModal" class="fixed inset-0 z-[80] flex items-end justify-center chat-modal-backdrop p-4 hidden">
+        <div class="chat-modal-content bg-white shadow-xl w-full max-w-lg">
+            <div class="chat-header flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <img src="image_238766.png" alt="Shetty Robot" class="h-10 w-10 rounded-full object-cover" onerror="this.src='https://placehold.co/40x40/3B82F6/FFFFFF?text=R'">
+                    <h3 class="font-bold">Shetty</h3>
+                </div>
+                <button id="closeAiChat" class="text-3xl leading-none">&times;</button>
+            </div>
+            <div id="chatBody" class="p-4 space-y-4 overflow-y-auto no-scrollbar"></div>
+            <div id="chatSuggestions" class="p-2 pt-0 flex flex-wrap gap-2 justify-center"></div>
+            <div class="chat-footer p-4">
+                <form id="chatSendForm" class="flex items-center space-x-2">
+                    <input type="text" id="chatInput" class="flex-grow block w-full rounded-lg shadow-sm" placeholder="Ask Shetty..." autocomplete="off">
+                    <button type="submit" class="text-white p-3 rounded-lg flex-shrink-0">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seat Price Tooltip -->
+    <div id="seatTooltip" class="hidden absolute z-[100] bg-gray-800 text-white text-sm px-2 py-1 rounded-md shadow-lg"></div>
+
+    <script>
+        const app = document.getElementById('app');
+        const loginBtn = document.getElementById('loginBtn');
+        const profileIcon = document.getElementById('profileIcon');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const receiptModal = document.getElementById('receiptModal');
+        
+        // --- AI Chat Elements ---
+        const aiChatFab = document.getElementById('aiChatFab');
+        const aiChatModal = document.getElementById('aiChatModal');
+        const aiChatModalContent = document.querySelector('.chat-modal-content'); 
+        const closeAiChat = document.getElementById('closeAiChat');
+        const chatBody = document.getElementById('chatBody');
+        const chatSendForm = document.getElementById('chatSendForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatSuggestions = document.getElementById('chatSuggestions');
+        
+        // --- STATE MANAGEMENT ---
+        const state = { isLoggedIn: false, username: '', email: '', currentView: 'SEARCH', previousView: 'SEARCH', searchParams: {}, searchResults: [], selectedTrip: null, selectedSeats: [], totalFare: 0, bookingDetails: null, isChatOpen: false, chatHistory: [{ role: 'ai', message: 'Hello! I am Shetty, your personal AI assistant. How can I help you book your trip today?' }], };
+
+        // --- MOCK DATA ---
+        const mockData = { BUS: [{ id: 'B1', operator: 'Blue Arrow', type: 'AC Sleeper', from: 'Bengaluru', to: 'Chennai', depTime: '21:00', arrTime: '04:30', duration: '7h 30m', rating: 4.5, price: 950, seatsBooked: ['1A', '2B', '5C', '8D'] }, { id: 'B2', operator: 'Skyline Travels', type: 'Non-AC Seater', from: 'Bengaluru', to: 'Chennai', depTime: '22:30', arrTime: '06:00', duration: '7h 30m', rating: 4.2, price: 600, seatsBooked: ['3A', '4B', '6C'] }, { id: 'B3', operator: 'Road King', type: 'Volvo Multi-Axle', from: 'Bengaluru', to: 'Mumbai', depTime: '19:00', arrTime: '11:00', duration: '16h 0m', rating: 4.8, price: 2100, seatsBooked: ['1D', '2A', '7B'] }], TRAIN: [{ id: 'T1', operator: 'Shatabdi Exp', type: 'AC Chair Car', from: 'Bengaluru', to: 'Chennai', depTime: '06:00', arrTime: '11:00', duration: '5h 0m', rating: 4.7, price: 850 }, { id: 'T2', operator: 'Lalbagh Exp', type: 'Second Sitting', from: 'Bengaluru', to: 'Chennai', depTime: '06:30', arrTime: '12:15', duration: '5h 45m', rating: 4.1, price: 175 }, { id: 'T3', operator: 'Udyan Exp', type: 'Sleeper Class', from: 'Bengaluru', to: 'Mumbai', depTime: '20:00', arrTime: '19:50', duration: '23h 50m', rating: 4.0, price: 750 }], BOOKINGS: [{ id: 'BB-XYZ123', type: 'BUS', operator: 'Blue Arrow', from: 'Bengaluru', to: 'Chennai', date: '2025-09-25', price: 950, seats: ['L-S1'], status: 'Completed' }, { id: 'BB-ABC456', type: 'BUS', operator: 'Road King', from: 'Bengaluru', to: 'Mumbai', date: '2025-10-15', price: 2100, seats: ['U-R2A'], status: 'Completed' }, { id: 'BB-DEF789', type: 'TRAIN', operator: 'Shatabdi Exp', from: 'Bengaluru', to: 'Chennai', date: '2025-09-30', price: 850, seats: [], status: 'Completed' }, { id: 'BB-GHI101', type: 'BUS', operator: 'Skyline Travels', from: 'Bengaluru', to: 'Chennai', date: '2025-10-27', price: 600, seats: ['4A', '4B'], status: 'Upcoming' }] };
+
+        // --- TEMPLATES / RENDER FUNCTIONS ---
+        const render = () => { app.innerHTML = ''; switch (state.currentView) { case 'SEARCH': renderSearchForm(); break; case 'RESULTS': renderSearchResults(); break; case 'SEAT_SELECTION': renderSeatSelection(); break; case 'PAYMENT': renderPayment(); break; case 'CONFIRMATION': renderConfirmation(); break; case 'BOOKINGS_BUS': renderMyBusBookings(); break; case 'BOOKINGS_TRAIN': renderMyTrainBookings(); break; case 'LOGIN': renderLoginPage(); break; case 'HELP': renderHelpPage(); break; default: renderSearchForm(); } };
+        const renderHelpPage = () => { document.body.style.overflow = 'hidden'; app.innerHTML = `<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 p-4 fade-in"><div class="relative bg-white rounded-lg shadow-xl w-full max-w-4xl mx-auto p-8 modal-content"><button id="backToPreviousBtn" class="absolute top-4 right-4 text-gray-500 text-3xl leading-none hover:text-gray-800" title="Close">&times;</button><div class="grid md:grid-cols-2 gap-8 items-center"><div> <h2 class="text-3xl font-bold text-blue-600 mb-4">blueBus Help</h2> <div class="bg-blue-50 p-6 rounded-lg text-center"> <p class="text-gray-700 mb-4">For seamless booking management and customer support</p> <button id="helpLoginBtn" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 font-semibold">Login to your account</button> </div> <div class="mt-8"> <h3 class="text-xl font-bold mb-4">FAQ</h3> <div class="space-y-4"> <a href="#" class="flex items-center text-blue-600 hover:underline"> <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Need to understand more about Chart... </a> <a href="#" class="flex items-center text-blue-600 hover:underline"> <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg> I am unable to select payment option. What... </a> </div> <div class="flex space-x-4 mt-6"> <button class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg hover:bg-gray-300 font-semibold">Bus FAQ</button> <button class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg hover:bg-gray-300 font-semibold">Train FAQ</button> </div> </div></div><div class="text-center hidden md:block"> <svg class="w-48 h-48 mx-auto text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.25 6.75h7.5M8.25 12h7.5m-7.5 5.25h7.5M3.75 6.75h.008v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.008v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.008v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.5 21.75v-1.875m0 0a3.375 3.375 0 00-3.375-3.375h-1.5a3.375 3.375 0 00-3.375 3.375m0 0v1.875m0 0a3.375 3.375 0 003.375 3.375h1.5a3.375 3.375 0 003.375-3.375M12 6.75v-1.875m0 0a3.375 3.375 0 013.375-3.375h1.5a3.375 3.375 0 013.375 3.375m0 0v1.875m0 0a3.375 3.375 0 01-3.375 3.375h-1.5a3.375 3.375 0 01-3.375-3.375"></path></svg> <h2 class="text-3xl font-bold text-gray-800 mt-4">24/7 Customer Support</h2> <p class="text-gray-600 mt-2">We are here to help you with any questions or issues.</p></div></div></div></div>`; addHelpPageListeners(); };
+        const renderLoginPage = () => { document.body.style.overflow = 'hidden'; app.innerHTML = `<div class="fixed inset-0 z-40" style="background: url('https://placehold.co/1920x1080/3b82f6/FFFFFF?text=blueBus') center/cover; filter: blur(4px);"></div> <div class="relative z-50 flex items-center justify-center min-h-screen"> <div class="bg-white/60 backdrop-blur-sm rounded-lg shadow-xl w-full max-w-md mx-4 p-8"> <div class="flex justify-between items-center mb-6"> <h2 class="text-3xl font-bold text-blue-600">Login or Sign Up</h2> <button id="backToPreviousBtn" class="text-gray-500 text-3xl leading-none hover:text-gray-800" title="Back">&times;</button> </div> <form id="loginFormPage"> <div class="mb-4"> <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label> <input type="email" id="email" class="w-full px-4 py-3 border border-gray-400 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-lg" placeholder="you@example.com" required> </div> <div class="mb-6"> <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label> <input type="password" id="password" class="w-full px-4 py-3 border border-gray-400 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-lg" placeholder="••••••••" required> </div> <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors font-semibold text-lg">Continue</button> </form> </div> </div>`; addLoginPageListeners(); };
+        const renderSearchForm = () => { document.body.style.overflow = 'auto'; const today = '2025-10-26'; app.innerHTML = `<div class="fade-in"><section class="hero-section py-12 px-4"><div class="container mx-auto"><div class="text-center text-white mb-8"><h1 class="text-4xl md:text-5xl font-bold">Your Journey, Our Promise</h1><p class="text-lg md:text-xl mt-2 opacity-90">Book Bus & Train tickets with ease</p></div><div class="bg-white rounded-xl shadow-2xl p-6 max-w-4xl mx-auto"><div class="flex border-b mb-6"><button data-type="BUS" class="search-tab py-3 px-6 text-lg border-b-2 active-tab flex items-center space-x-2"><img src="bus.png" alt="Bus Icon" class="h-6 w-6" onerror="this.src='https://placehold.co/24x24/3B82F6/FFFFFF?text=B'"><span>Bus</span></button><a href="train.html" class="py-3 px-6 text-lg text-gray-500 border-b-2 tab-inactive flex items-center space-x-2 hover:text-blue-600 transition-colors"><img src="train.png" alt="Train Icon" class="h-6 w-6" onerror="this.src='https://placehold.co/24x24/6B7280/FFFFFF?text=T'"><span>Train</span></a></div><form id="searchForm" class="grid grid-cols-1 md:grid-cols-10 gap-4 items-end"><div class="md:col-span-4"><label for="from" class="block text-sm font-medium text-gray-700">From</label><input list="cities" type="text" id="from" value="Bengaluru" class="mt-1 block w-full border-gray-400 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" required></div><div class="md:col-span-4"><label for="to" class="block text-sm font-medium text-gray-700">To</label><input list="cities" type="text" id="to" value="Chennai" class="mt-1 block w-full border-gray-400 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" required></div><div class="md:col-span-2"><label for="date" class="block text-sm font-medium text-gray-700">Date</label><input type="date" id="date" value="${today}" min="${today}" class="mt-1 block w-full border-gray-400 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" required></div><button type="submit" class="md:col-span-10 w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-transform transform hover:scale-105 mt-4">Search</button><datalist id="cities"><option value="Bengaluru"></option><option value="Chennai"></option><option value="Mumbai"></option><option value="Delhi"></option></datalist></form></div></div></section><div class="container mx-auto p-4 sm:p-6 lg:p-8"><section id="offersSection" class="max-w-6xl mx-auto"><h2 class="text-3xl font-bold text-center mb-8">Exclusive blueBus Offers</h2><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><a href="weekend.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden"><img src="BlueWeekend.png" alt="Weekend Deal" class="w-full h-40 object-cover" onerror="this.src='https://placehold.co/400x200/DBEAFE/1E40AF?text=Weekend+Deal'"><div class="p-5"><h3 class="text-xl font-bold">Save 20% on Weekend Trips</h3><p class="text-gray-600 mt-2">Use code: <span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">BLUEWKND</span></p></div></a><a href="first.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden"><img src="FirstRide.png" alt="First Ride Offer" class="w-full h-40 object-cover" onerror="this.src='https://placehold.co/400x200/D1FAE5/065F46?text=First+Ride+Offer'"><div class="p-5"><h3 class="text-xl font-bold">First Ride Free! (Up to ₹300)</h3><p class="text-gray-600 mt-2">Use code: <span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">BLUEFIRST</span></p></div></a><a href="group.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden"><img src="GroupDiscount.png" alt="Group Discount" class="w-full h-40 object-cover" onerror="this.src='https://placehold.co/400x200/FEF3C7/92400E?text=Group+Discount'"><div class="p-5"><h3 class="text-xl font-bold">Group Booking Discount</h3><p class="text-gray-600 mt-2">Get 15% off on booking for 4+ seats.</p></div></a></div></section><section id="whatsNewSection" class="max-w-6xl mx-auto mt-12 relative"><h2 class="text-3xl font-bold text-center mb-8">What's New</h2><div class="relative"><button id="scrollLeftBtn" class="absolute left-0 top-1/2 -translate-y-1/2 transform -translate-x-4 bg-white/80 rounded-full p-2 shadow-md z-10 hover:bg-white transition disabled:opacity-50" disabled>&lt;</button><div id="whatsNewContainer" class="flex overflow-x-auto gap-6 scroll-smooth no-scrollbar py-4"><a href="free.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-80"><img src="FreeCancellation.png" alt="Free Cancellation" class="w-full h-40 object-cover" onerror="this.src='https://placehold.co/320x160/FEE2E2/991B1B?text=Free+Cancellation'"><div class="p-5"><h3 class="text-xl font-bold">Get 100% refund on cancellation</h3><p class="text-gray-600 mt-2"><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">Know more ➜</span></p></div></a><a href="bustable.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-80"><img src="TimeTable.png" alt="Time Table" class="w-full h-40 object-cover" onerror="this.src='https://placehold.co/320x160/E0E7FF/3730A3?text=Bus+Timetable'"><div class="p-5"><h3 class="text-xl font-bold">Get Local bus timing in you city</h3><p class="text-gray-600 mt-2"><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded"> See more ➜</span></p></div></a><a href="flexi.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-80"><img src="flexi.png" alt="Flexi Ticket" class="w-full h-40 object-cover" onerror="this.src='https://placehold.co/320x160/D1FAE5/065F46?text=Flexi+Ticket'"><div class="p-5"><h3 class="text-xl font-bold">Get amazing benefits on changing dates</h3><p class="text-gray-600 mt-2"><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded"> Know more ➜</span></p></div></a><a href="free.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-80"><img src="Refer.png" alt="Refer & Earn!!" class="w-full h-40 object-cover" onerror="this.src='https://placehold.co/320x160/FEF3C7/92400E?text=Refer+&+Earn'"><div class="p-5"><h3 class="text-xl font-bold">Exciting rewards awaiting for a tap!</h3><p class="text-gray-600 mt-2"><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded"> Know more ➜</span></p></div></a><a href="elite.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-80"><img src="Elite.png" alt="Experience the top-class comfort" class="w-full h-40 object-cover" onerror="this.src='https://placehold.co/320x160/E5E7EB/1F2937?text=Elite+Buses'"><div class="p-5"><h3 class="text-xl font-bold">Get on-time trips with elite-class comfort</h3><p class="text-gray-600 mt-2"><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded"> Know more ➜</span></p></div></a></div><button id="scrollRightBtn" class="absolute right-0 top-1/2 -translate-y-1/2 transform translate-x-4 bg-white/80 rounded-full p-2 shadow-md z-10 hover:bg-white transition disabled:opacity-50">&gt;</button></div></section><section id="govtBusesSection" class="max-w-6xl mx-auto mt-12"><h2 class="text-3xl font-bold text-center mb-8">Government Buses</h2><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><a href="apsrtc.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-80"><div class="p-6"><div class="flex items-center justify-between"><div class="flex items-center"><img src="https://placehold.co/48x48/ECC94B/000000?text=AP" alt="APSRTC Logo" class="h-12 w-12 rounded-full border"><div class="ml-4"><h3 class="text-xl font-bold text-gray-800">APSRTC</h3><p class="text-sm text-gray-500">Andhra Pradesh</p></div></div><div class="bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full flex items-center">★ 3.85</div></div><p class="text-gray-700 mt-4 text-center">1539 services including Garuda, Garuda Plus and more</p><div class="bg-gray-100 rounded-full p-2 mt-4 text-center text-sm text-gray-600">Official booking partner of APSRTC</div></div><div class="bg-red-50 p-3 text-center text-red-600 font-semibold">Get instant refund with UPI payments</div></a><a href="tsrtc.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-80"><div class="p-6"><div class="flex items-center justify-between"><div class="flex items-center"><img src="https://placehold.co/48x48/F56565/FFFFFF?text=TS" alt="TSRTC Logo" class="h-12 w-12 rounded-full border"><div class="ml-4"><h3 class="text-xl font-bold text-gray-800">TSRTC</h3><p class="text-sm text-gray-500">Telangana</p></div></div><div class="bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full flex items-center">★ 4.10</div></div><p class="text-gray-700 mt-4 text-center">2000+ services including Lahari, Vennela and more</p><div class="bg-gray-100 rounded-full p-2 mt-4 text-center text-sm text-gray-600">Official booking partner of TSRTC</div></div><div class="bg-red-50 p-3 text-center text-red-600 font-semibold">Travel with safety and comfort</div></a><a href="ksrtc.html" class="offer-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-80"><div class="p-6"><div class="flex items-center justify-between"><div class="flex items-center"><img src="https://placehold.co/48x48/4299E1/FFFFFF?text=KA" alt="KSRTC Logo" class="h-12 w-12 rounded-full border"><div class="ml-4"><h3 class="text-xl font-bold text-gray-800">KSRTC</h3><p class="text-sm text-gray-500">Karnataka</p></div></div><div class="bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full flex items-center">★ 4.25</div></div><p class="text-gray-700 mt-4 text-center">3000+ services including Airavat, Rajahamsa and more</p><div class="bg-gray-100 rounded-full p-2 mt-4 text-center text-sm text-gray-600">Official booking partner of KSRTC</div></div><div class="bg-red-50 p-3 text-center text-red-600 font-semibold">Book now for the best prices</div></a></div></section>
+                        
+                        <!-- Added App Promotion Section -->
+                        <section id="appPromotionSection" class="max-w-6xl mx-auto mt-16 mb-8">
+                            <h2 class="text-3xl font-bold text-center mb-8">Get the blueBus App</h2>
+                            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between gap-8">
+                                <div class="flex items-center space-x-6">
+                                    <img src="https://placehold.co/80x160/E0E7FF/3730A3?text=App" alt="App Screenshot" class="h-40 w-auto object-contain flex-shrink-0">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-800">Rated 4.6 on Play Store</h3>
+                                        <p class="text-gray-600 mt-1">Download for exciting offers!</p>
+                                    </div>
+                                </div>
+                                <a href="#" class="bg-pink-100 text-pink-700 font-semibold py-3 px-10 rounded-lg hover:bg-pink-200 transition-colors whitespace-nowrap">
+                                    Download app
+                                </a>
+                            </div>
+                        </section>
+                    </div></div>`; addSearchFormListeners(); };
+        const renderSearchResults = () => { document.body.style.overflow = 'auto'; const { type, from, to, date } = state.searchParams; const results = state.searchResults; let resultsHTML = `<div class="flex flex-wrap justify-between items-center mb-6 gap-4"><div> <h2 class="text-2xl font-bold">${type}s from ${from} to ${to}</h2> <p class="text-gray-600">${new Date(date.replace(/-/g, '/')).toDateString()}</p> </div> <button id="backToSearchBtn" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">Modify Search</button></div>`; if (results.length === 0) { resultsHTML += `<div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">No services found for this route.</div>`; } else { resultsHTML += results.map(trip => `<div class="bg-white rounded-lg shadow-md mb-4 p-4 grid grid-cols-1 md:grid-cols-6 gap-4 items-center"><div class="md:col-span-2"><p class="font-bold text-lg">${trip.operator}</p><p class="text-sm text-gray-500">${trip.type}</p></div><div class="flex justify-between md:block text-left"><p class="font-semibold text-lg">${trip.depTime}</p><p class="text-sm text-gray-500">${trip.from}</p></div><div class="text-center text-sm text-gray-500">${trip.duration}</div><div class="flex justify-between md:block text-right md:text-left"><p class="font-semibold text-lg">${trip.arrTime}</p><p class="text-sm text-gray-500">${trip.to}</p></div><div class="text-right result-action-area"><p class="price-text font-bold text-xl text-blue-600">₹ ${trip.price}</p><button class="book-btn w-full md:w-auto mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg" data-trip-id="${trip.id}">${type === 'BUS' ? 'Select Seats' : 'Book Now'}</button></div></div>`).join(''); } app.innerHTML = `<div class="container mx-auto p-4 sm:p-6 lg:p-8 fade-in">${resultsHTML}</div>`; addResultsListeners(); };
+        const renderSeatSelection = () => { document.body.style.overflow = 'auto'; const trip = state.selectedTrip; const seats = { lower: [[{id:'L-S1',type:'sleeper'},null,{id:'L-R1A',type:'sleeper'},{id:'L-R1B',type:'sleeper'}],[{id:'L-S2',type:'sleeper'},null,{id:'L-R2A',type:'sleeper'},{id:'L-R2B',type:'sleeper'}],[{id:'L-S3',type:'sleeper'},null,{id:'L-R3A',type:'sleeper'},{id:'L-R3B',type:'sleeper'}],[{id:'8A',type:'seater'},{id:'8B',type:'seater'},{id:'8C',type:'seater'},{id:'8D',type:'seater'},{id:'8E',type:'seater'}]], upper: [[{id:'U-S1',type:'sleeper'},null,{id:'U-R1A',type:'sleeper'},{id:'U-R1B',type:'sleeper'}],[{id:'U-S2',type:'sleeper'},null,{id:'U-R2A',type:'sleeper'},{id:'U-R2B',type:'sleeper'}],[{id:'U-S3',type:'sleeper'},null,{id:'U-R3A',type:'sleeper'},{id:'U-R3B',type:'sleeper'}],[{id:'U-S4',type:'sleeper'},null,{id:'U-R4A',type:'sleeper'},{id:'U-R4B',type:'sleeper'}]] }; const renderDeck=(d)=>{return d.map((r,i)=>`<div class="flex justify-center items-center space-x-2 ${r.some(s=>s&&s.type==='sleeper')?'h-28':'my-2'}">${r.map(s=>{if(!s)return'<div class="w-10 h-24"></div>';const sid=s.id;const slp=s.type==='sleeper';const szCls=slp?'w-10 h-24':'w-10 h-10';const bkd=trip.seatsBooked.includes(sid);const sel=state.selectedSeats.includes(sid);let stCls='seat-available';if(bkd)stCls='seat-booked';return`<div class="seat ${stCls} ${szCls} flex items-center justify-center rounded-md cursor-pointer text-sm font-semibold ${sel?'seat-selected':''}" data-seat-id="${sid}">${sid}</div>`}).join('')}</div>`).join('')}; const seatLayoutHTML=`<div><h4 class="text-lg font-semibold my-4 text-center text-gray-700 border-b pb-2">Lower Deck</h4>${renderDeck(seats.lower)}</div><div class="mt-8"><h4 class="text-lg font-semibold my-4 text-center text-gray-700 border-b pb-2">Upper Deck</h4>${renderDeck(seats.upper)}</div>`; const content = ` <button id="backToResultsBtn" class="mb-4 bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">&larr; Back to Results</button> <div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div class="md:col-span-2 bg-white rounded-lg shadow-lg p-6"><h3 class="text-xl font-bold mb-4">Select Your Seats</h3><div class="p-4 border rounded-lg"><div class="flex justify-start mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 4.5V3M12 21v-1.5M4.5 12H3M21 12h-1.5"/></svg></div> ${seatLayoutHTML}</div><div class="flex flex-wrap space-x-4 mt-6"><div class="flex items-center"><div class="w-4 h-4 rounded-sm border border-blue-300 mr-2"></div>Available</div><div class="flex items-center"><div class="w-4 h-4 rounded-sm bg-blue-500 mr-2"></div>Selected</div><div class="flex items-center"><div class="w-4 h-4 rounded-sm bg-gray-300 mr-2"></div>Booked</div></div></div><div class="bg-white rounded-lg shadow-lg p-6"><h3 class="text-xl font-bold mb-4">Booking Summary</h3><div class="border-b pb-4 mb-4"><p class="font-semibold">${trip.operator}</p><p class="text-sm text-gray-500">${trip.type}</p><p class="text-sm mt-2">${trip.from} &rarr; ${trip.to}</p></div><div><p>Seats Selected: <span id="selectedSeatsDisplay" class="font-semibold">None</span></p><p class="text-2xl font-bold mt-2">Total Fare: <span id="totalFareDisplay">₹ 0</span></p></div><button id="proceedToPayBtn" class="mt-6 w-full bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 disabled:bg-gray-400" disabled>Proceed to Payment</button></div></div>`; app.innerHTML = `<div class="container mx-auto p-4 sm:p-6 lg:p-8 fade-in">${content}</div>`; addSeatSelectionListeners(); };
+        const renderMyBusBookings = () => { document.body.style.overflow = 'auto'; const busBookings = mockData.BOOKINGS.filter(b => b.type === 'BUS'); const today = '2025-10-26'; const todayDate = new Date(today.replace(/-/g, '/')); let bookingsHTML = `<div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold">My Bus Bookings</h2><button id="backToSearchBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">New Booking</button></div>`; if(busBookings.length===0){bookingsHTML+=`<div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">You have no bus bookings yet.</div>`}else{bookingsHTML+=busBookings.map(b=>{const upc=new Date(b.date.replace(/-/g,'/'))>=todayDate;const stCls=upc?'bg-green-100 text-green-800':'bg-gray-100 text-gray-800';const stTxt=upc?'Upcoming':'Completed';return`<div class="bg-white rounded-lg shadow-md mb-4 overflow-hidden"><div class="p-4 border-b grid grid-cols-2 md:grid-cols-4 gap-4 items-center"><div><p class="font-bold text-lg">${b.operator}</p><p class="text-sm text-gray-500">${b.from} &rarr; ${b.to}</p></div><div><p class="text-sm text-gray-500">Date of Journey</p><p class="font-semibold">${new Date(b.date.replace(/-/g,'/')).toDateString()}</p></div><div><p class="text-sm text-gray-500">Booking ID</p><p class="font-mono text-sm">${b.id}</p></div><div class="text-right"><span class="px-3 py-1 text-sm font-semibold rounded-full ${stCls}">${stTxt}</span></div></div><div class="p-4 bg-gray-50 flex justify-between items-center"><div><span class="text-sm text-gray-600">Seats: <span class="font-bold">${b.seats.join(', ')}</span></span></div><div><span class="text-sm text-gray-600">Total Fare: <span class="font-bold text-lg">₹${b.price}</span></span></div></div></div>`}).join('')} app.innerHTML = `<div class="container mx-auto p-4 sm:p-6 lg:p-8 fade-in">${bookingsHTML}</div>`; document.getElementById('backToSearchBtn').addEventListener('click', () => { state.currentView = 'SEARCH'; render(); }); };
+        const renderMyTrainBookings = () => { document.body.style.overflow = 'auto'; const trainBookings = mockData.BOOKINGS.filter(b => b.type === 'TRAIN'); const today = '2025-10-26'; const todayDate = new Date(today.replace(/-/g, '/')); let bookingsHTML = `<div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold">My Train Bookings</h2><button id="backToSearchBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">New Booking</button></div>`; if(trainBookings.length===0){bookingsHTML+=`<div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">You have no train bookings yet.</div>`}else{bookingsHTML+=trainBookings.map(b=>{const upc=new Date(b.date.replace(/-/g,'/'))>=todayDate;const stCls=upc?'bg-green-100 text-green-800':'bg-gray-100 text-gray-800';const stTxt=upc?'Upcoming':'Completed';return`<div class="bg-white rounded-lg shadow-md mb-4 overflow-hidden"><div class="p-4 border-b grid grid-cols-2 md:grid-cols-4 gap-4 items-center"><div><p class="font-bold text-lg">${b.operator}</p><p class="text-sm text-gray-500">${b.from} &rarr; ${b.to}</p></div><div><p class="text-sm text-gray-500">Date of Journey</p><p class="font-semibold">${new Date(b.date.replace(/-/g,'/')).toDateString()}</p></div><div><p class="text-sm text-gray-500">Booking ID</p><p class="font-mono text-sm">${b.id}</p></div><div class="text-right"><span class="px-3 py-1 text-sm font-semibold rounded-full ${stCls}">${stTxt}</span></div></div><div class="p-4 bg-gray-50 flex justify-end items-center"><div><span class="text-sm text-gray-600">Total Fare: <span class="font-bold text-lg">₹${b.price}</span></span></div></div></div>`}).join('')} app.innerHTML = `<div class="container mx-auto p-4 sm:p-6 lg:p-8 fade-in">${bookingsHTML}</div>`; document.getElementById('backToSearchBtn').addEventListener('click', () => { state.currentView = 'SEARCH'; render(); }); };
+        const renderPayment = () => { document.body.style.overflow = 'auto'; const content = ` <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg"><button id="backBtn" class="mb-6 bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">&larr; Back</button><h2 class="text-2xl font-bold mb-6">Passenger Details & Payment</h2><div class="mb-6 bg-blue-50 p-4 rounded-lg"><h3 class="font-bold text-lg">Total Amount: ₹${state.totalFare}</h3></div><form id="paymentForm"><div class="mb-6"><h3 class="font-semibold text-lg mb-2">Passenger Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label for="p-name" class="block text-sm font-medium text-gray-700">Full Name</label><input type="text" id="p-name" class="mt-1 block w-full border-gray-400 rounded-lg" required value="${state.username||''}"></div><div><label for="p-age" class="block text-sm font-medium text-gray-700">Age</label><input type="number" id="p-age" class="mt-1 block w-full border-gray-400 rounded-lg" required></div><div class="sm:col-span-2"><label for="p-email" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="p-email" class="mt-1 block w-full border-gray-400 rounded-lg" required value="${state.email||''}"></div></div></div><div class="mt-8"><h3 class="font-semibold text-lg mb-4">Select Payment Method</h3><div class="flex border-b mb-4"><button type="button" data-payment-method="card" class="payment-tab py-2 px-4 border-b-2 font-medium text-center active-tab">Credit/Debit Card</button><button type="button" data-payment-method="upi" class="payment-tab py-2 px-4 border-b-2 font-medium text-center text-gray-500 tab-inactive">UPI</button><button type="button" data-payment-method="netbanking" class="payment-tab py-2 px-4 border-b-2 font-medium text-center text-gray-500 tab-inactive">Net Banking</button></div><div id="payment-details"><div id="card-payment" class="payment-option"><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div class="sm:col-span-2"><label for="card-number" class="block text-sm font-medium text-gray-700">Card Number</label><input type="text" id="card-number" value="1234 5678 9012 3456" class="mt-1 block w-full border-gray-400 rounded-lg" required></div><div><label for="card-expiry" class="block text-sm font-medium text-gray-700">Expiry (MM/YY)</label><input type="text" id="card-expiry" value="12/28" class="mt-1 block w-full border-gray-400 rounded-lg" required></div><div><label for="card-cvc" class="block text-sm font-medium text-gray-700">CVC</label><input type="text" id="card-cvc" value="123" class="mt-1 block w-full border-gray-400 rounded-lg" required></div></div></div><div id="upi-payment" class="payment-option hidden"><label for="upi-id" class="block text-sm font-medium text-gray-700">UPI ID</label><div class="flex mt-1"><input type="text" id="upi-id" placeholder="yourname@bank" class="flex-grow block w-full border-gray-400 rounded-l-lg"><button type="button" class="bg-gray-200 text-gray-800 px-4 rounded-r-lg hover:bg-gray-300 font-semibold">Verify</button></div><p class="text-xs text-gray-500 mt-2">You will receive a payment request on your UPI app.</p></div><div id="netbanking-payment" class="payment-option hidden"><label for="bank-select" class="block text-sm font-medium text-gray-700">Select Bank</label><select id="bank-select" class="mt-1 block w-full border-gray-400 rounded-lg"><option>State Bank of India</option><option>HDFC Bank</option><option>ICICI Bank</option><option>Axis Bank</option><option>Kotak Mahindra Bank</option></select></div></div></div><button type="submit" class="mt-8 w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700">Pay ₹${state.totalFare}</button></form></div>`; app.innerHTML = `<div class="container mx-auto p-4 sm:p-6 lg:p-8 fade-in">${content}</div>`; addPaymentListeners(); };
+        const renderConfirmation = () => { document.body.style.overflow = 'auto'; const { passengerName, trip, seats, totalFare, bookingId } = state.bookingDetails; const content = ` <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg text-center"><svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><h2 class="text-2xl font-bold text-green-600 mb-2">Booking Confirmed!</h2><p class="text-gray-600 mb-6">Your e-receipt has been sent to your email.</p><div class="bg-gray-50 p-6 rounded-lg text-left mb-6"><p class="mb-2"><strong>Booking ID:</strong> <span class="font-mono">${bookingId}</span></p><p class="mb-2"><strong>Passenger:</strong> ${passengerName}</p><p class="mb-2"><strong>Trip:</strong> ${trip.operator} from ${trip.from} to ${trip.to}</p>${seats&&seats.length>0?`<p class="mb-2"><strong>Seats:</strong> ${seats.join(', ')}</p>`:''}<p class="text-lg font-bold mt-4"><strong>Total Paid:</strong> ₹${totalFare}</p></div><button id="viewReceiptBtn" class="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 mr-4">View E-Receipt</button><button id="newBookingBtn" class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-300">Make a New Booking</button></div>`; app.innerHTML = `<div class="container mx-auto p-4 sm:p-6 lg:p-8 fade-in">${content}</div>`; addConfirmationListeners(); };
+        const renderReceipt = () => { const { passengerName, passengerAge, trip, seats, totalFare, bookingId, date } = state.bookingDetails; const today = '2025-10-26'; const bookingDateString = new Date(today.replace(/-/g, '/')).toDateString(); const content = ` <div class="p-8"><div class="flex justify-between items-start pb-4 border-b"><div><h2 class="text-3xl font-bold text-blue-600">blueBus</h2><p class="text-gray-500">E-Receipt / Ticket</p></div><button id="closeReceiptModal" class="text-3xl text-gray-500 hover:text-gray-800 leading-none">&times;</button></div><div class="grid grid-cols-2 gap-8 mt-6"><div><p class="text-sm text-gray-500">Booking ID</p><p class="font-mono font-semibold">${bookingId}</p></div><div class="text-right"><p class="text-sm text-gray-500">Booking Date</p><p class="font-semibold">${bookingDateString}</p></div><div><p class="text-sm text-gray-500">Passenger</p><p class="font-semibold">${passengerName} (Age ${passengerAge})</p></div><div class="text-right"><p class="text-sm text-gray-500">Total Fare</p><p class="font-bold text-xl">₹ ${totalFare}</p></div></div><div class="mt-8 bg-blue-50 rounded-lg p-6"><h3 class="font-bold text-lg mb-4">Trip Details</h3><div class="grid grid-cols-2 gap-4"><div><p class="font-semibold text-lg">${trip.from} &rarr; ${trip.to}</p><p class="text-gray-600">${trip.operator} (${trip.type})</p></div><div class="text-right"><p class="font-semibold">Date: ${new Date(date.replace(/-/g,'/')).toDateString()}</p><p>Departure: <strong>${trip.depTime}</strong> | Arrival: <strong>${trip.arrTime}</strong></p></div></div>${seats&&seats.length>0?`<p class="mt-4"><strong>Seats:</strong> ${seats.join(', ')}</p>`:''}</div><div class="mt-8 text-center"><p class="text-gray-600">Thank you for choosing blueBus!</p><button onclick="window.print()" class="mt-4 bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-800">Print Ticket</button></div></div>`; document.getElementById('receiptContent').innerHTML = content; receiptModal.classList.remove('hidden'); document.getElementById('closeReceiptModal').addEventListener('click', () => receiptModal.classList.add('hidden')); };
+
+        // --- AI Chat Functions ---
+        const toggleChat = (isOpen) => { state.isChatOpen = isOpen; if (isOpen) { aiChatModal.classList.remove('hidden'); document.body.classList.add('chat-open'); aiChatModalContent.classList.remove('fade-out'); chatInput.focus(); renderChatSuggestions(); } else { aiChatModalContent.classList.add('fade-out'); setTimeout(() => { aiChatModal.classList.add('hidden'); document.body.classList.remove('chat-open'); }, 300); } };
+        const renderChatHistory = () => { chatBody.innerHTML = ''; state.chatHistory.forEach(msg => { const isAI = msg.role === 'ai'; const bubbleWrapper = document.createElement('div'); bubbleWrapper.classList.add('flex', isAI ? 'justify-start' : 'justify-end'); const bubble = document.createElement('div'); bubble.classList.add('chat-bubble', 'w-fit', 'max-w-[75%]', 'text-left'); if (isAI) { bubble.classList.add('chat-bubble-ai'); bubble.innerHTML = `<span>${msg.message}</span>`; } else { bubble.classList.add('chat-bubble-user'); bubble.textContent = msg.message; } bubbleWrapper.appendChild(bubble); chatBody.appendChild(bubbleWrapper); }); chatBody.scrollTop = chatBody.scrollHeight; renderChatSuggestions(); };
+        const renderChatSuggestions = () => { chatSuggestions.innerHTML = ''; const lastMessageIsAI = state.chatHistory.length === 0 || state.chatHistory[state.chatHistory.length - 1].role === 'ai'; if (state.isChatOpen && lastMessageIsAI) { const suggestions = ["Search buses", "Any offers?", "Cancel ticket"]; suggestions.forEach(text => { const btn = document.createElement('button'); btn.textContent = text; btn.classList.add('suggestion-btn'); btn.onclick = () => handleSuggestionClick(text); chatSuggestions.appendChild(btn); }); chatSuggestions.classList.remove('hidden'); chatSuggestions.classList.add('flex'); } else { chatSuggestions.classList.add('hidden'); chatSuggestions.classList.remove('flex'); } };
+        const handleSuggestionClick = (text) => { chatInput.value = text; handleChatSend(new Event('submit')); };
+        const getShettyResponse = (message) => { const msg = message.toLowerCase(); if (msg.includes('hello') || msg.includes('hi')) return 'Hi there! 👋 How can I assist you with your blueBus booking today? Feel free to ask about routes, offers, or managing your tickets.'; if (msg.includes('search') || (msg.includes('bus') && (msg.includes('bengaluru') || msg.includes('chennai') || msg.includes('mumbai')))) { let from="Bengaluru";let to="your destination";if(msg.includes('from bengaluru to chennai')){from="Bengaluru";to="Chennai"}else if(msg.includes('from bengaluru to mumbai')){from="Bengaluru";to="Mumbai"}else if(msg.includes('chennai')){to="Chennai"}else if(msg.includes('mumbai')){to="Mumbai"}return`Okay, looking for buses from ${from} to ${to}. Please use the search bar on the main page to select your exact date and find available options! 😊`} if (msg.includes('offer') || msg.includes('discount') || msg.includes('deal')) return 'We have some exciting offers! You can find the latest deals <a href="#offersSection" class="text-blue-600 underline font-semibold" id="chatOfferLink">here</a>. We often have discounts for weekends, first-time users, and groups!'; if (msg.includes('cancel') || msg.includes('manage') || (msg.includes('my') && msg.includes('booking'))) return 'To manage or cancel your bookings, please click on "My Bookings" in the header menu. You\'ll need to be logged in.'; if (msg.includes('refund')) return 'Refund policies depend on the operator and how far in advance you cancel. You can usually find the cancellation policy before confirming your booking, or check the details in "My Bookings" for an existing ticket.'; if (msg.includes('help')) return 'I\'m here to help! What specific question do you have? You can ask about finding buses, payment options, cancellation, or anything else related to blueBus.'; if (msg.includes('thank')) return 'You\'re welcome! Let me know if there\'s anything else. Happy travels! 🚌🚆'; return 'I understand you asked about "' + message + '". I\'m still learning! 🤔 Try asking about specific routes (e.g., "buses from Bengaluru to Chennai"), current offers, or how to cancel a ticket.'; };
+        const handleChatSend = (e) => { if (e && typeof e.preventDefault === 'function') e.preventDefault(); const userMessage = chatInput.value.trim(); if (!userMessage) return; state.chatHistory.push({ role: 'user', message: userMessage }); renderChatHistory(); chatInput.value = ''; const typingBubbleWrapper=document.createElement('div');typingBubbleWrapper.classList.add('flex','justify-start');const typingBubble=document.createElement('div');typingBubble.classList.add('chat-bubble','p-3','rounded-lg','w-fit','chat-bubble-ai');typingBubble.innerHTML=`<div class="flex space-x-1 items-center"><div class="w-2 h-2 bg-gray-500 rounded-full chat-bubble-ai-typing" style="animation-delay: 0s;"></div><div class="w-2 h-2 bg-gray-500 rounded-full chat-bubble-ai-typing" style="animation-delay: 0.2s;"></div><div class="w-2 h-2 bg-gray-500 rounded-full chat-bubble-ai-typing" style="animation-delay: 0.4s;"></div></div>`;typingBubbleWrapper.appendChild(typingBubble);chatBody.appendChild(typingBubbleWrapper);chatBody.scrollTop=chatBody.scrollHeight; setTimeout(() => { const aiMessage = getShettyResponse(userMessage); state.chatHistory.push({ role: 'ai', message: aiMessage }); chatBody.removeChild(typingBubbleWrapper); renderChatHistory(); const chatOfferLink = document.getElementById('chatOfferLink'); if (chatOfferLink) { chatOfferLink.addEventListener('click', (e) => { e.preventDefault(); toggleChat(false); setTimeout(() => { document.getElementById('offersSection')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }); } }, 1500); };
+
+        // --- EVENT LISTENERS ---
+        const addHelpPageListeners = () => { document.getElementById('backToPreviousBtn').addEventListener('click', () => { state.currentView = state.previousView; render(); }); document.getElementById('helpLoginBtn').addEventListener('click', () => { state.previousView = 'HELP'; state.currentView = 'LOGIN'; render(); }); };
+        const addLoginPageListeners = () => { document.getElementById('backToPreviousBtn').addEventListener('click', () => { state.currentView = state.previousView; render(); }); document.getElementById('loginFormPage').addEventListener('submit', (e) => { e.preventDefault(); const form = e.target; state.isLoggedIn = true; state.username = form.email.value.split('@')[0]; state.email = form.email.value; loginBtn.classList.add('hidden'); profileIcon.classList.remove('hidden'); profileIcon.classList.add('flex'); usernameDisplay.textContent = state.username; if (state.previousView === 'SEAT_SELECTION' || (state.previousView === 'RESULTS' && state.searchParams.type !== 'BUS')) { state.currentView = 'PAYMENT'; } else { state.currentView = state.previousView; } render(); }); };
+        const addSearchFormListeners = () => { const form = document.getElementById('searchForm'); const tabs = document.querySelectorAll('.search-tab'); let activeType = 'BUS'; tabs.forEach(tab => { tab.addEventListener('click', () => { tabs.forEach(t => { t.classList.remove('active-tab'); t.classList.add('tab-inactive', 'text-gray-500'); }); tab.classList.add('active-tab'); tab.classList.remove('tab-inactive', 'text-gray-500'); activeType = tab.dataset.type; }); }); form.addEventListener('submit', (e) => { e.preventDefault(); state.searchParams = { type: activeType, from: form.from.value, to: form.to.value, date: form.date.value, }; app.innerHTML = `<div class="text-center p-10">Searching...</div>`; setTimeout(() => { state.searchResults = mockData[activeType].filter( item => item.from.toLowerCase() === state.searchParams.from.toLowerCase() && item.to.toLowerCase() === state.searchParams.to.toLowerCase() ); state.currentView = 'RESULTS'; render(); }, 500); }); const whatsNewContainer = document.getElementById('whatsNewContainer'); const scrollLeftBtn = document.getElementById('scrollLeftBtn'); const scrollRightBtn = document.getElementById('scrollRightBtn'); if (whatsNewContainer && scrollLeftBtn && scrollRightBtn) { const scrollAmount = 344; const checkScroll = () => { const tolerance = 2; scrollLeftBtn.disabled = whatsNewContainer.scrollLeft <= 0; scrollRightBtn.disabled = whatsNewContainer.scrollLeft + whatsNewContainer.clientWidth >= whatsNewContainer.scrollWidth - tolerance; }; whatsNewContainer.addEventListener('scroll', checkScroll); window.addEventListener('resize', checkScroll); setTimeout(checkScroll, 100); scrollLeftBtn.addEventListener('click', () => { whatsNewContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); }); scrollRightBtn.addEventListener('click', () => { whatsNewContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' }); }); } };
+        const addResultsListeners = () => { document.getElementById('backToSearchBtn').addEventListener('click', () => { state.currentView = 'SEARCH'; render(); }); document.querySelectorAll('.book-btn').forEach(button => { button.addEventListener('click', (e) => { const tripId = e.target.dataset.tripId; state.selectedTrip = state.searchResults.find(t => t.id === tripId); if(state.searchParams.type === 'BUS') { state.currentView = 'SEAT_SELECTION'; } else { state.selectedSeats = []; state.totalFare = state.selectedTrip.price; if (!state.isLoggedIn) { state.previousView = state.currentView; state.currentView = 'LOGIN'; } else { state.currentView = 'PAYMENT'; } } render(); }); }); };
+        const addSeatSelectionListeners = () => { document.getElementById('backToResultsBtn').addEventListener('click', () => { state.currentView = 'RESULTS'; state.selectedSeats = []; state.totalFare = 0; render(); }); const tooltip = document.getElementById('seatTooltip'); const price = state.selectedTrip.price; document.querySelectorAll('.seat-available').forEach(seat => { seat.addEventListener('mouseover', (e) => { tooltip.innerHTML = `₹ ${price}`; tooltip.classList.remove('hidden'); }); seat.addEventListener('mousemove', (e) => { tooltip.style.left = `${e.pageX + 15}px`; tooltip.style.top = `${e.pageY + 15}px`; }); seat.addEventListener('mouseout', (e) => { tooltip.classList.add('hidden'); }); seat.addEventListener('click', (e) => { const seatEl = e.currentTarget; const seatId = seatEl.dataset.seatId; const index = state.selectedSeats.indexOf(seatId); if (index > -1) { state.selectedSeats.splice(index, 1); seatEl.classList.remove('seat-selected'); } else { state.selectedSeats.push(seatId); seatEl.classList.add('seat-selected'); } updateBookingSummary(); }); }); document.getElementById('proceedToPayBtn').addEventListener('click', () => { if (!state.isLoggedIn) { state.previousView = state.currentView; state.currentView = 'LOGIN'; render(); } else { state.currentView = 'PAYMENT'; render(); } }); };
+        const addPaymentListeners = () => { document.getElementById('paymentForm').addEventListener('submit', (e) => { e.preventDefault(); state.bookingDetails = { passengerName: e.target['p-name'].value, passengerAge: e.target['p-age'].value, passengerEmail: e.target['p-email'].value, trip: state.selectedTrip, seats: state.selectedSeats, totalFare: state.totalFare, bookingId: `BB-${Math.random().toString(36).substr(2, 9).toUpperCase()}`, date: state.searchParams.date }; app.innerHTML = `<div class="text-center p-10">Processing Payment...</div>`; setTimeout(() => { state.currentView = 'CONFIRMATION'; render(); }, 1500); }); document.getElementById('backBtn').addEventListener('click', () => { state.currentView = state.searchParams.type === 'BUS' ? 'SEAT_SELECTION' : 'RESULTS'; render(); }); const paymentTabs = document.querySelectorAll('.payment-tab'); const paymentOptions = document.querySelectorAll('.payment-option'); paymentTabs.forEach(tab => { tab.addEventListener('click', () => { paymentTabs.forEach(t => { t.classList.remove('active-tab'); t.classList.add('tab-inactive', 'text-gray-500'); }); tab.classList.add('active-tab'); tab.classList.remove('tab-inactive', 'text-gray-500'); const method = tab.dataset.paymentMethod; paymentOptions.forEach(option => { if (option.id === `${method}-payment`) { option.classList.remove('hidden'); } else { option.classList.add('hidden'); } }); }); }); };
+        const addConfirmationListeners = () => { document.getElementById('newBookingBtn').addEventListener('click', () => { Object.assign(state, { currentView: 'SEARCH', searchParams: {}, searchResults: [], selectedTrip: null, selectedSeats: [], totalFare: 0, bookingDetails: null, }); render(); }); document.getElementById('viewReceiptBtn').addEventListener('click', renderReceipt); };
+        const updateBookingSummary = () => { const seatsDisplay = document.getElementById('selectedSeatsDisplay'); const fareDisplay = document.getElementById('totalFareDisplay'); const proceedBtn = document.getElementById('proceedToPayBtn'); state.totalFare = state.selectedSeats.length * state.selectedTrip.price; seatsDisplay.textContent = state.selectedSeats.join(', ') || 'None'; fareDisplay.textContent = `₹ ${state.totalFare}`; if (state.selectedSeats.length > 0) { proceedBtn.disabled = false; } else { proceedBtn.disabled = true; } };
+        const showCustomMessage = (title, message) => { const modal = document.getElementById('messageModal'); document.getElementById('messageTitle').textContent = title; document.getElementById('messageBody').textContent = message; modal.classList.remove('hidden'); const closeBtn = document.getElementById('closeMessageModal'); const okBtn = document.getElementById('okMessageModal'); const closeModal = () => modal.classList.add('hidden'); closeBtn.onclick = closeModal; okBtn.onclick = closeModal; };
+
+        // --- INITIALIZATION ---
+        const init = () => {
+            document.getElementById('homeLink').addEventListener('click', (e) => { e.preventDefault(); state.currentView = 'SEARCH'; render(); });
+            document.getElementById('offersLink').addEventListener('click', (e) => { if (state.currentView !== 'SEARCH') { e.preventDefault(); state.currentView = 'SEARCH'; render(); setTimeout(() => { document.getElementById('offersSection')?.scrollIntoView({ behavior: 'smooth' }); }, 100); } });
+            const myBookingsBtn = document.getElementById('myBookingsBtn'); const myBookingsMenu = document.getElementById('myBookingsMenu'); myBookingsBtn.addEventListener('click', (e) => { e.stopPropagation(); myBookingsMenu.classList.toggle('hidden'); });
+            document.getElementById('busTicketsLink').addEventListener('click', (e) => { e.preventDefault(); state.currentView = 'BOOKINGS_BUS'; render(); myBookingsMenu.classList.add('hidden'); });
+            document.getElementById('trainTicketsLink').addEventListener('click', (e) => { e.preventDefault(); state.currentView = 'BOOKINGS_TRAIN'; render(); myBookingsMenu.classList.add('hidden'); });
+            document.getElementById('cancelLink').addEventListener('click', (e) => { e.preventDefault(); state.currentView = 'SEARCH'; render(); myBookingsMenu.classList.add('hidden'); });
+            loginBtn.addEventListener('click', () => { state.previousView = state.currentView; state.currentView = 'LOGIN'; render(); });
+            receiptModal.addEventListener('click', (e) => { if (e.target === receiptModal) { receiptModal.classList.add('hidden'); } });
+
+            // --- AI Chat Listeners ---
+            aiChatFab.addEventListener('click', () => toggleChat(true));
+            closeAiChat.addEventListener('click', () => toggleChat(false));
+            aiChatModal.addEventListener('click', (e) => { if (e.target === aiChatModal) { toggleChat(false); } });
+            chatSendForm.addEventListener('submit', handleChatSend);
+
+            window.addEventListener('click', (e) => { if (myBookingsMenu && !myBookingsMenu.classList.contains('hidden')) { myBookingsMenu.classList.add('hidden'); } });
+
+            render(); renderChatHistory(); 
+        };
+        // Wrap init() in DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', init); 
+    </script>
+
+</body>
+</html>
+
