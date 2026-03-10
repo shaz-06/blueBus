@@ -92,11 +92,7 @@ This project is inspired by platforms like:
 
 ---
 
-## 📸 Screenshots
-
-Add your UI screenshots here.
-
-Example:
+## 📸 blueBus Image
 
 ![Home Page](./BlueBus.png)
 
