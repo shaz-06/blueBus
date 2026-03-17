@@ -338,18 +338,38 @@
         let selectedSeats = [];
         let currentRoute = ''; 
 
-        const busData = {
-            "Hyderabad to Vijayawada": [
-                { operator: "Morning Star Travels", type: "A/C Sleeper (2+1)", departure: "22:30", arrival: "04:30", duration: "6h 0m", rating: 4.5, price: 750 },
-                { operator: "Orange Tours & Travels", type: "Non-A/C Seater (2+2)", departure: "23:00", arrival: "05:30", duration: "6h 30m", rating: 4.2, price: 450 },
-                { operator: "IntrCity SmartBus", type: "A/C Seater/Sleeper (2+1)", departure: "23:45", arrival: "06:00", duration: "6h 15m", rating: 4.8, price: 900 },
-            ],
-            "Bangalore to Chennai": [
-                 { operator: "SRS Travels", type: "A/C Sleeper (2+1)", departure: "22:00", arrival: "04:30", duration: "6h 30m", rating: 4.3, price: 800 },
-                 { operator: "KPN Travels", type: "Non-A/C Seater/Sleeper (2+1)", departure: "22:45", arrival: "05:15", duration: "6h 30m", rating: 4.0, price: 550 },
-                 { operator: "National Travels", type: "A/C Seater (2+2)", departure: "23:15", arrival: "05:45", duration: "6h 30m", rating: 4.1, price: 650 },
-            ]
-        };
+        let busData = {};
+
+        async function fetchBusData() {
+            try {
+                const response = await fetch('bus_routes.json');
+                if (response.ok) {
+                    const rawData = await response.json();
+                    rawData.forEach(route => {
+                        const from = route['From'] || route.From || '';
+                        const to = route['To'] || route.To || '';
+                        if (!from || !to) return;
+                        
+                        const routeKey = `${from} to ${to}`;
+                        if (!busData[routeKey]) busData[routeKey] = [];
+                        
+                        busData[routeKey].push({
+                            operator: route['Operator'] || route.Operator,
+                            type: route['Bus Type'] || route.BusType || 'Seater',
+                            departure: route['Departure'] || route.Departure,
+                            arrival: route['Arrival'] || route.Arrival,
+                            duration: route['Duration'] || route.Duration,
+                            rating: 4.0,
+                            price: Math.floor(Math.random() * (1500 - 500) + 500)
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to load bus_routes.json", error);
+            }
+        }
+        
+        fetchBusData();
 
         // --- INITIALIZATION ---
         const today = new Date().toISOString().split('T')[0];
@@ -754,7 +774,8 @@
             
             const isUpcoming = booking.status === 'Upcoming' && bookingDate >= currentDate;
             
-            <!-- Updated status colors from orange to blue -->let statusColor = 'border-blue-500';
+            // Updated status colors from orange to blue
+            let statusColor = 'border-blue-500';
             let statusTextColor = 'text-blue-600';
             let cardOpacity = '';
 
