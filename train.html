@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Next Nave Generation eTicketing System</title>
-    
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Font Awesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-    
+
     <!-- Added flatpickr calendar CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    
+
     <style>
         /* Custom styles for IRCTC theme */
         .irctc-blue {
             background-color: #021B79;
         }
+
         .irctc-dark-blue {
             background-color: #1a2c5f;
         }
+
         .irctc-orange {
             background-color: #5683eb;
         }
+
         .irctc-orange-hover:hover {
             background-color: #e66a1a;
         }
+
         .irctc-footer-bg {
-            background-color: #2c1e4a; /* Dark purple from screenshot */
+            background-color: #2c1e4a;
+            /* Dark purple from screenshot */
         }
+
         .irctc-social-gradient {
-            background-image: linear-gradient(to right, #4a1e76, #d23a70); /* Gradient from screenshot */
+            background-image: linear-gradient(to right, #4a1e76, #d23a70);
+            /* Gradient from screenshot */
         }
-        
+
         /* Active tab style */
         .tab-btn.active {
             border-color: #5683eb;
@@ -42,6 +50,7 @@
             background-color: white;
             z-index: 10;
         }
+
         .tab-btn {
             border-bottom-width: 3px;
             border-color: transparent;
@@ -51,33 +60,42 @@
         .filter-header {
             border-bottom: 2px solid #5683eb;
         }
+
         .time-filter-btn {
             background-color: #0c3d94;
             color: white;
             transition: background-color 0.2s;
         }
+
         /* Added active state for time filter buttons */
         .time-filter-btn.active {
-            background-color: #5683eb; /* Orange to show selection */
+            background-color: #5683eb;
+            /* Orange to show selection */
             border-color: #5683eb;
         }
+
         .train-card {
             border-bottom: 1px solid #ddd;
         }
+
         /* Style for the new class filter dropdown */
         #class-filter-dropdown {
             z-index: 50;
         }
+
         /* Style for the new quota filter dropdown */
         #quota-filter-dropdown {
             z-index: 50;
         }
+
         /* NEW: Style for the Sort By dropdown */
         #sort-by-dropdown {
             z-index: 50;
         }
+
         #sort-by-dropdown button.active {
-            background-color: #1a2c5f; /* Dark blue active state */
+            background-color: #1a2c5f;
+            /* Dark blue active state */
             color: white;
         }
 
@@ -93,21 +111,27 @@
             padding: 10px 14px;
             border-radius: 16px;
         }
+
         .chat-message.bot {
-            background-color: #e2e8f0; /* bg-gray-200 */
+            background-color: #e2e8f0;
+            /* bg-gray-200 */
             color: #333;
             align-self: flex-start;
             border-bottom-left-radius: 4px;
         }
+
         .chat-message.user {
-            background-color: #1d4ed8; /* bg-blue-700 */
+            background-color: #1d4ed8;
+            /* bg-blue-700 */
             color: white;
             align-self: flex-end;
-            margin-left: auto; /* Push to right */
+            margin-left: auto;
+            /* Push to right */
             border-bottom-right-radius: 4px;
         }
     </style>
 </head>
+
 <body class="bg-gray-100 font-sans">
 
     <!-- Top Bar -->
@@ -136,7 +160,8 @@
         <div class="container mx-auto max-w-7xl flex justify-between items-center p-2">
             <!-- Left Logo -->
             <a href="#">
-                <img src="trainlogo.png" alt="blueRail Logo" class="h-16" onerror="this.onerror=null; this.src='https://placehold.co/100x70/EFEFEF/333333?text=IRCTC+Logo';">
+                <img src="trainlogo.png" alt="blueRail Logo" class="h-16"
+                    onerror="this.onerror=null; this.src='https://placehold.co/100x70/EFEFEF/333333?text=IRCTC+Logo';">
             </a>
 
             <!-- Main Navigation -->
@@ -159,7 +184,8 @@
                 <span class="text-right text-sm font-semibold text-gray-800 hidden md:block">
                     blueRailways<br>Safety | Security | Punctuality
                 </span>
-                <img src="trainlogo2.png" alt="blue Railways Logo" class="h-16" onerror="this.onerror=null; this.src='https://placehold.co/80x70/EFEFEF/333333?text=Rail+Logo';">
+                <img src="trainlogo2.png" alt="blue Railways Logo" class="h-16"
+                    onerror="this.onerror=null; this.src='https://placehold.co/80x70/EFEFEF/333333?text=Rail+Logo';">
             </div>
         </div>
     </header>
@@ -172,10 +198,11 @@
         <!-- Hero Section -->
         <main class="container mx-auto max-w-7xl mt-4 p-4">
             <div class="lg:grid lg:grid-cols-12 gap-6">
-                
+
                 <!-- Left Side: Booking Form -->
-                <div class="lg:col-span-5 bg-white p-4 rounded-lg shadow-lg relative -mt-16 md:-mt-20 z-20 border border-gray-200">
-                    
+                <div
+                    class="lg:col-span-5 bg-white p-4 rounded-lg shadow-lg relative -mt-16 md:-mt-20 z-20 border border-gray-200">
+
                     <!-- Tabs -->
                     <div class="flex justify-start border-b-2 border-gray-200">
                         <button class="tab-btn active text-lg font-bold py-2 px-4" data-tab="book-ticket">
@@ -196,17 +223,23 @@
                             <div>
                                 <label for="from-station-input" class="text-xs text-gray-500 font-medium">From</label>
                                 <div class="relative mt-1">
-                                    <i class="fa-solid fa-location-arrow absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                    <input type="text" id="from-station-input" class="w-full border border-gray-300 rounded-lg p-3 pl-10" placeholder="KSR BENGALURU - SBC">
+                                    <i
+                                        class="fa-solid fa-location-arrow absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="text" id="from-station-input"
+                                        class="w-full border border-gray-300 rounded-lg p-3 pl-10"
+                                        placeholder="KSR BENGALURU - SBC">
                                 </div>
                             </div>
-                            
+
                             <!-- To Station -->
                             <div>
                                 <label for="to-station-input" class="text-xs text-gray-500 font-medium">To</label>
                                 <div class="relative mt-1">
-                                    <i class="fa-solid fa-map-marker-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                    <input type="text" id="to-station-input" class="w-full border border-gray-300 rounded-lg p-3 pl-10" placeholder="UDUPI - UD">
+                                    <i
+                                        class="fa-solid fa-map-marker-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="text" id="to-station-input"
+                                        class="w-full border border-gray-300 rounded-lg p-3 pl-10"
+                                        placeholder="UDUPI - UD">
                                 </div>
                             </div>
 
@@ -216,16 +249,21 @@
                                 <div>
                                     <label for="date-input" class="text-xs text-gray-500 font-medium">Date</label>
                                     <div class="relative mt-1">
-                                        <i class="fa-solid fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                        <i
+                                            class="fa-solid fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                                         <!-- Added id="date-input" for flatpickr -->
-                                        <input type="text" id="date-input" class="w-full border border-gray-300 rounded-lg p-3 pl-10" placeholder="25/10/2025">
+                                        <input type="text" id="date-input"
+                                            class="w-full border border-gray-300 rounded-lg p-3 pl-10"
+                                            placeholder="25/10/2025">
                                     </div>
                                 </div>
-                                
+
                                 <!-- Class -->
                                 <div class="relative">
-                                    <label for="class-input" class="absolute left-3 top-2 text-xs text-gray-500">Class</label>
-                                    <select id="class-input" class="w-full border border-gray-300 rounded-lg p-3 pt-6 bg-white appearance-none">
+                                    <label for="class-input"
+                                        class="absolute left-3 top-2 text-xs text-gray-500">Class</label>
+                                    <select id="class-input"
+                                        class="w-full border border-gray-300 rounded-lg p-3 pt-6 bg-white appearance-none">
                                         <option>All Classes</option>
                                         <option>Sleeper (SL)</option>
                                         <option>AC 3 Tier (3A)</option>
@@ -236,11 +274,13 @@
                                     <i class="fa-solid fa-chevron-down absolute right-3 top-8 text-gray-400"></i>
                                 </div>
                             </div>
-                            
+
                             <!-- Quota -->
                             <div class="relative">
-                                <label for="quota-input" class="absolute left-3 top-2 text-xs text-gray-500">Quota</label>
-                                <select id="quota-input" class="w-full border border-gray-300 rounded-lg p-3 pt-6 bg-white appearance-none">
+                                <label for="quota-input"
+                                    class="absolute left-3 top-2 text-xs text-gray-500">Quota</label>
+                                <select id="quota-input"
+                                    class="w-full border border-gray-300 rounded-lg p-3 pt-6 bg-white appearance-none">
                                     <option>GENERAL</option>
                                     <option>LADIES</option>
                                     <option>LOWER BERTH/SR.CITIZEN</option>
@@ -252,10 +292,14 @@
 
                             <!-- Checkboxes -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                <label class="flex items-center"><input type="checkbox" class="form-checkbox rounded mr-2"> Person With Disability Concession</label>
-                                <label class="flex items-center"><input type="checkbox" class="form-checkbox rounded mr-2"> Flexible With Date</label>
-                                <label class="flex items-center"><input type="checkbox" class="form-checkbox rounded mr-2"> Train with Available Berth</label>
-                                <label class="flex items-center"><input type="checkbox" class="form-checkbox rounded mr-2"> Railway Pass Concession</label>
+                                <label class="flex items-center"><input type="checkbox"
+                                        class="form-checkbox rounded mr-2"> Person With Disability Concession</label>
+                                <label class="flex items-center"><input type="checkbox"
+                                        class="form-checkbox rounded mr-2"> Flexible With Date</label>
+                                <label class="flex items-center"><input type="checkbox"
+                                        class="form-checkbox rounded mr-2"> Train with Available Berth</label>
+                                <label class="flex items-center"><input type="checkbox"
+                                        class="form-checkbox rounded mr-2"> Railway Pass Concession</label>
                             </div>
 
                             <!-- Error Message (Hidden by default) -->
@@ -265,8 +309,11 @@
 
                             <!-- Search Buttons -->
                             <div class="flex flex-col md:flex-row gap-4">
-                                <button id="search-btn" class="w-full irctc-orange irctc-orange-hover text-white font-bold py-3 px-6 rounded-lg text-lg">Search</button>
-                                <a href="diksha.html" class="w-full bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg text-lg hover:bg-gray-300 text-center">Easy Booking on AskDISHA</a>
+                                <button id="search-btn"
+                                    class="w-full irctc-orange irctc-orange-hover text-white font-bold py-3 px-6 rounded-lg text-lg">Search</button>
+                                <a href="diksha.html"
+                                    class="w-full bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg text-lg hover:bg-gray-300 text-center">Easy
+                                    Booking on AskDISHA</a>
                             </div>
                         </form>
                     </div>
@@ -286,76 +333,77 @@
 
                 <!-- Right Side: Hero Image -->
                 <div class="lg:col-span-7">
-                    <img src="vande.jpg" alt="Vande Bharat Express" class="w-full h-auto rounded-lg shadow-lg"  onerror="this.onerror=null; this.src='https://placehold.co/800x600/EFEFEF/333333?text=Hero+Image';">
+                    <img src="vande.jpg" alt="Vande Bharat Express" class="w-full h-auto rounded-lg shadow-lg"
+                        onerror="this.onerror=null; this.src='https://placehold.co/800x600/EFEFEF/333333?text=Hero+Image';">
                 </div>
             </div>
         </main>
-        
+
         <!-- Services Section -->
         <section class="container mx-auto max-w-7xl mt-12 p-4 bg-white rounded-lg shadow-lg border border-gray-200">
             <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">Have you not found the right one?</h2>
             <h3 class="text-xl font-light text-center text-gray-600 mb-8">Find a service suitable for you here.</h3>
-            
+
             <!-- Service Icons Grid -->
             <!-- Updated grid for 5 columns max -->
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
-                
+
                 <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
                     <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
                         <i class="fa-solid fa-plane-departure text-4xl text-gray-600"></i>
                     </div>
                     <span class="font-semibold text-gray-700">FLIGHTS</span>
                 </a>
-                
+
                 <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
                     <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
                         <i class="fa-solid fa-hotel text-4xl text-gray-600"></i>
                     </div>
                     <span class="font-semibold text-gray-700">HOTELS</span>
                 </a>
-                
+
                 <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
                     <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
                         <i class="fa-solid fa-tv text-4xl text-gray-600"></i>
                     </div>
                     <span class="font-semibold text-gray-700">RAIL DRISHTI</span>
                 </a>
-                
+
                 <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
                     <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
                         <i class="fa-solid fa-utensils text-4xl text-gray-600"></i>
                     </div>
                     <span class="font-semibold text-gray-700">E-CATERING</span>
                 </a>
-                
+
                 <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
                     <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
                         <i class="fa-solid fa-bus text-4xl text-gray-600"></i>
                     </div>
                     <span class="font-semibold text-gray-700">BUS</span>
                 </a>
-                
+
                 <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
                     <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
                         <i class="fa-solid fa-umbrella-beach text-4xl text-gray-600"></i>
                     </div>
                     <span class="font-semibold text-gray-700">HOLIDAY PACKAGES</span>
                 </a>
-                
+
                 <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
                     <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
                         <i class="fa-solid fa-train-subway text-4xl text-gray-600"></i>
                     </div>
                     <span class="font-semibold text-gray-700">TOURIST TRAIN</span>
                 </a>
-                
+
                 <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
                     <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
                         <i class="fa-solid fa-mountain-sun text-4xl text-gray-600"></i>
                     </div>
                     <span class="font-semibold text-gray-700">HILL RAILWAYS</span>
                 </a>
-                
+
                 <a href="#" class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg">
                     <div class="flex items-center justify-center w-20 h-20 border-2 border-gray-300 rounded-full mb-3">
                         <i class="fa-solid fa-train-tram text-4xl text-gray-600"></i>
@@ -374,7 +422,8 @@
 
         <!-- Banner Ad -->
         <section class="container mx-auto max-w-7xl mt-8 p-4">
-            <img src="https://placehold.co/1200x150/EFEFEF/333333?text=Promotional+Banner+Ad" alt="Promotional Banner" class="w-full h-auto rounded-lg">
+            <img src="https://placehold.co/1200x150/EFEFEF/333333?text=Promotional+Banner+Ad" alt="Promotional Banner"
+                class="w-full h-auto rounded-lg">
         </section>
 
     </div> <!-- End of homepage-content -->
@@ -397,94 +446,129 @@
                     <div class="relative">
                         <span class="font-semibold" id="results-to-station">UDUPI</span>
                     </div>
-                    
+
                     <!-- Results Date Picker -->
-                    <div id="results-date-picker" class="relative cursor-pointer border border-gray-300 rounded p-2 text-center">
+                    <div id="results-date-picker"
+                        class="relative cursor-pointer border border-gray-300 rounded p-2 text-center">
                         <i class="fa-solid fa-calendar-alt text-gray-500 mr-2"></i>
                         <span class="font-semibold" id="results-date">25/10/2025</span>
                     </div>
-                    
+
                     <!-- Results Class Picker -->
                     <div class="relative">
                         <!-- Made this a button -->
-                        <button id="class-filter-btn" class="w-full border border-gray-300 rounded p-2 text-left font-semibold flex justify-between items-center">
+                        <button id="class-filter-btn"
+                            class="w-full border border-gray-300 rounded p-2 text-left font-semibold flex justify-between items-center">
                             <span id="results-class">All Classes</span>
                             <i class="fa-solid fa-chevron-down text-gray-500"></i>
                         </button>
                         <!-- New Dropdown for Class Filter -->
-                        <div id="class-filter-dropdown" class="hidden absolute top-full left-0 mt-1 bg-white text-black p-4 rounded shadow-lg border w-64">
-                            <label class="flex items-center"><input type="checkbox" data-class="1A" class="form-checkbox rounded mr-2 filter-class-dropdown">AC First Class (1A)</label>
-                            <label class="flex items-center"><input type="checkbox" data-class="2A" class="form-checkbox rounded mr-2 filter-class-dropdown">AC 2 Tier (2A)</label>
-                            <label class="flex items-center"><input type="checkbox" data-class="3A" class="form-checkbox rounded mr-2 filter-class-dropdown">AC 3 Tier (3A)</label>
-                            <label class="flex items-center"><input type="checkbox" data-class="SL" class="form-checkbox rounded mr-2 filter-class-dropdown">Sleeper (SL)</label>
-                            <label class="flex items-center"><input type="checkbox" data-class="3E" class="form-checkbox rounded mr-2 filter-class-dropdown">AC 3 Economy (3E)</label>
+                        <div id="class-filter-dropdown"
+                            class="hidden absolute top-full left-0 mt-1 bg-white text-black p-4 rounded shadow-lg border w-64">
+                            <label class="flex items-center"><input type="checkbox" data-class="1A"
+                                    class="form-checkbox rounded mr-2 filter-class-dropdown">AC First Class (1A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="2A"
+                                    class="form-checkbox rounded mr-2 filter-class-dropdown">AC 2 Tier (2A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="3A"
+                                    class="form-checkbox rounded mr-2 filter-class-dropdown">AC 3 Tier (3A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="SL"
+                                    class="form-checkbox rounded mr-2 filter-class-dropdown">Sleeper (SL)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="3E"
+                                    class="form-checkbox rounded mr-2 filter-class-dropdown">AC 3 Economy (3E)</label>
                         </div>
                     </div>
-                    
+
                     <!-- Results Quota Picker -->
                     <div class="relative">
                         <!-- Made this a button -->
-                        <button id="quota-filter-btn" class="w-full border border-gray-300 rounded p-2 text-left font-semibold flex justify-between items-center">
+                        <button id="quota-filter-btn"
+                            class="w-full border border-gray-300 rounded p-2 text-left font-semibold flex justify-between items-center">
                             <span id="results-quota">GENERAL</span>
                             <i class="fa-solid fa-chevron-down text-gray-500"></i>
                         </button>
                         <!-- New Dropdown for Quota Filter -->
-                        <div id="quota-filter-dropdown" class="hidden absolute top-full left-0 mt-1 bg-white text-black p-4 rounded shadow-lg border w-64">
+                        <div id="quota-filter-dropdown"
+                            class="hidden absolute top-full left-0 mt-1 bg-white text-black p-4 rounded shadow-lg border w-64">
                             <div class="space-y-2" id="quota-radio-group">
-                                <label class="flex items-center"><input type="radio" name="quota" value="GENERAL" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio" checked>GENERAL</label>
-                                <label class="flex items-center"><input type="radio" name="quota" value="LADIES" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">LADIES</label>
-                                <label class="flex items-center"><input type="radio" name="quota" value="LOWER BERTH/SR.CITIZEN" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">LOWER BERTH/SR.CITIZEN</label>
-                                <label class="flex items-center"><input type="radio" name="quota" value="TATKAL" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">TATKAL</label>
-                                <label class="flex items-center"><input type="radio" name="quota" value="PREMIUM TATKAL" class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">PREMIUM TATKAL</label>
+                                <label class="flex items-center"><input type="radio" name="quota" value="GENERAL"
+                                        class="form-radio text-orange-500 rounded mr-2 quota-filter-radio"
+                                        checked>GENERAL</label>
+                                <label class="flex items-center"><input type="radio" name="quota" value="LADIES"
+                                        class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">LADIES</label>
+                                <label class="flex items-center"><input type="radio" name="quota"
+                                        value="LOWER BERTH/SR.CITIZEN"
+                                        class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">LOWER
+                                    BERTH/SR.CITIZEN</label>
+                                <label class="flex items-center"><input type="radio" name="quota" value="TATKAL"
+                                        class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">TATKAL</label>
+                                <label class="flex items-center"><input type="radio" name="quota" value="PREMIUM TATKAL"
+                                        class="form-radio text-orange-500 rounded mr-2 quota-filter-radio">PREMIUM
+                                    TATKAL</label>
                             </div>
                         </div>
                     </div>
 
-                    <button id="modify-search-btn" class="w-full irctc-orange irctc-orange-hover text-white font-bold py-2 px-4 rounded-lg">Modify Search</button>
+                    <button id="modify-search-btn"
+                        class="w-full irctc-orange irctc-orange-hover text-white font-bold py-2 px-4 rounded-lg">Modify
+                        Search</button>
                 </div>
             </div>
 
             <!-- Main Results Area -->
             <div class="lg:grid lg:grid-cols-12 gap-6 mt-6">
-                
+
                 <!-- Left Side: Filters -->
                 <div class="lg:col-span-3 bg-white p-4 rounded-lg shadow-lg border border-gray-200 h-fit">
                     <div class="flex justify-between items-center pb-2 filter-header">
                         <h3 class="text-lg font-bold">Refine Results</h3>
-                        <a href="#" id="reset-filters-btn" class="text-blue-600 text-sm hover:underline">Reset Filters</a>
+                        <a href="#" id="reset-filters-btn" class="text-blue-600 text-sm hover:underline">Reset
+                            Filters</a>
                     </div>
-                    
+
                     <!-- Journey Class Filter -->
                     <div class="mt-4">
                         <h4 class="font-semibold mb-2">JOURNEY CLASS</h4>
                         <div class="space-y-1 text-sm">
-                            <label class="flex items-center"><input type="checkbox" data-class="1A" class="form-checkbox rounded mr-2 filter-class">AC First Class (1A)</label>
-                            <label class="flex items-center"><input type="checkbox" data-class="2A" class="form-checkbox rounded mr-2 filter-class">AC 2 Tier (2A)</label>
-                            <label class="flex items-center"><input type="checkbox" data-class="3A" class="form-checkbox rounded mr-2 filter-class">AC 3 Tier (3A)</label>
-                            <label class="flex items-center"><input type="checkbox" data-class="SL" class="form-checkbox rounded mr-2 filter-class">Sleeper (SL)</label>
-                            <label class="flex items-center"><input type="checkbox" data-class="3E" class="form-checkbox rounded mr-2 filter-class">AC 3 Economy (3E)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="1A"
+                                    class="form-checkbox rounded mr-2 filter-class">AC First Class (1A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="2A"
+                                    class="form-checkbox rounded mr-2 filter-class">AC 2 Tier (2A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="3A"
+                                    class="form-checkbox rounded mr-2 filter-class">AC 3 Tier (3A)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="SL"
+                                    class="form-checkbox rounded mr-2 filter-class">Sleeper (SL)</label>
+                            <label class="flex items-center"><input type="checkbox" data-class="3E"
+                                    class="form-checkbox rounded mr-2 filter-class">AC 3 Economy (3E)</label>
                         </div>
                     </div>
-                    
+
                     <!-- Departure Time Filter -->
                     <div class="mt-6">
                         <h4 class="font-semibold mb-2">DEPARTURE TIME</h4>
                         <div class="grid grid-cols-2 gap-2 text-sm">
-                            <button class="time-filter-btn departure-time-btn p-2 rounded" data-range="00:00-06:00">00:00 - 06:00<br>Early Morning</button>
-                            <button class="time-filter-btn departure-time-btn p-2 rounded" data-range="06:00-12:00">06:00 - 12:00<br>Morning</button>
-                            <button class="time-filter-btn departure-time-btn p-2 rounded" data-range="12:00-18:00">12:00 - 18:00<br>Mid Day</button>
-                            <button class="time-filter-btn departure-time-btn p-2 rounded" data-range="18:00-24:00">18:00 - 24:00<br>Night</button>
+                            <button class="time-filter-btn departure-time-btn p-2 rounded"
+                                data-range="00:00-06:00">00:00 - 06:00<br>Early Morning</button>
+                            <button class="time-filter-btn departure-time-btn p-2 rounded"
+                                data-range="06:00-12:00">06:00 - 12:00<br>Morning</button>
+                            <button class="time-filter-btn departure-time-btn p-2 rounded"
+                                data-range="12:00-18:00">12:00 - 18:00<br>Mid Day</button>
+                            <button class="time-filter-btn departure-time-btn p-2 rounded"
+                                data-range="18:00-24:00">18:00 - 24:00<br>Night</button>
                         </div>
                     </div>
 
                     <!-- From/To Station Filter -->
                     <div class="mt-6">
                         <h4 class="font-semibold mb-2">FROM STATIONS</h4>
-                        <label class="flex items-center text-sm"><input type="checkbox" class="form-checkbox rounded mr-2" checked><span id="filter-from-station">KSR BENGALURU</span></label>
+                        <label class="flex items-center text-sm"><input type="checkbox"
+                                class="form-checkbox rounded mr-2" checked><span id="filter-from-station">KSR
+                                BENGALURU</span></label>
                     </div>
                     <div class="mt-4">
                         <h4 class="font-semibold mb-2">TO STATIONS</h4>
-                        <label class="flex items-center text-sm"><input type="checkbox" class="form-checkbox rounded mr-2" checked><span id="filter-to-station">UDUPI</span></label>
+                        <label class="flex items-center text-sm"><input type="checkbox"
+                                class="form-checkbox rounded mr-2" checked><span
+                                id="filter-to-station">UDUPI</span></label>
                     </div>
                 </div>
 
@@ -492,16 +576,22 @@
                 <!-- Added id="train-list-container" -->
                 <div class="lg:col-span-9 mt-4 lg:mt-0" id="train-list-container">
                     <!-- Results Header -->
-                    <div class="bg-white p-3 rounded-lg shadow-lg border border-gray-200 flex justify-between items-center">
+                    <div
+                        class="bg-white p-3 rounded-lg shadow-lg border border-gray-200 flex justify-between items-center">
                         <div>
                             <h2 class="text-lg font-bold">
-                                2 Results For <span id="header-from-station">KSR BENGALURU</span> <i class="fa-solid fa-arrow-right text-sm"></i> <span id="header-to-station">UDUPI</span>
-                                | <span id="header-date-display">Sat, 25 Oct 2025</span> For Quota <span id="header-quota">General</span>
+                                2 Results For <span id="header-from-station">KSR BENGALURU</span> <i
+                                    class="fa-solid fa-arrow-right text-sm"></i> <span
+                                    id="header-to-station">UDUPI</span>
+                                | <span id="header-date-display">Sat, 25 Oct 2025</span> For Quota <span
+                                    id="header-quota">General</span>
                             </h2>
                         </div>
                         <div class="flex space-x-2">
-                            <a href="#" id="prev-day-btn" class="text-blue-600 hover:underline"><i class="fa-solid fa-chevron-left"></i> Previous Day</a>
-                            <a href="#" id="next-day-btn" class="text-blue-600 hover:underline">Next Day <i class="fa-solid fa-chevron-right"></i></a>
+                            <a href="#" id="prev-day-btn" class="text-blue-600 hover:underline"><i
+                                    class="fa-solid fa-chevron-left"></i> Previous Day</a>
+                            <a href="#" id="next-day-btn" class="text-blue-600 hover:underline">Next Day <i
+                                    class="fa-solid fa-chevron-right"></i></a>
                         </div>
                     </div>
 
@@ -509,31 +599,48 @@
                     <!-- Updated styling to match new screenshot -->
                     <!-- Wrapped in a relative container for the dropdown -->
                     <div class="relative flex space-x-1 my-4">
-                        <button id="sort-by-btn" class="bg-blue-800 text-white py-2 px-4 rounded font-bold text-sm w-44 text-left flex justify-between items-center">
+                        <button id="sort-by-btn"
+                            class="bg-blue-800 text-white py-2 px-4 rounded font-bold text-sm w-44 text-left flex justify-between items-center">
                             <span id="sort-by-text">Sort By | Duration</span>
                             <i class="fa-solid fa-chevron-down text-xs"></i>
                         </button>
-                        <button class="bg-white border border-orange-500 text-gray-800 py-2 px-4 rounded font-bold text-sm hover:bg-gray-50">Show Available Trains</button>
-                    
+                        <button
+                            class="bg-white border border-orange-500 text-gray-800 py-2 px-4 rounded font-bold text-sm hover:bg-gray-50">Show
+                            Available Trains</button>
+
                         <!-- NEW: Sort By Dropdown -->
-                        <div id="sort-by-dropdown" class="hidden absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md border border-gray-300 w-96 p-2" style="--tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); z-index: 50;">
+                        <div id="sort-by-dropdown"
+                            class="hidden absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md border border-gray-300 w-96 p-2"
+                            style="--tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); z-index: 50;">
                             <div class="grid grid-cols-2 gap-2">
-                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50 active" data-value="Duration" data-text="Duration">
+                                <button
+                                    class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50 active"
+                                    data-value="Duration" data-text="Duration">
                                     Duration<br>Early First
                                 </button>
-                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="DurationLate" data-text="Duration">
+                                <button
+                                    class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50"
+                                    data-value="DurationLate" data-text="Duration">
                                     Duration<br>Late First
                                 </button>
-                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="Departure" data-text="Departure">
+                                <button
+                                    class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50"
+                                    data-value="Departure" data-text="Departure">
                                     Departure<br>Early First
                                 </button>
-                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="DepartureLate" data-text="Departure">
+                                <button
+                                    class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50"
+                                    data-value="DepartureLate" data-text="Departure">
                                     Departure<br>Late First
                                 </button>
-                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="Arrival" data-text="Arrival">
+                                <button
+                                    class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50"
+                                    data-value="Arrival" data-text="Arrival">
                                     Arrival<br>Early First
                                 </button>
-                                <button class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50" data-value="ArrivalLate" data-text="Arrival">
+                                <button
+                                    class="sort-option p-3 border rounded text-center font-semibold text-gray-700 hover:bg-gray-50"
+                                    data-value="ArrivalLate" data-text="Arrival">
                                     Arrival<br>Late First
                                 </button>
                             </div>
@@ -543,12 +650,9 @@
 
                     <!-- Train Card 1 -->
                     <!-- Added data attributes for filtering and SORTING -->
-                    <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 mt-4 train-card" 
-                        data-departure-time="18:50" 
-                        data-classes="SL,3E,3A,2A"
-                        data-duration-mins="566"
-                        data-departure-mins="1130"
-                        data-arrival-mins="1696">
+                    <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 mt-4 train-card"
+                        data-departure-time="18:50" data-classes="SL,3E,3A,2A" data-duration-mins="566"
+                        data-departure-mins="1130" data-arrival-mins="1696">
                         <!-- Top Row: Name, Runs On -->
                         <div class="flex justify-between items-center pb-3">
                             <div>
@@ -556,21 +660,24 @@
                             </div>
                             <div class="text-right">
                                 <span class="text-gray-600">Runs On: M T W T F S S</span><br>
-                                <a href="#" class="text-blue-600 font-semibold hover:underline open-schedule-modal" data-train-name="PANCHAGANGA EXP (16595)">Train Schedule</a>
+                                <a href="#" class="text-blue-600 font-semibold hover:underline open-schedule-modal"
+                                    data-train-name="PANCHAGANGA EXP (16595)">Train Schedule</a>
                             </div>
                         </div>
-                        
+
                         <!-- Mid Row: Timing -->
                         <div class="flex flex-col md:flex-row justify-between items-center py-3">
                             <div class="text-center md:text-left">
-                                <span class="text-xl font-bold">18:50</span> | <span id="card1-from-station">KSR BENGALURU</span><br>
+                                <span class="text-xl font-bold">18:50</span> | <span id="card1-from-station">KSR
+                                    BENGALURU</span><br>
                                 <span class="text-gray-600">Sat, 25 Oct</span>
                             </div>
                             <div class="text-gray-600 my-2 md:my-0">
                                 --- 09:26 ---
                             </div>
                             <div class="text-center md:text-right">
-                                <span class="text-xl font-bold">04:16</span> | <span id="card1-to-station">UDUPI</span><br>
+                                <span class="text-xl font-bold">04:16</span> | <span
+                                    id="card1-to-station">UDUPI</span><br>
                                 <span class="text-gray-600">Sun, 26 Oct</span>
                             </div>
                         </div>
@@ -578,38 +685,47 @@
                         <!-- Bottom Row: Classes & Book -->
                         <div class="flex flex-col md:flex-row justify-between items-center pt-3">
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                <a href="#"
+                                    class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
                                     <span class="font-semibold">Sleeper (SL)</span><br>
-                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                    <span class="text-green-600 font-bold">Refresh <i
+                                            class="fa-solid fa-rotate-right"></i></span>
                                 </a>
-                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                <a href="#"
+                                    class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
                                     <span class="font-semibold">AC 3 Economy (3E)</span><br>
-                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                    <span class="text-green-600 font-bold">Refresh <i
+                                            class="fa-solid fa-rotate-right"></i></span>
                                 </a>
-                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                <a href="#"
+                                    class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
                                     <span class="font-semibold">AC 3 Tier (3A)</span><br>
-                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                    <span class="text-green-600 font-bold">Refresh <i
+                                            class="fa-solid fa-rotate-right"></i></span>
                                 </a>
-                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                <a href="#"
+                                    class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
                                     <span class="font-semibold">AC 2 Tier (2A)</span><br>
-                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                    <span class="text-green-600 font-bold">Refresh <i
+                                            class="fa-solid fa-rotate-right"></i></span>
                                 </a>
                             </div>
                             <div class="flex space-x-2 mt-4 md:mt-0">
-                                <button class="bg-orange-100 border border-orange-300 text-orange-700 py-2 px-4 rounded font-semibold hover:bg-orange-200">Book Now</button>
-                                <button class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded font-semibold hover:bg-gray-200">OTHER DATES</button>
+                                <button
+                                    class="bg-orange-100 border border-orange-300 text-orange-700 py-2 px-4 rounded font-semibold hover:bg-orange-200">Book
+                                    Now</button>
+                                <button
+                                    class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded font-semibold hover:bg-gray-200">OTHER
+                                    DATES</button>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Train Card 2 -->
                     <!-- Added data attributes for filtering and SORTING -->
                     <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 mt-4 train-card"
-                        data-departure-time="20:25"
-                        data-classes="SL,3A,2A,1A"
-                        data-duration-mins="855"
-                        data-departure-mins="1225"
-                        data-arrival-mins="2080">
+                        data-departure-time="20:25" data-classes="SL,3A,2A,1A" data-duration-mins="855"
+                        data-departure-mins="1225" data-arrival-mins="2080">
                         <!-- Top Row: Name, Runs On -->
                         <div class="flex justify-between items-center pb-3">
                             <div>
@@ -617,21 +733,24 @@
                             </div>
                             <div class="text-right">
                                 <span class="text-gray-600">Runs On: M T W T F S S</span><br>
-                                <a href="#" class="text-blue-600 font-semibold hover:underline open-schedule-modal" data-train-name="SMVB MRDW EXP (16585)">Train Schedule</a>
+                                <a href="#" class="text-blue-600 font-semibold hover:underline open-schedule-modal"
+                                    data-train-name="SMVB MRDW EXP (16585)">Train Schedule</a>
                             </div>
                         </div>
-                        
+
                         <!-- Mid Row: Timing -->
                         <div class="flex flex-col md:flex-row justify-between items-center py-3">
                             <div class="text-center md:text-left">
-                                <span class="text-xl font-bold">20:25</span> | <span id="card2-from-station">KSR BENGALURU</span><br>
+                                <span class="text-xl font-bold">20:25</span> | <span id="card2-from-station">KSR
+                                    BENGALURU</span><br>
                                 <span class="text-gray-600">Sat, 25 Oct</span>
                             </div>
                             <div class="text-gray-600 my-2 md:my-0">
                                 --- 14:15 ---
                             </div>
                             <div class="text-center md:text-right">
-                                <span class="text-xl font-bold">10:40</span> | <span id="card2-to-station">UDUPI</span><br>
+                                <span class="text-xl font-bold">10:40</span> | <span
+                                    id="card2-to-station">UDUPI</span><br>
                                 <span class="text-gray-600">Sun, 26 Oct</span>
                             </div>
                         </div>
@@ -639,32 +758,45 @@
                         <!-- Bottom Row: Classes & Book -->
                         <div class="flex flex-col md:flex-row justify-between items-center pt-3">
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                <a href="#"
+                                    class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
                                     <span class="font-semibold">Sleeper (SL)</span><br>
-                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                    <span class="text-green-600 font-bold">Refresh <i
+                                            class="fa-solid fa-rotate-right"></i></span>
                                 </a>
-                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                <a href="#"
+                                    class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
                                     <span class="font-semibold">AC 3 Tier (3A)</span><br>
-                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                    <span class="text-green-600 font-bold">Refresh <i
+                                            class="fa-solid fa-rotate-right"></i></span>
                                 </a>
-                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                <a href="#"
+                                    class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
                                     <span class="font-semibold">AC 2 Tier (2A)</span><br>
-                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                    <span class="text-green-600 font-bold">Refresh <i
+                                            class="fa-solid fa-rotate-right"></i></span>
                                 </a>
-                                <a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
+                                <a href="#"
+                                    class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn">
                                     <span class="font-semibold">AC First Class (1A)</span><br>
-                                    <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
+                                    <span class="text-green-600 font-bold">Refresh <i
+                                            class="fa-solid fa-rotate-right"></i></span>
                                 </a>
                             </div>
                             <div class="flex space-x-2 mt-4 md:mt-0">
-                                <button class="bg-orange-100 border border-orange-300 text-orange-700 py-2 px-4 rounded font-semibold hover:bg-orange-200">Book Now</button>
-                                <button class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded font-semibold hover:bg-gray-200">OTHER DATES</button>
+                                <button
+                                    class="bg-orange-100 border border-orange-300 text-orange-700 py-2 px-4 rounded font-semibold hover:bg-orange-200">Book
+                                    Now</button>
+                                <button
+                                    class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded font-semibold hover:bg-gray-200">OTHER
+                                    DATES</button>
                             </div>
                         </div>
                     </div>
 
                     <!-- No Results Message (Hidden by default) -->
-                    <div id="no-results-message" class="hidden text-center mt-8 p-4 bg-white rounded-lg shadow-lg border">
+                    <div id="no-results-message"
+                        class="hidden text-center mt-8 p-4 bg-white rounded-lg shadow-lg border">
                         <h3 class="text-xl font-bold text-gray-700">No trains found</h3>
                         <p class="text-gray-500">Please try changing your filters or click "Reset Filters".</p>
                     </div>
@@ -677,7 +809,8 @@
     <!-- NEW: Floating Chatbot -->
     <div id="chatbot-container" class="fixed bottom-4 right-4 z-50">
         <!-- Chat Window (Hidden by default) -->
-        <div id="chat-window" class="hidden fixed bottom-20 right-4 w-full max-w-sm h-full max-h-[70vh] bg-white rounded-lg shadow-xl flex flex-col transition-all duration-300 ease-out origin-bottom-right transform scale-95 opacity-0">
+        <div id="chat-window"
+            class="hidden fixed bottom-20 right-4 w-full max-w-sm h-full max-h-[70vh] bg-white rounded-lg shadow-xl flex flex-col transition-all duration-300 ease-out origin-bottom-right transform scale-95 opacity-0">
             <!-- Chat Header -->
             <div class="bg-blue-800 text-white p-4 flex items-center space-x-3 rounded-t-lg">
                 <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
@@ -690,7 +823,7 @@
                 </div>
                 <button id="chat-close-btn" class="ml-auto text-white text-2xl font-bold">&times;</button>
             </div>
-            
+
             <!-- Message Area -->
             <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-100">
                 <!-- Initial Bot Message -->
@@ -698,21 +831,25 @@
                     <p>Welcome to blueRail! How can I help you with your booking today?</p>
                 </div>
             </div>
-            
+
             <!-- Input Area -->
             <div class="p-3 border-t bg-white rounded-b-lg flex items-center space-x-2">
-                <input type="text" id="chat-input" placeholder="Type your message..." class="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button id="chat-send-btn" class="w-10 h-10 bg-blue-700 text-white rounded-full flex items-center justify-center flex-shrink-0">
+                <input type="text" id="chat-input" placeholder="Type your message..."
+                    class="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="chat-send-btn"
+                    class="w-10 h-10 bg-blue-700 text-white rounded-full flex items-center justify-center flex-shrink-0">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
-                <button id="chat-mic-btn" class="w-10 h-10 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                <button id="chat-mic-btn"
+                    class="w-10 h-10 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
                     <i class="fa-solid fa-microphone"></i>
                 </button>
             </div>
         </div>
-        
+
         <!-- Chat Toggle Button -->
-        <button id="chat-toggle-btn" class="irctc-orange w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 ease-in-out transform hover:scale-110">
+        <button id="chat-toggle-btn"
+            class="irctc-orange w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 ease-in-out transform hover:scale-110">
             <i class="fa-solid fa-comment-dots text-white text-3xl"></i>
             <i class="fa-solid fa-times text-white text-3xl hidden"></i>
         </button>
@@ -728,16 +865,28 @@
                 <span class="font-semibold text-white">Get Connected with us on social networks</span>
                 <div class="flex space-x-2">
                     <!-- Social Icons -->
-                    <a href="#" class="w-8 h-8 rounded-full bg-blue-800 text-white flex items-center justify-center"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-pink-600 text-white flex items-center justify-center"><i class="fab fa-instagram"></i></a>
-                    <a href="#" classq-="w-8 h-8 rounded-full bg-blue-700 text-white flex items-center justify-center"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center"><i class="fab fa-pinterest"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center"><i class="fab fa-tumblr"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-yellow-500 text-gray-800 flex items-center justify-center"><i class="fab fa-snapchat-ghost"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-blue-400 text-white flex items-center justify-center"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-blue-800 text-white flex items-center justify-center"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center"><i
+                            class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center"><i
+                            class="fab fa-youtube"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-pink-600 text-white flex items-center justify-center"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#"
+                        classq-="w-8 h-8 rounded-full bg-blue-700 text-white flex items-center justify-center"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center"><i
+                            class="fab fa-telegram-plane"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center"><i
+                            class="fab fa-pinterest"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-700 text-white flex items-center justify-center"><i
+                            class="fab fa-tumblr"></i></a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full bg-yellow-500 text-gray-800 flex items-center justify-center"><i
+                            class="fab fa-snapchat-ghost"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-blue-400 text-white flex items-center justify-center"><i
+                            class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
@@ -802,7 +951,7 @@
     <script>
         // FIX: Wait for the DOM to be fully loaded before running the script
         document.addEventListener('DOMContentLoaded', (event) => {
-        
+
             // --- Homepage Tab functionality ---
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
@@ -838,14 +987,14 @@
             const dateInput = document.getElementById('date-input');
             const classInput = document.getElementById('class-input');
             const quotaInput = document.getElementById('quota-input');
-            
+
             // --- Results Page Display Elements ---
             const resultsFrom = document.getElementById('results-from-station');
             const resultsTo = document.getElementById('results-to-station');
             const resultsDate = document.getElementById('results-date');
             const resultsClass = document.getElementById('results-class');
             const resultsQuota = document.getElementById('results-quota');
-            
+
             const headerFrom = document.getElementById('header-from-station');
             const headerTo = document.getElementById('header-to-station');
             const headerQuota = document.getElementById('header-quota');
@@ -861,14 +1010,14 @@
 
             // --- Added Error Message Element ---
             const errorMsg = document.getElementById('search-error');
-            
+
             // --- Added Filter Elements ---
             const filterCheckboxes = document.querySelectorAll('.filter-class');
             const timeFilterButtons = document.querySelectorAll('.departure-time-btn');
-            
+
             const trainListContainer = document.getElementById('train-list-container');
-            const allTrainCards = trainListContainer.querySelectorAll('.train-card');
-            
+            let allTrainCards = trainListContainer.querySelectorAll('.train-card');
+
             const noResultsMessage = document.getElementById('no-results-message');
             const resetFiltersBtn = document.getElementById('reset-filters-btn');
 
@@ -901,15 +1050,15 @@
              */
             function updateClassFilterButtonText() {
                 // FIX: Add null check
-                if (!resultsClass) return; 
-                
+                if (!resultsClass) return;
+
                 const selected = [];
                 dropdownCheckboxes.forEach(cb => {
                     if (cb.checked) {
                         selected.push(cb.getAttribute('data-class'));
                     }
                 });
-                
+
                 if (selected.length === 0) {
                     resultsClass.textContent = 'All Classes';
                 } else if (selected.length === 1) {
@@ -946,7 +1095,7 @@
 
                 // 1. Get all *visible* train cards into an array to respect filters
                 const cards = Array.from(trainListContainer.querySelectorAll('.train-card[style*="display: block"], .train-card:not([style*="display: none"])'));
-                
+
                 // 2. Sort the array
                 cards.sort((a, b) => {
                     const durationA = parseInt(a.getAttribute('data-duration-mins'));
@@ -966,7 +1115,7 @@
                         default: return durationA - durationB; // Default to Duration Early
                     }
                 });
-                
+
                 // 3. Re-append the sorted cards to the container
                 cards.forEach(card => {
                     trainListContainer.appendChild(card);
@@ -978,71 +1127,125 @@
 
             // Go to Results Page
             if (searchBtn) {
-                searchBtn.addEventListener('click', (e) => {
+                searchBtn.addEventListener('click', async (e) => {
                     e.preventDefault();
-                    
-                    // FIX: Add null checks for form inputs
+
                     if (!fromInput || !toInput || !dateInput || !classInput || !quotaInput || !errorMsg) return;
 
-                    // Get values from form
-                    const fromValue = fromInput.value || fromInput.placeholder.split(' - ')[0]; // Use placeholder as fallback
-                    const toValue = toInput.value || toInput.placeholder.split(' - ')[0]; // Use placeholder as fallback
+                    const fromValue = fromInput.value || fromInput.placeholder.split(' - ')[0];
+                    const toValue = toInput.value || toInput.placeholder.split(' - ')[0];
                     const dateValue = dateInput.value;
-                    
-                    // --- Validation Check ---
-                    if (dateValue.trim() === '') { // Only check date, as others have fallbacks
-                        errorMsg.style.display = 'block'; // Show error
-                        return; // Stop the function here
+
+                    if (dateValue.trim() === '') {
+                        errorMsg.style.display = 'block';
+                        return;
                     } else {
-                        errorMsg.style.display = 'none'; // Hide error if all fields are good
+                        errorMsg.style.display = 'none';
                     }
-                    
-                    // --- Continue if validation passes ---
+
                     const classValue = classInput.options[classInput.selectedIndex].text;
                     const quotaValue = quotaInput.options[quotaInput.selectedIndex].text;
 
-                    // Set values on results page (with null checks)
                     if (resultsFrom) resultsFrom.textContent = fromValue;
                     if (resultsTo) resultsTo.textContent = toValue;
                     if (resultsDate) resultsDate.textContent = dateValue;
                     if (resultsClass) resultsClass.textContent = classValue;
                     if (resultsQuota) resultsQuota.textContent = quotaValue;
-                    
+
                     if (headerFrom) headerFrom.textContent = fromValue;
                     if (headerTo) headerTo.textContent = toValue;
                     if (headerQuota) headerQuota.textContent = quotaValue;
-                    
+
                     if (filterFrom) filterFrom.textContent = fromValue;
                     if (filterTo) filterTo.textContent = toValue;
-                    
-                    if (card1From) card1From.textContent = fromValue;
-                    if (card1To) card1To.textContent = toValue;
-                    if (card2From) card2From.textContent = fromValue;
-                    if (card2To) card2To.textContent = toValue;
 
-                    // Sync quota radio button
                     if (quotaRadioButtons) {
-                        quotaRadioButtons.forEach(radio => {
-                            radio.checked = (radio.value === quotaValue);
-                        });
+                        quotaRadioButtons.forEach(radio => radio.checked = (radio.value === quotaValue));
                     }
 
-                    // Switch pages
                     if (homepageContent) homepageContent.classList.add('hidden');
                     if (resultsPageContent) resultsPageContent.classList.remove('hidden');
-                    window.scrollTo(0, 0); // Scroll to top
-                    
-                    // Sync calendars
+                    window.scrollTo(0, 0);
+
                     if (homeCalendar && resultsCalendar) {
-                        const selectedDate = homeCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00"); // Use a fallback
-                        resultsCalendar.setDate(selectedDate, true); // true to trigger onChange
+                        const selectedDate = homeCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00");
+                        resultsCalendar.setDate(selectedDate, true);
                     }
-                    
-                    // Call filter function to ensure list is correct on load
+
+                    // NEW DYNAMIC FETCH LOGIC
+                    trainListContainer.querySelectorAll('.train-card').forEach(c => c.remove());
+                    let tempDiv = document.createElement('div');
+                    tempDiv.className = 'text-center p-8 train-card';
+                    tempDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-3xl text-blue-600"></i><p class="mt-2 text-gray-600">Fetching trains...</p>';
+                    trainListContainer.appendChild(tempDiv);
+
+                    try {
+                        const res = await fetch('EXP-TRAINS.json');
+                        const trains = await res.json();
+                        tempDiv.remove();
+                        const fStn = fromValue.split('-')[0].trim().toUpperCase();
+                        const tStn = toValue.split('-')[0].trim().toUpperCase();
+
+                        const [dd, mm, yyyy] = dateValue.split('/');
+                        const uDate = new Date(`${yyyy}-${mm}-${dd}T00:00:00`);
+                        const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+                        const dayOfWeek = days[uDate.getDay()];
+                        const dOpt = { weekday: 'short', day: '2-digit', month: 'short' };
+                        const dispDate = new Intl.DateTimeFormat('en-GB', dOpt).format(uDate).replace(/,/g, '');
+
+                        let html = '';
+                        for (const tr of trains) {
+                            if (!tr.runningDays || !tr.runningDays[dayOfWeek]) continue;
+                            const rt = tr.trainRoute || [];
+                            let fIdx = -1, tIdx = -1;
+                            for (let i = 0; i < rt.length; i++) {
+                                if (rt[i].stationName.toUpperCase().includes(fStn)) fIdx = i;
+                                if (rt[i].stationName.toUpperCase().includes(tStn)) tIdx = i;
+                            }
+                            if (fIdx !== -1 && tIdx !== -1 && fIdx < tIdx) {
+                                const fStop = rt[fIdx], tStop = rt[tIdx];
+                                let dep = fStop.departs === 'Source' ? fStop.arrives : fStop.departs;
+                                let arr = tStop.arrives === 'Destination' ? tStop.departs : tStop.arrives;
+                                if (dep === 'Source' || dep === 'Destination') dep = '00:00';
+                                if (arr === 'Source' || arr === 'Destination') arr = '00:00';
+
+                                const depMins = parseInt(dep.split(':')[0]) * 60 + parseInt(dep.split(':')[1] || 0);
+                                const dayDiff = Number(tStop.day) - Number(fStop.day);
+                                const arrMins = dayDiff * 24 * 60 + parseInt(arr.split(':')[0]) * 60 + parseInt(arr.split(':')[1] || 0);
+                                let dMins = arrMins - depMins; if (dMins < 0) dMins += 24 * 60;
+                                const durStr = `${Math.floor(dMins / 60)}h ${dMins % 60}m`;
+
+                                const dist = Math.abs((parseInt(tStop.distance) || 0) - (parseInt(fStop.distance) || 0)) || 500;
+                                const price = Math.floor(dist * 1.5);
+
+                                const toD = new Date(uDate.getTime() + dayDiff * 24 * 60 * 60 * 1000);
+                                const tDispDate = new Intl.DateTimeFormat('en-GB', dOpt).format(toD).replace(/,/g, '');
+
+                                const dMap = { MON: "M", TUE: "T", WED: "W", THU: "T", FRI: "F", SAT: "S", SUN: "S" };
+                                const runsStr = Object.keys(dMap).map(k => tr.runningDays[k] ? `<span class="text-gray-800 font-bold">${dMap[k]}</span>` : `<span class="text-gray-400">${dMap[k]}</span>`).join(' ');
+
+                                const cl = ['SL', '3A', '2A', '1A'].map(c => `<a href="#" class="p-2 border rounded text-center hover:bg-gray-50 refresh-availability-btn"><span class="font-semibold">${c}</span><br><span class="text-blue-600 font-bold">Check Availability <i class="fa-solid fa-rotate-right"></i></span></a>`).join('');
+
+                                html += `<div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 mt-4 train-card" data-departure-time="${dep}" data-classes="SL,3A,2A,1A" data-duration-mins="${dMins}" data-departure-mins="${depMins}" data-arrival-mins="${arrMins}">
+                                    <div class="flex justify-between items-center pb-3"><div><h3 class="text-xl font-bold text-blue-900">${tr.trainName} (${tr.trainNumber})</h3></div><div class="text-right"><span class="text-gray-600">Runs On: ${runsStr}</span><br><a href="#" class="text-blue-600 font-semibold hover:underline open-schedule-modal" data-train-name="${tr.trainName} (${tr.trainNumber})">Train Schedule</a></div></div>
+                                    <div class="flex flex-col md:flex-row justify-between items-center py-3"><div class="text-center md:text-left"><span class="text-xl font-bold">${dep}</span> | <span class="card-from-station">${fromValue}</span><br><span class="text-gray-600">${dispDate}</span></div><div class="text-gray-600 my-2 md:my-0 font-medium">--- ${durStr} ---</div><div class="text-center md:text-right"><span class="text-xl font-bold">${arr}</span> | <span class="card-to-station">${toValue}</span><br><span class="text-gray-600">${tDispDate}</span></div></div>
+                                    <div class="flex flex-col md:flex-row justify-between items-center pt-3 border-t"><div class="grid grid-cols-2 md:grid-cols-4 gap-4 flex-1 mr-4">${cl}</div><div class="flex flex-col items-end space-y-2 mt-4 md:mt-0"><span class="text-lg font-bold text-gray-800">₹ ${price} <span class="text-xs font-normal text-gray-500">onwards</span></span><div class="flex space-x-2"><button class="bg-orange-100 border border-orange-300 text-orange-700 py-2 px-4 rounded font-semibold hover:bg-orange-200">Book Now</button></div></div></div>
+                                </div>`;
+                            }
+                        }
+                        if (html === '') {
+                            const nr = document.getElementById('no-results-message');
+                            if (nr) nr.style.display = 'block';
+                        } else {
+                            trainListContainer.insertAdjacentHTML('beforeend', html);
+                        }
+                    } catch (err) { console.error('Error fetching trains:', err); }
+
+                    allTrainCards = trainListContainer.querySelectorAll('.train-card');
+                    if (typeof bindDynamicCardEvents === 'function') bindDynamicCardEvents();
+
                     filterTrains();
-                    // Call text update function to set initial "All Classes" text
                     updateClassFilterButtonText();
-                    // Call sort function to set initial sort order
                     sortTrains('Duration');
                 });
             }
@@ -1051,7 +1254,7 @@
             if (modifySearchBtn) {
                 modifySearchBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    
+
                     // Sync calendar back to homepage
                     if (resultsCalendar && homeCalendar) {
                         const selectedDate = resultsCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00");
@@ -1071,7 +1274,7 @@
                 // Use en-GB for d/m/y format, replace commas
                 return new Intl.DateTimeFormat('en-GB', options).format(dateObj).replace(/,/g, '');
             }
-            
+
             // Reset Filters
             if (resetFiltersBtn) {
                 resetFiltersBtn.addEventListener('click', (e) => {
@@ -1080,19 +1283,19 @@
                     timeFilterButtons.forEach(button => button.classList.remove('active'));
                     // Also reset dropdown checkboxes
                     dropdownCheckboxes.forEach(checkbox => checkbox.checked = false);
-                    
+
                     filterTrains();
                     updateClassFilterButtonText(); // Reset button text
 
                     // NEW: Reset availability status
                     document.querySelectorAll('.refresh-availability-btn').forEach(button => {
-                            const classNameSpan = button.querySelector('.font-semibold');
-                            if (classNameSpan) { // Check if it has been modified
-                                button.innerHTML = `
+                        const classNameSpan = button.querySelector('.font-semibold');
+                        if (classNameSpan) { // Check if it has been modified
+                            button.innerHTML = `
                                     <span class="font-semibold">${classNameSpan.textContent}</span><br>
                                     <span class="text-green-600 font-bold">Refresh <i class="fa-solid fa-rotate-right"></i></span>
                                 `;
-                            }
+                        }
                     });
                 });
             }
@@ -1120,7 +1323,7 @@
                 // 3. Loop through each train card
                 allTrainCards.forEach(card => {
                     let showCard = true; // Assume visible by default
-                    
+
                     // --- Check against class filters ---
                     if (selectedClasses.length > 0) {
                         const trainClasses = card.getAttribute('data-classes').split(',');
@@ -1134,14 +1337,14 @@
                     // --- Check against time filters (if card is still visible) ---
                     if (showCard && selectedTimeRanges.length > 0) {
                         const trainTime = card.getAttribute('data-departure-time'); // e.g., "18:50"
-                        
+
                         // Check if train time falls into *any* selected range
                         const timeMatch = selectedTimeRanges.some(range => {
                             const startTime = range[0]; // "00:00"
                             const endTime = range[1];   // "06:00"
                             return trainTime >= startTime && (endTime === "24:00" ? trainTime <= endTime : trainTime < endTime);
                         });
-                        
+
                         if (!timeMatch) {
                             showCard = false;
                         }
@@ -1201,12 +1404,12 @@
                     dateFormat: "d/m/Y",
                     defaultDate: "25/10/2025", // Set default for demo
                     // When this calendar changes, update the text span inside it
-                    onChange: function(selectedDates, dateStr, instance) {
-                        if(resultsDate) {
+                    onChange: function (selectedDates, dateStr, instance) {
+                        if (resultsDate) {
                             resultsDate.textContent = dateStr;
                         }
                         // Update the header date as well
-                        if(headerDateSpan && selectedDates[0]) {
+                        if (headerDateSpan && selectedDates[0]) {
                             headerDateSpan.textContent = formatHeaderDate(selectedDates[0]);
                         }
                     }
@@ -1304,13 +1507,13 @@
                 quotaRadioGroup.addEventListener('change', (e) => {
                     if (e.target.type === 'radio') {
                         const newValue = e.target.value;
-                        
+
                         // Update button text
                         if (resultsQuota) resultsQuota.textContent = newValue;
-                        
+
                         // Update header text
                         if (headerQuota) headerQuota.textContent = newValue;
-                        
+
                         // Sync homepage select (match by text value)
                         if (quotaInput) {
                             for (let i = 0; i < quotaInput.options.length; i++) {
@@ -1320,7 +1523,7 @@
                                 }
                             }
                         }
-                        
+
                         // Close dropdown
                         if (quotaFilterDropdown) quotaFilterDropdown.classList.add('hidden');
                     }
@@ -1332,17 +1535,17 @@
                 option.addEventListener('click', () => {
                     const sortValue = option.getAttribute('data-value');
                     const sortText = option.getAttribute('data-text');
-                    
+
                     // Update main button text
                     if (sortByText) sortByText.textContent = `Sort By | ${sortText}`;
-                    
+
                     // Update active class
                     sortOptions.forEach(opt => opt.classList.remove('active'));
                     option.classList.add('active');
-                    
+
                     // Call the new sort function
                     sortTrains(sortValue);
-                    
+
                     // Close dropdown
                     if (sortByDropdown) sortByDropdown.classList.add('hidden');
                 });
@@ -1350,151 +1553,155 @@
 
 
             // --- NEW: AVAILABILITY REFRESH LOGIC ---
-            const refreshButtons = document.querySelectorAll('.refresh-availability-btn');
-            
-            refreshButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    // Find the elements to update
-                    const classNameSpan = button.querySelector('.font-semibold');
-                    const statusSpan = button.querySelector('.font-bold');
+            function bindDynamicCardEvents() {
+                const refreshButtons = document.querySelectorAll('.refresh-availability-btn');
 
-                    // Check if already loading
-                    if (!statusSpan || statusSpan.textContent.includes('Checking...')) {
-                        return; 
-                    }
+                refreshButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
 
-                    // Store original content in a data attribute if not already stored
-                    if (!button.dataset.originalContent) {
-                        button.dataset.originalContent = button.innerHTML;
-                    }
+                        // Find the elements to update
+                        const classNameSpan = button.querySelector('.font-semibold');
+                        const statusSpan = button.querySelector('.font-bold');
 
-                    // 1. Show loading state
-                    statusSpan.innerHTML = 'Checking... <i class="fa-solid fa-spinner fa-spin"></i>';
-                    statusSpan.classList.remove('text-green-600', 'text-orange-600', 'text-red-600');
-                    statusSpan.classList.add('text-blue-600'); // Loading color
-
-                    // 2. Simulate API call
-                    setTimeout(() => {
-                        // Generate random availability
-                        const randomStatus = Math.random();
-                        let newStatusText = '';
-                        let newStatusColor = '';
-
-                        if (randomStatus > 0.4) { // Available
-                            const seats = Math.floor(Math.random() * 200) + 10;
-                            newStatusText = `Available ${seats}`;
-                            newStatusColor = 'text-green-600';
-                        } else if (randomStatus > 0.1) { // Waitlisted
-                            const seats = Math.floor(Math.random() * 50) + 1;
-                            newStatusText = `WL ${seats}`;
-                            newStatusColor = 'text-orange-600';
-                        } else { // Not Available
-                            newStatusText = 'Not Available';
-                            newStatusColor = 'text-red-600';
+                        // Check if already loading
+                        if (!statusSpan || statusSpan.textContent.includes('Checking...')) {
+                            return;
                         }
 
-                        // 3. Update UI
-                        // Re-create the inner HTML structure
-                        button.innerHTML = `
+                        // Store original content in a data attribute if not already stored
+                        if (!button.dataset.originalContent) {
+                            button.dataset.originalContent = button.innerHTML;
+                        }
+
+                        // 1. Show loading state
+                        statusSpan.innerHTML = 'Checking... <i class="fa-solid fa-spinner fa-spin"></i>';
+                        statusSpan.classList.remove('text-green-600', 'text-orange-600', 'text-red-600');
+                        statusSpan.classList.add('text-blue-600'); // Loading color
+
+                        // 2. Simulate API call
+                        setTimeout(() => {
+                            // Generate random availability
+                            const randomStatus = Math.random();
+                            let newStatusText = '';
+                            let newStatusColor = '';
+
+                            if (randomStatus > 0.4) { // Available
+                                const seats = Math.floor(Math.random() * 200) + 10;
+                                newStatusText = `Available ${seats}`;
+                                newStatusColor = 'text-green-600';
+                            } else if (randomStatus > 0.1) { // Waitlisted
+                                const seats = Math.floor(Math.random() * 50) + 1;
+                                newStatusText = `WL ${seats}`;
+                                newStatusColor = 'text-orange-600';
+                            } else { // Not Available
+                                newStatusText = 'Not Available';
+                                newStatusColor = 'text-red-600';
+                            }
+
+                            // 3. Update UI
+                            // Re-create the inner HTML structure
+                            button.innerHTML = `
                             <span class="font-semibold">${classNameSpan.textContent}</span><br>
                             <span class="${newStatusColor} font-bold">${newStatusText}</span>
                         `;
 
-                    }, 1000 + Math.random() * 500); // Simulate network delay
+                        }, 1000 + Math.random() * 500); // Simulate network delay
+                    });
                 });
-            });
 
-            
-            // --- NEW: TRAIN SCHEDULE MODAL LOGIC ---
-            const modalOverlay = document.getElementById('train-schedule-modal-overlay');
-            const modalCloseBtn = document.getElementById('modal-close-btn');
-            const modalTrainName = document.getElementById('modal-train-name');
-            const openModalLinks = document.querySelectorAll('.open-schedule-modal');
-            
-            // Static data elements in modal (could be updated dynamically)
-            const modalTrainNameStatic = document.getElementById('modal-train-name-static');
-            const modalTrainNumberStatic = document.getElementById('modal-train-number-static');
 
-            openModalLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    // Get train name from the link
-                    const trainName = link.getAttribute('data-train-name');
-                    
-                    // Update modal title
-                    if (modalTrainName) modalTrainName.textContent = `Train Schedule - ${trainName}`;
-                    
-                    // --- (Demo enhancement) ---
-                    // In a real app, you'd fetch data for *this* train.
-                    // For this demo, we'll just update the static part if we can.
-                    if (trainName.includes('16595')) {
-                        if (modalTrainNameStatic) modalTrainNameStatic.textContent = 'PANCHAGANGA EXP';
-                        if (modalTrainNumberStatic) modalTrainNumberStatic.textContent = '16595';
-                    } else if (trainName.includes('16585')) {
-                        if (modalTrainNameStatic) modalTrainNameStatic.textContent = 'SMVB MRDW EXP';
-                        if (modalTrainNumberStatic) modalTrainNumberStatic.textContent = '16585';
-                        // Note: The schedule table below is still for 16595 as we only have that data.
-                    }
-                    // --- End of demo enhancement ---
+                // --- NEW: TRAIN SCHEDULE MODAL LOGIC ---
+                const modalOverlay = document.getElementById('train-schedule-modal-overlay');
+                const modalCloseBtn = document.getElementById('modal-close-btn');
+                const modalTrainName = document.getElementById('modal-train-name');
+                const openModalLinks = document.querySelectorAll('.open-schedule-modal');
 
-                    // --- NEW: REAL-TIME DATE LOGIC ---
-                    if (resultsCalendar && modalOverlay) {
-                        const selectedDate = resultsCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00"); // "Day 1"
-                        const scheduleRows = modalOverlay.querySelectorAll('tbody.divide-y tr');
+                // Static data elements in modal (could be updated dynamically)
+                const modalTrainNameStatic = document.getElementById('modal-train-name-static');
+                const modalTrainNumberStatic = document.getElementById('modal-train-number-static');
 
-                        scheduleRows.forEach(row => {
-                            // Ensure cells exist
-                            if (row.cells.length < 9) return; 
-                            
-                            const arrivalCell = row.cells[4];
-                            const departureCell = row.cells[5];
-                            const dayNumber = parseInt(row.cells[8].textContent, 10);
+                openModalLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
 
-                            if (isNaN(dayNumber) || !arrivalCell || !departureCell) return; // Skip if day number is invalid or cells are missing
+                        // Get train name from the link
+                        const trainName = link.getAttribute('data-train-name');
 
-                            // 1. Restore original time (if it was stored)
-                            if (arrivalCell.dataset.originalTime) {
-                                arrivalCell.innerHTML = arrivalCell.dataset.originalTime;
-                            } else {
-                                // Store it for the first time
-                                arrivalCell.dataset.originalTime = arrivalCell.innerHTML;
-                            }
-                            
-                            if (departureCell.dataset.originalTime) {
-                                departureCell.innerHTML = departureCell.dataset.originalTime;
-                            } else {
-                                departureCell.dataset.originalTime = departureCell.innerHTML;
-                            }
+                        // Update modal title
+                        if (modalTrainName) modalTrainName.textContent = `Train Schedule - ${trainName}`;
 
-                            // 2. Calculate the new date for this row
-                            const scheduleRowDate = new Date(selectedDate.getTime());
-                            scheduleRowDate.setDate(scheduleRowDate.getDate() + (dayNumber - 1));
-                            
-                            // 3. Format the date (e.g., "Sat 25 Oct")
-                            const options = { weekday: 'short', day: '2-digit', month: 'short' };
-                            const dateString = new Intl.DateTimeFormat('en-GB', options).format(scheduleRowDate).replace(/,/g, '');
+                        // --- (Demo enhancement) ---
+                        // In a real app, you'd fetch data for *this* train.
+                        // For this demo, we'll just update the static part if we can.
+                        if (trainName.includes('16595')) {
+                            if (modalTrainNameStatic) modalTrainNameStatic.textContent = 'PANCHAGANGA EXP';
+                            if (modalTrainNumberStatic) modalTrainNumberStatic.textContent = '16595';
+                        } else if (trainName.includes('16585')) {
+                            if (modalTrainNameStatic) modalTrainNameStatic.textContent = 'SMVB MRDW EXP';
+                            if (modalTrainNumberStatic) modalTrainNumberStatic.textContent = '16585';
+                            // Note: The schedule table below is still for 16595 as we only have that data.
+                        }
+                        // --- End of demo enhancement ---
 
-                            // 4. Inject the new date
-                            if (arrivalCell.innerHTML.trim() !== '--') {
-                                arrivalCell.innerHTML += `<br><small class="text-gray-500 schedule-date-display">${dateString}</small>`;
-                            }
-                            if (departureCell.innerHTML.trim() !== '--') {
-                                departureCell.innerHTML += `<br><small class="text-gray-500 schedule-date-display">${dateString}</small>`;
-                            }
-                        });
-                    }
-                    // --- END OF NEW LOGIC ---
+                        // --- NEW: REAL-TIME DATE LOGIC ---
+                        if (resultsCalendar && modalOverlay) {
+                            const selectedDate = resultsCalendar.selectedDates[0] || new Date("2025-10-25T12:00:00"); // "Day 1"
+                            const scheduleRows = modalOverlay.querySelectorAll('tbody.divide-y tr');
 
-                    // Show the modal
-                    if (modalOverlay) {
-                        modalOverlay.classList.remove('hidden');
-                        modalOverlay.classList.add('flex');
-                    }
+                            scheduleRows.forEach(row => {
+                                // Ensure cells exist
+                                if (row.cells.length < 9) return;
+
+                                const arrivalCell = row.cells[4];
+                                const departureCell = row.cells[5];
+                                const dayNumber = parseInt(row.cells[8].textContent, 10);
+
+                                if (isNaN(dayNumber) || !arrivalCell || !departureCell) return; // Skip if day number is invalid or cells are missing
+
+                                // 1. Restore original time (if it was stored)
+                                if (arrivalCell.dataset.originalTime) {
+                                    arrivalCell.innerHTML = arrivalCell.dataset.originalTime;
+                                } else {
+                                    // Store it for the first time
+                                    arrivalCell.dataset.originalTime = arrivalCell.innerHTML;
+                                }
+
+                                if (departureCell.dataset.originalTime) {
+                                    departureCell.innerHTML = departureCell.dataset.originalTime;
+                                } else {
+                                    departureCell.dataset.originalTime = departureCell.innerHTML;
+                                }
+
+                                // 2. Calculate the new date for this row
+                                const scheduleRowDate = new Date(selectedDate.getTime());
+                                scheduleRowDate.setDate(scheduleRowDate.getDate() + (dayNumber - 1));
+
+                                // 3. Format the date (e.g., "Sat 25 Oct")
+                                const options = { weekday: 'short', day: '2-digit', month: 'short' };
+                                const dateString = new Intl.DateTimeFormat('en-GB', options).format(scheduleRowDate).replace(/,/g, '');
+
+                                // 4. Inject the new date
+                                if (arrivalCell.innerHTML.trim() !== '--') {
+                                    arrivalCell.innerHTML += `<br><small class="text-gray-500 schedule-date-display">${dateString}</small>`;
+                                }
+                                if (departureCell.innerHTML.trim() !== '--') {
+                                    departureCell.innerHTML += `<br><small class="text-gray-500 schedule-date-display">${dateString}</small>`;
+                                }
+                            });
+                        }
+                        // --- END OF NEW LOGIC ---
+
+                        if (modalOverlay) {
+                            modalOverlay.classList.remove('hidden');
+                            modalOverlay.classList.add('flex');
+                        }
+                    });
                 });
-            });
+            } // End of bindDynamicCardEvents function
+
+            // Initial binding for any existing elements
+            bindDynamicCardEvents();
 
             // Close modal with 'x' button
             if (modalCloseBtn) {
@@ -1505,7 +1712,7 @@
                     }
                 });
             }
-            
+
             // Close modal by clicking overlay
             if (modalOverlay) {
                 modalOverlay.addEventListener('click', (e) => {
@@ -1524,7 +1731,7 @@
             const chatMessages = document.getElementById('chat-messages');
             const chatInput = document.getElementById('chat-input');
             const chatSendBtn = document.getElementById('chat-send-btn');
-            
+
             // --- FIX: Check if chatToggleBtn exists before using it ---
             let toggleIconOpen = null;
             let toggleIconClose = null;
@@ -1551,7 +1758,7 @@
             // Function to add a message to the chat
             function addMessage(message, sender) {
                 // Add null check
-                if (!chatMessages) return; 
+                if (!chatMessages) return;
                 const messageDiv = document.createElement('div');
                 messageDiv.classList.add('chat-message', sender);
                 messageDiv.innerHTML = `<p>${message}</p>`; // Use innerHTML to render any HTML (like links)
@@ -1563,7 +1770,7 @@
             // Function to handle sending a message
             function sendMessage() {
                 // Add null check
-                if (!chatInput) return; 
+                if (!chatInput) return;
                 const userMessage = chatInput.value.trim();
                 if (userMessage === '') return;
 
@@ -1593,7 +1800,7 @@
                     } else if (userMsgLower.includes('schedule')) {
                         botResponse = "You can check the train schedule on the search results page. After searching, click the 'Train Schedule' link on any train card.";
                     }
-                    
+
                     addMessage(botResponse, 'bot');
                 }, 1000);
             }
@@ -1608,7 +1815,7 @@
             if (chatSendBtn) {
                 chatSendBtn.addEventListener('click', sendMessage);
             }
-            
+
             // Allow sending with 'Enter' key
             if (chatInput) {
                 chatInput.addEventListener('keypress', (e) => {
@@ -1618,9 +1825,399 @@
                 });
             }
 
-        
+
         }); // End of DOMContentLoaded
     </script>
 
+    <!-- NEW: Book Now Modal Flow -->
+    <div id="train-booking-modal"
+        class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 p-4 fade-in">
+        <div class="relative bg-white rounded-lg shadow-xl w-full max-w-2xl mx-auto p-8 modal-content">
+            <button id="close-booking-modal"
+                class="absolute top-4 right-4 text-gray-500 text-3xl leading-none hover:text-gray-800"
+                title="Close">&times;</button>
+
+            <div id="booking-step-1">
+                <h2 class="text-2xl font-bold mb-6 text-blue-900 border-b pb-2">Passenger Details</h2>
+                <form id="passenger-form">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" id="pass-name"
+                                class="mt-1 block w-full border-gray-400 rounded-lg p-2 border" required
+                                placeholder="Name as per ID">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Age</label>
+                            <input type="number" id="pass-age"
+                                class="mt-1 block w-full border-gray-400 rounded-lg p-2 border" required
+                                placeholder="Age">
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700">Email Address (for e-ticket)</label>
+                        <input type="email" id="pass-email"
+                            class="mt-1 block w-full border-gray-400 rounded-lg p-2 border" required
+                            placeholder="email@example.com">
+                    </div>
+
+                    <h3 class="font-bold text-lg mb-2 text-gray-800">Select Payment Method</h3>
+                    <select id="pay-method" class="w-full border-gray-400 rounded-lg p-2 border mb-6 text-gray-700">
+                        <option value="upi">UPI (GPay, PhonePe, Paytm)</option>
+                        <option value="card">Credit / Debit Card</option>
+                        <option value="netbanking">Net Banking</option>
+                    </select>
+
+                    <button type="submit"
+                        class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 shadow-md">Proceed
+                        to Secure Payment</button>
+                </form>
+            </div>
+
+            <div id="booking-step-2" class="hidden text-center py-8">
+                <i class="fa-solid fa-spinner fa-spin text-4xl text-blue-600 mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-800">Processing Payment...</h2>
+                <p class="text-gray-500">Please do not close or refresh this page.</p>
+            </div>
+
+            <div id="booking-step-3" class="hidden text-center py-6">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Booking Confirmed!</h2>
+                <p class="text-gray-600 mb-6">Your ticket has been booked successfully. A copy has been sent to your
+                    email.</p>
+                <div class="bg-gray-50 border rounded-lg p-4 mb-6 text-left inline-block">
+                    <p class="text-sm text-gray-500 font-semibold mb-1">PNR Number</p>
+                    <p class="text-xl font-bold font-mono text-blue-800 tracking-wider" id="generated-pnr">8472910482
+                    </p>
+                </div>
+                <br>
+                <button id="finish-booking-btn"
+                    class="bg-gray-800 text-white font-bold py-2 px-8 rounded hover:bg-gray-900">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('train-list-container');
+            const modal = document.getElementById('train-booking-modal');
+            const closeBtn = document.getElementById('close-booking-modal');
+            const step1 = document.getElementById('booking-step-1');
+            const step2 = document.getElementById('booking-step-2');
+            const step3 = document.getElementById('booking-step-3');
+            const form = document.getElementById('passenger-form');
+            const finishBtn = document.getElementById('finish-booking-btn');
+            const pnrSpan = document.getElementById('generated-pnr');
+
+            // Handle Book Now clicks for both Trains and newly injected Hotels
+            document.body.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON' && e.target.textContent.trim() === 'Book Now') {
+                    if (e.target.closest('#train-list-container') || e.target.closest('#hotel-spa-container')) {
+                        e.preventDefault();
+                        modal.classList.remove('hidden');
+                        step1.classList.remove('hidden');
+                        step2.classList.add('hidden');
+                        step3.classList.add('hidden');
+                        if (form) form.reset();
+                    }
+                }
+            });
+
+            const closeModal = () => modal.classList.add('hidden');
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            if (finishBtn) finishBtn.addEventListener('click', closeModal);
+
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    step1.classList.add('hidden');
+                    step2.classList.remove('hidden');
+
+                    setTimeout(() => {
+                        step2.classList.add('hidden');
+                        step3.classList.remove('hidden');
+                        pnrSpan.textContent = Math.floor(1000000000 + Math.random() * 9000000000);
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Top Navigation Link Router
+            const navLinks = document.querySelectorAll('nav a');
+
+            // Create a dynamic "Coming Soon" modal for missing pages
+            const featureModalHTML = `
+        <div id="feature-soon-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 p-4 fade-in" style="z-index: 9999;">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-auto p-8 modal-content text-center relative">
+                <button id="close-feature-modal" class="absolute top-4 right-4 text-gray-500 text-3xl leading-none hover:text-gray-800">&times;</button>
+                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-rocket text-3xl text-blue-600"></i>
+                </div>
+                <h2 id="feature-title" class="text-3xl font-bold text-gray-800 mb-2">Coming Soon!</h2>
+                <p class="text-gray-600 mb-6">We are working hard to bring the <span id="feature-name" class="font-bold text-blue-600"></span> feature to you very soon.</p>
+                <button class="bg-blue-600 text-white font-bold py-2 px-8 rounded hover:bg-blue-700 close-feature-btn">Stay Tuned</button>
+            </div>
+        </div>
+    `;
+            document.body.insertAdjacentHTML('beforeend', featureModalHTML);
+
+            const featureModal = document.getElementById('feature-soon-modal');
+            const closeFeatureBtns = document.querySelectorAll('#close-feature-modal, .close-feature-btn');
+
+            closeFeatureBtns.forEach(btn => btn.addEventListener('click', () => {
+                featureModal.classList.add('hidden');
+            }));
+
+            navLinks.forEach(link => {
+                const text = link.textContent.trim().toUpperCase();
+
+                if (text === 'BUSES') {
+                    link.href = 'index.html';
+                } else if (text === 'TRAINS' || text.includes('BLUERAIL')) {
+                    link.href = 'train.html';
+                } else if (text === 'HOTELS') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const spa = document.getElementById('hotel-spa-container');
+                        if (spa) {
+                            spa.classList.remove('hidden');
+                            document.body.style.overflow = 'hidden';
+                        }
+                    });
+                } else if (['LOYALTY', 'BLUE EWALLET', 'FLIGHTS', 'HOLIDAYS', 'MEALS', 'PROMOTIONS', 'MORE'].includes(text)) {
+                    // Un-routed requests get a "Coming Soon" modal without changing their native href attribute
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        document.getElementById('feature-name').textContent = link.textContent.trim();
+                        featureModal.classList.remove('hidden');
+                    });
+                }
+            });
+        });
+    </script>
+    <!-- NEW: Hotel Booking SPA -->
+    <div id="hotel-spa-container" class="hidden fixed inset-0 z-[100] bg-gray-50 overflow-y-auto w-full h-full fade-in">
+        <!-- Navbar -->
+        <nav class="bg-blue-900 text-white p-4 sticky top-0 z-50 shadow-md flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-hotel text-2xl"></i>
+                <span class="text-2xl font-bold tracking-wider">blueHotels</span>
+            </div>
+            <button id="close-hotels-btn"
+                class="bg-white text-blue-900 font-bold py-2 px-6 rounded hover:bg-gray-200 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Back to Trains
+            </button>
+        </nav>
+
+        <!-- Hero Search -->
+        <div class="relative bg-blue-800 text-white py-20 px-4 overflow-hidden">
+            <!-- Decorative background circles -->
+            <div
+                class="absolute top-0 left-0 w-64 h-64 bg-blue-700 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob">
+            </div>
+            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"
+                style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-8 left-20 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"
+                style="animation-delay: 4s;"></div>
+
+            <div class="container mx-auto max-w-5xl relative z-10 text-center">
+                <h1 class="text-5xl font-extrabold mb-4 drop-shadow-lg">Find Your Perfect Stay</h1>
+                <p class="text-xl mb-8 font-light">Book luxury hotels, cozy homestays, and resorts at the best prices.
+                </p>
+
+                <div class="bg-white p-4 rounded-xl shadow-2xl flex flex-col md:flex-row gap-4 items-center">
+                    <div class="flex-1 w-full relative">
+                        <i
+                            class="fa-solid fa-location-dot absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Where are you going?"
+                            class="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-gray-800 font-medium">
+                    </div>
+                    <div class="flex-1 w-full flex gap-2">
+                        <input type="date"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-medium text-gray-800">
+                        <input type="date"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-medium text-gray-800">
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <button
+                            class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 shadow-md">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container mx-auto max-w-6xl py-12 px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Top Rated Properties</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="hotel-results-grid">
+                <!-- Dynamically populated from API -->
+                <div class="col-span-3 text-center py-10" id="hotel-loading-spinner" style="display: none;">
+                    <i class="fa-solid fa-spinner fa-spin text-4xl text-blue-600 mb-4"></i>
+                    <p class="text-gray-500 text-lg">Connecting to LIVE Hotel API...</p>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            @keyframes blob {
+                0% {
+                    transform: translate(0px, 0px) scale(1);
+                }
+
+                33% {
+                    transform: translate(30px, -50px) scale(1.1);
+                }
+
+                66% {
+                    transform: translate(-20px, 20px) scale(0.9);
+                }
+
+                100% {
+                    transform: translate(0px, 0px) scale(1);
+                }
+            }
+
+            .animate-blob {
+                animation: blob 7s infinite;
+            }
+        </style>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const closeBtn = document.getElementById('close-hotels-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    document.getElementById('hotel-spa-container').classList.add('hidden');
+                    document.body.style.overflow = '';
+                });
+            }
+
+            // Free Live Hotel API Integration Fetcher
+            async function loadHotelsAPI() {
+                const grid = document.getElementById('hotel-results-grid');
+                const spinner = document.getElementById('hotel-loading-spinner');
+                if (!grid || !spinner) return;
+
+                // Show loading state
+                grid.querySelectorAll('.hotel-card-render').forEach(e => e.remove());
+                spinner.style.display = 'block';
+
+                try {
+                    const searchInput = document.querySelector('#hotel-spa-container input[type="text"]');
+                    const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+                    const qStr = searchInput && searchInput.value.trim() !== '' ? searchInput.value.trim() : 'Bali Resorts';
+
+                    // SerpApi Google Hotels configuration requested by user
+                    const apiKey = 'b6e6271cf5a399899d018d4eb2a7513132c1a0ca17a615e58576de8d7fe75d0c';
+                    const checkIn = '2026-03-23';
+                    const checkOut = '2026-03-28';
+                    const serpUrl = `https://serpapi.com/search.json?engine=google_hotels&q=${encodeURIComponent(qStr)}&check_in_date=${checkIn}&check_out_date=${checkOut}&api_key=${apiKey}`;
+
+                    let data = [];
+
+                    try {
+                        // Attempt live fetch to Google Hotels via SerpApi
+                        const serpRes = await fetch(serpUrl);
+                        const serpJson = await serpRes.json();
+
+                        if (serpJson.properties) {
+                            data = serpJson.properties.map((p, idx) => ({
+                                id: idx,
+                                name: p.name,
+                                location: 'Location available on map',
+                                rating: p.overall_rating || 4.5,
+                                price: p.rate_per_night?.lowest ? p.rate_per_night.lowest.replace(/[^0-9]/g, '') : 'N/A',
+                                originalPrice: p.rate_per_night?.lowest ? parseInt(p.rate_per_night.lowest.replace(/[^0-9]/g, '')) + 2000 : 'N/A',
+                                image: (p.images && p.images.length > 0) ? p.images[0].thumbnail : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+                                description: p.description || 'A beautiful property found via Google Hotels.',
+                                tag: p.type || 'Hotel'
+                            }));
+                        } else {
+                            throw new Error("Invalid SerpApi response - fallback to local");
+                        }
+                    } catch (err) {
+                        console.warn('SerpApi failed (likely dummy key or CORS). Falling back to local hotels.json mock.');
+                        // Fallback to local mock API payload (hotels.json)
+                        const res = await fetch('hotels.json');
+                        let localData = await res.json();
+
+                        if (query) {
+                            localData = localData.filter(h => h.location.toLowerCase().includes(query) || h.name.toLowerCase().includes(query));
+                        }
+                        data = localData;
+                    }
+
+                    // Artificial delay to show the fetching animation
+                    setTimeout(() => {
+                        spinner.style.display = 'none';
+
+                        if (data.length === 0) {
+                            grid.insertAdjacentHTML('beforeend', '<p class="text-gray-500 col-span-3 text-center hotel-card-render text-lg font-semibold py-8 block mx-auto w-full">No properties found matching your search. Try another city or hotel name.</p>');
+                            return;
+                        }
+
+                        data.forEach(h => {
+                            const tagHtml = h.tag ? `<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-2 py-1 rounded text-sm font-bold text-red-500 flex items-center shadow-sm z-10"><i class="fa-solid fa-fire mr-1"></i> ${h.tag}</div>` : '';
+
+                            const card = `
+                    <div class="hotel-card-render bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition duration-300 group cursor-pointer relative fade-in">
+                        ${tagHtml}
+                        <div class="h-56 overflow-hidden">
+                            <img src="${h.image}" alt="${h.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">${h.name}</h3>
+                                <div class="flex items-center bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-bold"><i class="fa-solid fa-star mr-1"></i> ${h.rating}</div>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-4"><i class="fa-solid fa-map-pin mr-1"></i> ${h.location}</p>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">${h.description}</p>
+                            <div class="flex justify-between items-end border-t border-gray-100 pt-4">
+                                <div>
+                                    <p class="text-xs text-gray-400 line-through">₹ ${h.originalPrice}</p>
+                                    <p class="text-2xl font-bold text-gray-900">₹ ${h.price} <span class="text-sm font-normal text-gray-500">/night</span></p>
+                                </div>
+                                <button class="bg-blue-100 text-blue-700 font-bold py-2 px-4 rounded hover:bg-blue-600 hover:text-white transition-colors duration-300">Book Now</button>
+                            </div>
+                        </div>
+                    </div>`;
+                            grid.insertAdjacentHTML('beforeend', card);
+                        });
+                    }, 800);
+
+                } catch (err) {
+                    spinner.style.display = 'none';
+                    grid.insertAdjacentHTML('beforeend', '<p class="text-red-500 col-span-3 text-center hotel-card-render">Failed to connect to Hotel API. Please try again later.</p>');
+                }
+            }
+
+            // Attach load dispatch when search is clicked
+            const searchBtn = document.querySelector('#hotel-spa-container button.bg-orange-500');
+            if (searchBtn) {
+                searchBtn.addEventListener('click', loadHotelsAPI);
+            }
+
+            // Auto-load on open if empty
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                if (link.textContent.trim().toUpperCase() === 'HOTELS') {
+                    link.addEventListener('click', () => {
+                        if (!document.querySelector('.hotel-card-render')) {
+                            loadHotelsAPI();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
 </body>
+
 </html>
